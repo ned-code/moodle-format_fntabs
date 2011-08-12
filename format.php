@@ -1,3 +1,4 @@
+<link rel="stylesheet/css" href="format/mfntabs/style.css" />
 <?php
 
 // Display the whole course as "tab" made of of modules
@@ -24,17 +25,17 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
  * @package
  */
-    defined('MOODLE_INTERNAL') || die();
-
+    defined('MOODLE_INTERNAL') || die();      
+    
+    require_once($CFG->libdir . '/filelib.php');
     require_once($CFG->libdir . '/filelib.php');
     require_once($CFG->libdir . '/completionlib.php');
     require_once($CFG->libdir . '/ajax/ajaxlib.php');
-    require_once($CFG->dirroot . '/mod/forum/lib.php');
+    require_once($CFG->dirroot . '/mod/forum/lib.php');    
 
     require_once($CFG->dirroot . '/course/format/' . $course->format . '/course_format.class.php');
     require_once($CFG->dirroot . '/course/format/' . $course->format . '/course_format_fn.class.php');
     global $DB, $OUTPUT, $THEME, $PAGE;
-
     $cobject = new course_format_fn($course);
     $course = $cobject->course;
     //    $week = optional_param('week', -1, PARAM_INT);
@@ -125,32 +126,32 @@ if (empty($course->showsection0) && ($thissection->summary or $thissection->sequ
     if (!empty($thissection->name)) {
         echo $OUTPUT->heading($thissection->name, 3, 'sectionname');
     }
-
-    if ($PAGE->user_is_editing()) {
-        if (empty($_GET['edittitle']) or ($_GET['edittitle'] != 'sec0')) {
-            echo $course->sec0title;
-            $path = $CFG->wwwroot . '/course';
-            if (empty($THEME->custompix)) {
-                $pixpath = $path . '/../pix';
-            } else {
-                $pixpath = $path . '/../theme/' . $CFG->theme . '/pix';
-            }
-            echo ' <a title="' . get_string('edit') . '" href="' . $CFG->wwwroot . '/course/view.php?id=' .
-            $course->id . '&amp;edittitle=sec0"><img src="' . $pixpath . '/t/edit.gif" /></a>';
-        } else if ($_GET['edittitle'] == 'sec0') {
-            echo '<form name="editsec0title" method="post" ' .
-            'action="' . $CFG->wwwroot . '/course/format/fn/mod.php">' .
-            '<input name="id" type="hidden" value="' . $course->id . '" />' .
-            '<input name="sec0title" type="text" size="20" value="' . $course->sec0title . '" />' .
-            '<input style="font-size: 8pt; margin: 0 0 0 2px; padding: 0 0 0 0;" type="submit" ' .
-            'value="ok" title="Save">' .
-            '</form>';
-        } else {
-            echo $course->sec0title;
-        }
-    } else {
-        echo $course->sec0title;
-    }   
+//
+//    if ($PAGE->user_is_editing()) {
+//        if (empty($_GET['edittitle']) or ($_GET['edittitle'] != 'sec0')) {
+//            echo $course->sec0title;
+//            $path = $CFG->wwwroot . '/course';
+//            if (empty($THEME->custompix)) {
+//                $pixpath = $path . '/../pix';
+//            } else {
+//                $pixpath = $path . '/../theme/' . $CFG->theme . '/pix';
+//            }
+//            echo ' <a title="' . get_string('edit') . '" href="' . $CFG->wwwroot . '/course/view.php?id=' .
+//            $course->id . '&amp;edittitle=sec0"><img src="' . $pixpath . '/t/edit.gif" /></a>';
+//        } else if ($_GET['edittitle'] == 'sec0') {
+//            echo '<form name="editsec0title" method="post" ' .
+//            'action="' . $CFG->wwwroot . '/course/format/fn/mod.php">' .
+//            '<input name="id" type="hidden" value="' . $course->id . '" />' .
+//            '<input name="sec0title" type="text" size="20" value="' . $course->sec0title . '" />' .
+//            '<input style="font-size: 8pt; margin: 0 0 0 2px; padding: 0 0 0 0;" type="submit" ' .
+//            'value="ok" title="Save">' .
+//            '</form>';
+//        } else {
+//            echo $course->sec0title;
+//        }
+//    } else {
+//        echo $course->sec0title;
+//    }   
 
     echo '<div class="summary">';
     
@@ -161,7 +162,6 @@ if (empty($course->showsection0) && ($thissection->summary or $thissection->sequ
     $summaryformatoptions->overflowdiv = true;
     echo format_text($summarytext, $thissection->summaryformat, $summaryformatoptions);
 
-
     if ($PAGE->user_is_editing() && has_capability('moodle/course:update', get_context_instance(CONTEXT_COURSE, $course->id))) {
         echo '<p><a title="'.$streditsummary.'" '.
                  ' href="editsection.php?id='.$thissection->id.'"><img src="'.$OUTPUT->pix_url('t/edit') . '" '.
@@ -169,7 +169,6 @@ if (empty($course->showsection0) && ($thissection->summary or $thissection->sequ
     }
 
     echo '</div>';
-
 //        print_section($course, $thissection, $mods, $modnamesused);
     $cobject->print_section_fn($course, $thissection, $mods, $modnamesused);
 
@@ -234,7 +233,7 @@ if (empty($course->showonlysection0)) {
         if (!empty($course->mainheading)) {
             $strmainheading = $course->mainheading;
         } else {
-            $strmainheading = get_string('defaultmainheading', 'format_fn');
+            $strmainheading = get_string('defaultmainheading', 'format_mfntabs');
         }
          echo $OUTPUT->heading($strmainheading, 3, 'fnoutlineheadingblock');
 
@@ -460,7 +459,6 @@ if (empty($course->showonlysection0)) {
                     ';
     }
 }
-
 
 echo "</ul>\n";
 

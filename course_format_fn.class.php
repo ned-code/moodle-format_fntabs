@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="format/mfntabs/style.css" />
 <?php
 
 // $Id: course_format_fn.class.php,v 1.5 2010/01/12 21:41:43 mchurch Exp $
@@ -90,8 +91,7 @@ class course_format_fn extends course_format {
 
     function print_weekly_activities_bar($week=0, $tabrange=0) {
         global $THEME, $FULLME, $CFG, $course;
-        $completioninfo = new completion_info($course);
-
+        $completioninfo = new completion_info($course);      
 
         list($tablow, $tabhigh, $week) = $this->get_week_info($tabrange, $week);
 
@@ -125,8 +125,9 @@ class course_format_fn extends course_format {
 //            $actbar .= '<td class="fnweeklynavnorm" width="'.$width.'%" height="25">' .
 //                       '<a href="'.$url.'&selected_week='.$prv.'">Previous</a></td>';
         }
-
-        for ($i = $tablow; $i <= $tabhigh; $i++) {
+        
+       
+         for ($i = $tablow; $i <= $tabhigh; $i++) {
             if (empty($this->sections[$i]->visible) || ($timenow < $weekdate)) {
                 if ($i == $week) {
                     $css = 'fnweeklynavdisabledselected';
@@ -143,10 +144,8 @@ class course_format_fn extends course_format {
                 $actbar .= '<td class="' . $css . '" height="25" width="' . $width . '%" alt="sudhanshu" title="Sudhanshu">' . $f . '</td>';
             } else if ($i == $week) {
                 if (!$isteacher && !empty($completioninfo) &&
-                        $this->is_section_finished($this->sections[$i], $this->mods)) {  
-//                    $a=$this->activities_notattempted_in_section($this->sections[$i], $this->mods);
-//                    print_object("Activities not attempted:$a");                   
-
+                        $this->is_section_finished($this->sections[$i], $this->mods)) {
+                    $a = $this->activities_notattempted_in_section($this->sections[$i], $this->mods);                   
 
                     $f = '<img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/sectcompleted.gif" ' .
                             'height="18" width="16" alt="Section Completed" title="Section Completed" align="right" hspace="0" vspace="0">';
@@ -156,15 +155,14 @@ class course_format_fn extends course_format {
                 $actbar .= '<td class="fnweeklynavselected" width="' . $width . '%" height="25"> ' . $f . $i . ' </td>';
             } else {
                 if (!$isteacher && !empty($completioninfo) &&
-                        $this->is_section_finished($this->sections[$i], $this->mods)) {  
+                        $this->is_section_finished($this->sections[$i], $this->mods)) {                 
                    
                     $f = '<img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/sectcompleted.gif" ' .
                             'height="18" width="16" alt="Section Completed" title="Section Completed" align="right" hspace="0" vspace="0">';
                 } else {
                     $f = '';
-                }
-
-                $actbar .= '<td class="fnweeklynavnorm"  width="' . $width . '%" height="25" title="hi" alt="hi">' .
+                }               
+                $actbar .= '<td class="fnweeklynavnorm"  width="' . $width . '%" height="25" title="hi"  alt="hi">' .
                         $f . '<a href="' . $url . '&selected_week=' . $i . '">&nbsp;' . $i . '&nbsp;</a>' . '</td>';
             }
             $weekdate += ( $weekofseconds);
@@ -545,16 +543,14 @@ class course_format_fn extends course_format {
                         }
                     }
                     if ($completionicon) {
-                        $imgsrc = '' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/completion-' . $completionicon . '.gif';
-//                        print_object($imgsrc);
-                        # $imgsrc = $OUTPUT->pix_url('i/completion-'.$completionicon);                           
+                        $imgsrc = '' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/completion-' . $completionicon . '.gif';                        
 
-                        $imgalt = s(get_string('completion-alt-' . $completionicon, 'format_mytab'));
+                        $imgalt = s(get_string('completion-alt-' . $completionicon, 'format_mfntabs'));
                         if ($completion == COMPLETION_TRACKING_MANUAL && !$isediting) {
-                            $imgtitle = s(get_string('completion-title-' . $completionicon, 'format_mytab'));
+                            $imgtitle = s(get_string('completion-title-' . $completionicon, 'format_mfntabs'));
                             $newstate =
                                     $completiondata->completionstate == COMPLETION_COMPLETE ? COMPLETION_INCOMPLETE : COMPLETION_COMPLETE;
-//                       
+                       
                             // In manual mode the icon is a toggle form...
                             // If this completion state is used by the
                             // conditional activities system, we need to turn
@@ -652,6 +648,7 @@ class course_format_fn extends course_format {
             return false;
         }
     }
+    
      function first_unfinished_section() {
         if (is_array($this->sections) && is_array($this->mods)) {
             foreach ($this->sections as $section) {
@@ -747,9 +744,6 @@ class course_format_fn extends course_format {
        return $incompleted_saved;
         
     }
-    
-
-
 }
 
 ?>

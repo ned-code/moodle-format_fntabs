@@ -22,6 +22,7 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+$string['defaultmainheading'] = 'Weekly Activities';
 $string['sectionname'] = 'Moodle FN Tab';
 $string['pluginname'] = 'Moodle FN Tabs Format';
 $string['section0name'] = 'General';
