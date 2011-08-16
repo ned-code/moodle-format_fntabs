@@ -27,7 +27,7 @@ class course_format_fn extends course_format {
      *
      */
     function course_format_fn(&$course) {
-        global $mods, $modnames, $modnamesplural, $modnamesused, $sections;
+        global $mods, $modnames, $modnamesplural, $modnamesused, $sections,$DB;
 
         parent::course_format($course);
 
@@ -36,6 +36,90 @@ class course_format_fn extends course_format {
         $this->modnamesplural = &$modnamesplural;
         $this->modnamesused = &$modnamesused;
         $this->sections = &$sections;
+    }
+    function get_course($course=null) {
+        global $DB;
+        if (!empty($course->id)) {
+            $extradata = $DB->get_records('course_config_fn', array('courseid'=>$course->id));
+        } else if (!empty($this->course->id)) {
+            $extradata = $DB->get_records('course_config_fn', array('courseid'=>$this->course->id));
+        } else {
+            $extradata = false;
+        }
+
+        if (is_null($course)) {
+            $course = new Object();
+        }
+
+        if ($extradata) {
+            foreach ($extradata as $extra) {
+                $this->course->{$extra->variable} = $extra->value;
+                $course->{$extra->variable} = $extra->value;
+            }
+        }
+
+        $this->course->uselogo = !empty($course->logo);
+        $course->uselogo = !empty($course->logo);
+
+        return $course;
+    }
+    /******************************************************************************/
+/*   CUSTOM FUNCTIONS:                                                        */
+/******************************************************************************/
+
+    function handle_extra_actions() {
+        global $USER, $CFG,$DB;
+
+///     Handle activity complete.
+///
+        if (($resid = optional_param('rescomplete', 0, PARAM_INT)) && confirm_sesskey()) {
+            if (! $cm = $DB->get_record("course_modules", array("id"=>optional_param('id', 0, PARAM_INT)))) {
+                print_error("This course module doesn't exist");
+            }
+            set_resource_complete($resid, $USER->id);
+
+        } else if ((($hide = optional_param('hidegrades', false, PARAM_INT)) !== false) && confirm_sesskey()) {
+            if (! $cm = $DB->get_record("course_modules", array("id"=>optional_param('mid', 0, PARAM_INT)))) {
+                print_error("This course module doesn't exist");
+            }
+            /// Replace with a capability...
+            if (!is_primary_admin()) {
+                print_error("You can't modify the gradebook settings!");
+            }
+            $this->set_gradebook_for_module($cm->id, $hide);
+
+        } else if (isset($_GET['mandatory']) and confirm_sesskey()) {
+
+            if (! $cm = $DB->get_record("course_modules", array("id"=>$_GET['id']))) {
+                print_error("This course module doesn't exist");
+            }
+
+            if (!is_primary_admin()) {
+                print_error("You can't modify the mandatory settings!");
+            }
+
+            fn_set_mandatory_for_module($cm->id, $_GET['mandatory']);
+        } else if (isset($_POST['sec0title'])) {
+            if (!$course = $DB->get_record('course', array('id'=>$_POST['id']))) {
+                print_error('This course doesn\'t exist.');
+            }
+            FN_get_course($course);
+            $course->sec0title = $_POST['sec0title'];
+            FN_update_course($course);
+            $cm->course = $course->id;
+        } else if (isset($_GET['openchat'])) {
+            if ($varrec = $DB->get_record('course_config_FN', array('courseid'=>$this->course->id, 'variable'=>'classchatopen'))) {
+                $varrec->value = $_GET['openchat'];
+                $DB->update_record('course_config_fn', $varrec);
+            } else {
+                $varrec->courseid = $this->course->id;
+                $varrec->variable = 'classchatopen';
+                $varrec->value = $_GET['openchat'];
+                $DB->insert_record('course_config_fn', $varrec);
+            }
+            $this->course->classchatopen = $varrec->value;
+            $cm->course = $tgis->course->id;
+        }
     }
 
     function get_week_info($tabrange, $week) {
@@ -745,5 +829,3 @@ class course_format_fn extends course_format {
         
     }
 }
-
-?>

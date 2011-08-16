@@ -1,4 +1,4 @@
-<link rel="stylesheet/css" href="format/mfntabs/style.css" />
+<link rel="stylesheet" href="format/mfntabs/style.css" />
 <?php
 
 // Display the whole course as "tab" made of of modules
@@ -38,6 +38,11 @@
     global $DB, $OUTPUT, $THEME, $PAGE;
     $cobject = new course_format_fn($course);
     $course = $cobject->course;
+    
+     $cobject->handle_extra_actions(); 
+
+    /// Add any extra module information to our module structures.
+    //$cobject->add_extra_module_info();
     //    $week = optional_param('week', -1, PARAM_INT);
     $selected_week = optional_param('selected_week', -1, PARAM_INT);
     if ($selected_week != -1) {
@@ -89,70 +94,71 @@
 
 //Print the Your progress icon if the track completion is enabled
     $completioninfo = new completion_info($course);    
-    echo $completioninfo->display_help_icon();
-    
+    echo $completioninfo->display_help_icon();    
     echo $OUTPUT->heading(get_string('weeklyoutline'), 2, 'headingblock header outline');
 
 // Note, an ordered list would confuse - "1" could be the clipboard or summary.
     echo "<ul class='weeks'>\n";
 
 /// If currently moving a file then show the current clipboard
-    if (ismoving($course->id)) {
-        $stractivityclipboard = strip_tags(get_string('activityclipboard', '', $USER->activitycopyname));
-        $strcancel = get_string('cancel');
-        echo '<li class="clipboard">';
-        echo $stractivityclipboard . '&nbsp;&nbsp;(<a href="mod.php?cancelcopy=true&amp;sesskey=' . sesskey() . '">' . $strcancel . '</a>)';
-        echo "</li>\n";
-    }
+     if (ismoving($course->id)) {
+            $stractivityclipboard = strip_tags(get_string('activityclipboard', '', addslashes($USER->activitycopyname)));
+            $strcancel= get_string('cancel');
+            echo '<tr class="clipboard">';
+            echo '<td colspan="3">';
+            echo $stractivityclipboard.'&nbsp;&nbsp;(<a href="mod.php?cancelcopy=true&amp;sesskey='.$USER->sesskey.'">'.$strcancel.'</a>)';
+            echo '</td>';
+            echo '</tr>';
+        }
     
 /// Print Section 0 with general activities
 
     $section = 0;
     $thissection = $sections[$section];
     unset($sections[0]);
+//    print_object($course->showsection0);
 
-if (empty($course->showsection0) && ($thissection->summary or $thissection->sequence or $PAGE->user_is_editing())) {
+if (!empty($course->showsection0) && ($thissection->summary or $thissection->sequence or $PAGE->user_is_editing())) {
 
     // Note, 'right side' is BEFORE content.
+    echo "<tr id=\"section-0\" class=\"section main\">";
+    echo '<td colspan="3" align="center" width="100%" id="fnsection0" class="content">';
+    if (empty($course->sec0title)) {
+        $course->sec0title = '';
+    }
+    if ($PAGE->user_is_editing()) {
+        if (empty($_GET['edittitle']) or ($_GET['edittitle'] != 'sec0')) {
+            echo "<b>$course->sec0title</b>";
+            $path = $CFG->wwwroot . '/course';
+            if (empty($THEME->custompix)) {
+                $pixpath = $path . '/../pix';
+            } else {
+                $pixpath = $path . '/../theme/' . $CFG->theme . '/pix';
+            }
+            echo ' <a title="' . get_string('edit') . '" href="' . $CFG->wwwroot . '/course/view.php?id=' .
+            $course->id . '&amp;edittitle=sec0"><img src="' . $pixpath . '/t/edit.gif" /></a>';
+        } else if ($_GET['edittitle'] == 'sec0') {
+            echo '<form name="editsec0title" method="post" ' .
+            'action="' . $CFG->wwwroot . '/course/format/mfntabs/mod.php">' .
+            '<input name="id" type="hidden" value="' . $course->id . '" />' .
+            '<input name="sec0title" type="text" size="20" value="' . $course->sec0title . '" />' .
+            '<input style="font-size: 8pt; margin: 0 0 0 2px; padding: 0 0 0 0;" type="submit" ' .
+            'value="ok" title="Save">' .
+            '</form>';
+        } else {
+             echo "<b>$course->sec0title</b>";
+        }
+    } else {
+         echo "<b>$course->sec0title</b>";
+    }
+    echo '</td></tr>';    
     echo '<li id="section-0" class="section main clearfix" >';
     echo '<div class="left side">&nbsp;</div>';
     echo '<div class="right side" >&nbsp;</div>';
     echo '<div class="content">';
-
-    if (empty($course->sec0title)) {
-        $course->sec0title = '';
-    }
-
     if (!empty($thissection->name)) {
-        echo $OUTPUT->heading($thissection->name, 3, 'sectionname');
-    }
-//
-//    if ($PAGE->user_is_editing()) {
-//        if (empty($_GET['edittitle']) or ($_GET['edittitle'] != 'sec0')) {
-//            echo $course->sec0title;
-//            $path = $CFG->wwwroot . '/course';
-//            if (empty($THEME->custompix)) {
-//                $pixpath = $path . '/../pix';
-//            } else {
-//                $pixpath = $path . '/../theme/' . $CFG->theme . '/pix';
-//            }
-//            echo ' <a title="' . get_string('edit') . '" href="' . $CFG->wwwroot . '/course/view.php?id=' .
-//            $course->id . '&amp;edittitle=sec0"><img src="' . $pixpath . '/t/edit.gif" /></a>';
-//        } else if ($_GET['edittitle'] == 'sec0') {
-//            echo '<form name="editsec0title" method="post" ' .
-//            'action="' . $CFG->wwwroot . '/course/format/fn/mod.php">' .
-//            '<input name="id" type="hidden" value="' . $course->id . '" />' .
-//            '<input name="sec0title" type="text" size="20" value="' . $course->sec0title . '" />' .
-//            '<input style="font-size: 8pt; margin: 0 0 0 2px; padding: 0 0 0 0;" type="submit" ' .
-//            'value="ok" title="Save">' .
-//            '</form>';
-//        } else {
-//            echo $course->sec0title;
-//        }
-//    } else {
-//        echo $course->sec0title;
-//    }   
-
+            echo $OUTPUT->heading($thissection->name, 3, 'sectionname');
+        }
     echo '<div class="summary">';
     
     $coursecontext = get_context_instance(CONTEXT_COURSE, $course->id);
@@ -173,7 +179,7 @@ if (empty($course->showsection0) && ($thissection->summary or $thissection->sequ
     $cobject->print_section_fn($course, $thissection, $mods, $modnamesused);
 
     if ($PAGE->user_is_editing()) {
-       print_section_add_menus($course, $section, $modnames);
+       $cobject->print_section_add_menus($course, $section, $modnames);
     }
 
     echo '</div>';
@@ -313,7 +319,7 @@ if (empty($course->showonlysection0)) {
 
           $showsection = (has_capability('moodle/course:viewhiddensections', $context) || ($thissection->visible && ($timenow > $weekdate)));
               
-        if ($showsection) {       
+        if ($showsection) {   
                   $currenttopic = ($course->marker == $section);
             //            if (!$cobjectsection->visible || ($timenow < $weekdate) || ($selected_week > $currentweek)) {
             if (!$thissection->visible || ($selected_week > $currentweek)) {
@@ -388,13 +394,13 @@ if (empty($course->showonlysection0)) {
                 if ($course->marker == $section) {  // Show the "light globe" on/off
                      echo '<a href="view.php?id='.$course->id.'&amp;week=0#section-'.$section.'" title="'.$strshowallweeks.'">'.
                      '<img src="'.$OUTPUT->pix_url('i/all') . '" class="icon wkall" alt="'.$strshowallweeks.'" /></a><br />';                    
-                } else {                   
+                } else {              
                      $strshowonlyweek = get_string("showonlyweek", "", $section);
                     echo '<a href="view.php?id='.$course->id.'&amp;week='.$section.'" title="'.$strshowonlyweek.'">'.
                      '<img src="'.$OUTPUT->pix_url('i/one') . '" class="icon wkone" alt="'.$strshowonlyweek.'" /></a><br />';
                 }
                 
-                if ($thissection->visible) {        // Show the hide/show eye                          
+                if ($thissection->visible) {      // Show the hide/show eye                          
                     echo '<a href="view.php?id=' . $course->id . '&amp;hide=' . $section . '&amp;sesskey=' . sesskey() . '#section-' . $section . '" title="' . $strweekhide . '">' .
                     '<img src="' . $OUTPUT->pix_url('i/hide') . '" class="icon hide" alt="' . $strweekhide . '" /></a><br />';
                 } else {
@@ -462,11 +468,13 @@ if (empty($course->showonlysection0)) {
 
 echo "</ul>\n";
 
-if (empty($sectionmenu)) {
-    $select = new single_select(new moodle_url('/course/view.php', array('id' => $course->id)), 'week', $sectionmenu);
-    $select->label = get_string('jumpto');
-    $select->class = 'jumpmenu';
-    $select->formid = 'sectionmenu';
-//    echo $OUTPUT->render($select);
-}
+//if (empty($sectionmenu)) {
+//    $select = new single_select(new moodle_url('/course/view.php', array('id' => $course->id)), 'week', $sectionmenu);
+//    $select->label = get_string('jumpto');
+//    $select->class = 'jumpmenu';
+//    $select->formid = 'sectionmenu';
+////    echo $OUTPUT->render($select);
+//}
+
+
 

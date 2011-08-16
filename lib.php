@@ -1,4 +1,7 @@
 <?php
+
+require_once ($CFG->dirroot.'/course/lib.php');
+define('FN_EXTRASECTION', 9999);     // A non-existant section to hold hidden modules.
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -22,7 +25,63 @@
  * @copyright 2009 Sam Hemelryk
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+/// Format Specific Functions:
+function FN_update_course($form, $oldformat = false) {
+    global $CFG,$DB,$OUTPUT;
 
+    /// Updates course specific variables.
+    /// Variables are: 'showsection0', 'showannouncements'.
+
+//    $config_vars = array('showsection0', 'showannouncements', 'sec0title', 'showhelpdoc', 'showclassforum',
+//                         'showclasschat', 'logo', 'mycourseblockdisplay',
+//                         'showgallery', 'gallerydefault', 'usesitegroups', 'mainheading', 'topicheading',
+//                         'activitytracking', 'ttmarking', 'ttgradebook', 'ttdocuments', 'ttstaff',
+//                         'defreadconfirmmess', 'usemandatory', 'expforumsec');
+    
+    $config_vars = array('showsection0','sec0title','mainheading', 'topicheading');
+    foreach ($config_vars as $config_var) {
+        if ($varrec = $DB->get_record('course_config_fn', array('courseid'=>$form->id, 'variable'=>$config_var))) {
+            $varrec->value = $form->$config_var;
+            $DB->update_record('course_config_fn', $varrec);
+        } else {
+            $varrec->courseid = $form->id;           
+            $varrec->variable = $config_var;
+            $varrec->value = $form->$config_var;
+            print_object( $form->$config_var);
+            $DB->insert_record('course_config_fn', $varrec);
+        }
+    }
+
+    /// We need to have the sections created ahead of time for the weekly nav to work,
+    /// so check and create here.
+    if (!($sections = get_all_sections($form->id))) {
+        $sections = array();
+    }
+
+    for ($i = 0; $i <= $form->numsections; $i++) {
+        if (empty($sections[$i])) {
+            $section = new Object();
+            $section->course = $form->id;   // Create a new section structure
+            $section->section = $i;
+            $section->summary = "";
+            $section->visible = 1;
+            if (!$section->id = $DB->insert_record("course_sections", $section)) {
+                $OUTPUT->notification("Error inserting new section!");
+            }
+        }
+    }
+
+    /// Check for a change to an FN format. If so, set some defaults as well...
+    if ($oldformat != 'FN') {
+        /// Set the news (announcements) forum to no force subscribe, and no posts or discussions.
+        require_once($CFG->dirroot.'/mod/forum/lib.php');
+        $news = forum_get_course_forum($form->id, 'news');
+        $news->open = 0;
+        $news->forcesubscribe = 0;
+        $DB->update_record('forum', $news);
+    }
+    rebuild_course_cache($form->id);
+}
 
 /**
  * Indicates this format uses sections.
@@ -55,6 +114,17 @@ function callback_weeks_load_content(&$navigation, $course, $coursenode) {
  */
 function callback_weeks_definition() {
     return get_string('week');
+}
+
+function FN_get_course(&$course) {
+    global $DB;
+    /// Add course specific variable to the passed in parameter.
+
+    if ($config_vars = $DB->get_records('course_config_fn', array('courseid'=>$course->id))) {
+        foreach ($config_vars as $config_var) {
+            $course->{$config_var->variable} = $config_var->value;
+        }
+    }
 }
 
 /**
@@ -99,6 +169,7 @@ function callback_weeks_get_section_name($course, $section) {
         return $weekday.' - '.$endweekday;
     }
 }
+
 
 /**
  * Declares support for course AJAX features
@@ -163,4 +234,6 @@ function get_week_info($tabrange, $week) {
 
         return array($tablow, $tabhigh, $week);
     }
+
+
    
