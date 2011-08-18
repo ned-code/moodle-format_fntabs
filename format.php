@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="format/mfntabs/style.css" />
+<link rel="stylesheet" href="format/mfntabs/styles.css" />
 <?php
 
 // Display the whole course as "tab" made of of modules

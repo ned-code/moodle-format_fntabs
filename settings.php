@@ -2,17 +2,19 @@
       // Edit course settings
 
     require_once('../../../config.php');
- #  require_once($CFG->dirroot.'/enrol/enrol.class.php');
+//    require_once($CFG->dirroot.'/enrol/enrol.class.php');
     require_once($CFG->libdir.'/blocklib.php');
     require_once('lib.php');
     require_once('edit_form.php');
     require_once('course_format.class.php');
     require_once('course_format_fn.class.php');
-    global $DB,$OUTPUT;
+    global $DB,$OUTPUT,$PAGE;
 
     $id         = optional_param('id', 0, PARAM_INT);       // course id       
     $categoryid = optional_param('category', 0, PARAM_INT); // course category - can be changed in edit form
-
+    $PAGE->set_url('/course/format/mfntabs/settings.php', array('id'=>$id,'extraonly'=>'1'));
+//    $PAGE->set_url('/blocks/fn_marking/fn_summaries.php', array('id'=>$id,'show'=>$show,'navlevel'=>'top'));
+      
 
 /// basic access control checks
     if ($id) { // editing course
@@ -136,7 +138,7 @@
          
     }
 
- $PAGE->set_url('/course/format/fn/settings.php');
+// $PAGE->set_url($CFG->wwwroot."/course/view.php?id=$course->id");
 /// Print the form
 
     $site = get_site();

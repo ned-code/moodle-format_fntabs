@@ -1,5 +1,7 @@
-<link rel="stylesheet" href="format/mfntabs/style.css" />
+<link rel="stylesheet" href="format/mfntabs/styles.css" />
 <?php
+
+
 
 // $Id: course_format_fn.class.php,v 1.5 2010/01/12 21:41:43 mchurch Exp $
 /**
@@ -37,6 +39,7 @@ class course_format_fn extends course_format {
         $this->modnamesused = &$modnamesused;
         $this->sections = &$sections;
     }
+    
     function get_course($course=null) {
         global $DB;
         if (!empty($course->id)) {
@@ -63,15 +66,13 @@ class course_format_fn extends course_format {
 
         return $course;
     }
-    /******************************************************************************/
+ /******************************************************************************/
 /*   CUSTOM FUNCTIONS:                                                        */
 /******************************************************************************/
 
     function handle_extra_actions() {
         global $USER, $CFG,$DB;
-
-///     Handle activity complete.
-///
+        
         if (($resid = optional_param('rescomplete', 0, PARAM_INT)) && confirm_sesskey()) {
             if (! $cm = $DB->get_record("course_modules", array("id"=>optional_param('id', 0, PARAM_INT)))) {
                 print_error("This course module doesn't exist");
@@ -196,7 +197,7 @@ class course_format_fn extends course_format {
         $actbar = '';
         $actbar .= '<table cellpadding="0" cellspacing="0" width="100%" class="fnweeklynav"><tr>';
         $width = (int) (100 / ($tabhigh - $tablow + 3));
-        $actbar .= '<td width="4" align="center" height="25" alt=".$this->section->name." title="$this->section->name"></td>';
+        $actbar .= '<td width="4" align="center" height="25"></td>';
 
         if ($tablow <= 1) {
             $actbar .= '<td height="25">' . $strtopicheading . ':&nbsp;</td>';
@@ -236,17 +237,17 @@ class course_format_fn extends course_format {
                 } else {
                     $f = '';
                 }
-                $actbar .= '<td class="fnweeklynavselected" width="' . $width . '%" height="25"> ' . $f . $i . ' </td>';
+                $actbar .= '<td class="fnweeklynavselected" id=fnweeklynav'.$i.' width="' . $width . '%" height="25"> ' . $f . $i . ' </td>';
             } else {
                 if (!$isteacher && !empty($completioninfo) &&
-                        $this->is_section_finished($this->sections[$i], $this->mods)) {                 
+                        $this->is_section_finished($this->sections[$i], $this->mods)) {           
                    
                     $f = '<img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/sectcompleted.gif" ' .
                             'height="18" width="16" alt="Section Completed" title="Section Completed" align="right" hspace="0" vspace="0">';
                 } else {
                     $f = '';
                 }               
-                $actbar .= '<td class="fnweeklynavnorm"  width="' . $width . '%" height="25" title="hi"  alt="hi">' .
+                $actbar .= '<td class="fnweeklynavnorm" id=fnweeklynav'.$i.' width="' . $width . '%" height="25" title="hi"  alt="hi">' .
                         $f . '<a href="' . $url . '&selected_week=' . $i . '">&nbsp;' . $i . '&nbsp;</a>' . '</td>';
             }
             $weekdate += ( $weekofseconds);

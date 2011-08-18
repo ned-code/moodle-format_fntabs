@@ -21,10 +21,9 @@
  * @copyright 1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
+$string['pluginname'] = 'MoodleFN Format';
 $string['defaultmainheading'] = 'Weekly Activities';
 $string['sectionname'] = 'Moodle FN Tab';
-$string['pluginname'] = 'Moodle FN Tabs Format';
 $string['section0name'] = 'General';
 $string['page-course-view-weeks'] = 'Any course main page in weeks format';
 $string['page-course-view-weeks-x'] = 'Any course page in weeks format';
@@ -166,7 +165,7 @@ $string['xdays']='{$a} days';
 $string['completion-alt-submitted'] = 'Waiting for grade';
 $string['completion-title-submitted'] = 'Waiting for grade';
 
-$string['pluginname'] = 'MoodleFN Format';
+
 $string['mainheading'] = 'Main Heading';
 $string['sectionname'] = 'Section';
 $string['activitytracking'] = 'Activity Tracking';
