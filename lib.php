@@ -1,53 +1,40 @@
 <?php
 
-require_once ($CFG->dirroot.'/course/lib.php');
-define('FN_EXTRASECTION', 9999);     // A non-existant section to hold hidden modules.
-// This file is part of Moodle - http://moodle.org/
-//
-// Moodle is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// Moodle is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
 /**
- * This file contains general functions for the course format Week
+ * This file contains general functions for the course format MoodleFN format
  *
  * @since 2.0
  * @package moodlecore
  * @copyright 2009 Sam Hemelryk
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+require_once ($CFG->dirroot . '/course/lib.php');
+define('FN_EXTRASECTION', 9999);     // A non-existant section to hold hidden modules.
+
+
 /// Format Specific Functions:
 function FN_update_course($form, $oldformat = false) {
-    global $CFG,$DB,$OUTPUT;
+    global $CFG, $DB, $OUTPUT;
 
     /// Updates course specific variables.
     /// Variables are: 'showsection0', 'showannouncements'.
-
 //    $config_vars = array('showsection0', 'showannouncements', 'sec0title', 'showhelpdoc', 'showclassforum',
 //                         'showclasschat', 'logo', 'mycourseblockdisplay',
 //                         'showgallery', 'gallerydefault', 'usesitegroups', 'mainheading', 'topicheading',
 //                         'activitytracking', 'ttmarking', 'ttgradebook', 'ttdocuments', 'ttstaff',
 //                         'defreadconfirmmess', 'usemandatory', 'expforumsec');
+
+    $config_vars = array('showsection0', 'sec0title', 'mainheading', 'topicheading');
     
-    $config_vars = array('showsection0','sec0title','mainheading', 'topicheading');
     foreach ($config_vars as $config_var) {
-        if ($varrec = $DB->get_record('course_config_fn', array('courseid'=>$form->id, 'variable'=>$config_var))) {
+        if ($varrec = $DB->get_record('course_config_fn', array('courseid' => $form->id, 'variable' => $config_var))) {
             $varrec->value = $form->$config_var;
             $DB->update_record('course_config_fn', $varrec);
         } else {
-            $varrec->courseid = $form->id;           
+            $varrec->courseid = $form->id;
             $varrec->variable = $config_var;
-            $varrec->value = $form->$config_var;
-            print_object( $form->$config_var);
+            $varrec->value = $form->$config_var;            
             $DB->insert_record('course_config_fn', $varrec);
         }
     }
@@ -74,7 +61,7 @@ function FN_update_course($form, $oldformat = false) {
     /// Check for a change to an FN format. If so, set some defaults as well...
     if ($oldformat != 'FN') {
         /// Set the news (announcements) forum to no force subscribe, and no posts or discussions.
-        require_once($CFG->dirroot.'/mod/forum/lib.php');
+        require_once($CFG->dirroot . '/mod/forum/lib.php');
         $news = forum_get_course_forum($form->id, 'news');
         $news->open = 0;
         $news->forcesubscribe = 0;
@@ -120,7 +107,7 @@ function FN_get_course(&$course) {
     global $DB;
     /// Add course specific variable to the passed in parameter.
 
-    if ($config_vars = $DB->get_records('course_config_fn', array('courseid'=>$course->id))) {
+    if ($config_vars = $DB->get_records('course_config_fn', array('courseid' => $course->id))) {
         foreach ($config_vars as $config_var) {
             $course->{$config_var->variable} = $config_var->value;
         }
@@ -155,7 +142,7 @@ function callback_weeks_get_section_name($course, $section) {
     } else {
         // Got to work out the date of the week so that we can show it
         $sections = get_all_sections($course->id);
-        $weekdate = $course->startdate+7200;
+        $weekdate = $course->startdate + 7200;
         foreach ($sections as $sec) {
             if ($sec->id == $section->id) {
                 break;
@@ -163,13 +150,12 @@ function callback_weeks_get_section_name($course, $section) {
                 $weekdate += 604800;
             }
         }
-        $strftimedateshort = ' '.get_string('strftimedateshort');
+        $strftimedateshort = ' ' . get_string('strftimedateshort');
         $weekday = userdate($weekdate, $strftimedateshort);
-        $endweekday = userdate($weekdate+518400, $strftimedateshort);
-        return $weekday.' - '.$endweekday;
+        $endweekday = userdate($weekdate + 518400, $strftimedateshort);
+        return $weekday . ' - ' . $endweekday;
     }
 }
-
 
 /**
  * Declares support for course AJAX features
@@ -185,56 +171,52 @@ function callback_weeks_ajax_support() {
 }
 
 function get_week_info($tabrange, $week) {
-        global $SESSION;
+    global $SESSION;
 
-        if ($this->course->numsections == FNMAXTABS) {
-            $tablow = 1;
-            $tabhigh = FNMAXTABS;
-        } else if ($tabrange > 1000) {
-            $tablow = $tabrange / 1000;
-            $tabhigh = $tablow + FNMAXTABS - 1;
-        } else if (($tabrange == 0) && ($week == 0)) {
-            $tablow = ((int) ((int) ($this->course->numsections - 1) / (int) FNMAXTABS) * FNMAXTABS) + 1;
-            $tabhigh = $tablow + FNMAXTABS - 1;
-        } else if ($tabrange == 0) {
-            $tablow = ((int) ((int) $week / (int) FNMAXTABS) * FNMAXTABS) + 1;
-            $tabhigh = $tablow + FNMAXTABS - 1;
-        } else {
-            $tablow = 1;
-            $tabhigh = FNMAXTABS;
-        }
-        $tabhigh = MIN($tabhigh, $this->course->numsections);
-
-
-        /// Normalize the tabs to always display FNMAXTABS...
-        if (($tabhigh - $tablow + 1) < FNMAXTABS) {
-            $tablow = $tabhigh - FNMAXTABS + 1;
-        }
+    if ($this->course->numsections == FNMAXTABS) {
+        $tablow = 1;
+        $tabhigh = FNMAXTABS;
+    } else if ($tabrange > 1000) {
+        $tablow = $tabrange / 1000;
+        $tabhigh = $tablow + FNMAXTABS - 1;
+    } else if (($tabrange == 0) && ($week == 0)) {
+        $tablow = ((int) ((int) ($this->course->numsections - 1) / (int) FNMAXTABS) * FNMAXTABS) + 1;
+        $tabhigh = $tablow + FNMAXTABS - 1;
+    } else if ($tabrange == 0) {
+        $tablow = ((int) ((int) $week / (int) FNMAXTABS) * FNMAXTABS) + 1;
+        $tabhigh = $tablow + FNMAXTABS - 1;
+    } else {
+        $tablow = 1;
+        $tabhigh = FNMAXTABS;
+    }
+    $tabhigh = MIN($tabhigh, $this->course->numsections);
 
 
-        /// Save the low and high week in SESSION variables... If they already exist, and the selected
-        /// week is in their range, leave them as is.
-        if (($tabrange >= 1000) || !isset($SESSION->FN_tablow[$this->course->id]) || !isset($SESSION->FN_tabhigh[$this->course->id]) ||
-                ($week < $SESSION->FN_tablow[$this->course->id]) || ($week > $SESSION->FN_tabhigh[$this->course->id])) {
-            $SESSION->FN_tablow[$this->course->id] = $tablow;
-            $SESSION->FN_tabhigh[$this->course->id] = $tabhigh;
-        } else {
-            $tablow = $SESSION->FN_tablow[$this->course->id];
-            $tabhigh = $SESSION->FN_tabhigh[$this->course->id];
-        }
-        $tablow = MAX($tablow, 1);
-        $tabhigh = MIN($tabhigh, $this->course->numsections);
-
-        /// If selected week in a different set of tabs, move it to the current set...
-        if (($week != 0) && ($week < $tablow)) {
-            $week = $SESSION->G8_selected_week[$this->course->id] = $tablow;
-        } else if ($week > $tabhigh) {
-            $week = $SESSION->G8_selected_week[$this->course->id] = $tabhigh;
-        }
-
-        return array($tablow, $tabhigh, $week);
+    /// Normalize the tabs to always display FNMAXTABS...
+    if (($tabhigh - $tablow + 1) < FNMAXTABS) {
+        $tablow = $tabhigh - FNMAXTABS + 1;
     }
 
 
+    /// Save the low and high week in SESSION variables... If they already exist, and the selected
+    /// week is in their range, leave them as is.
+    if (($tabrange >= 1000) || !isset($SESSION->FN_tablow[$this->course->id]) || !isset($SESSION->FN_tabhigh[$this->course->id]) ||
+            ($week < $SESSION->FN_tablow[$this->course->id]) || ($week > $SESSION->FN_tabhigh[$this->course->id])) {
+        $SESSION->FN_tablow[$this->course->id] = $tablow;
+        $SESSION->FN_tabhigh[$this->course->id] = $tabhigh;
+    } else {
+        $tablow = $SESSION->FN_tablow[$this->course->id];
+        $tabhigh = $SESSION->FN_tabhigh[$this->course->id];
+    }
+    $tablow = MAX($tablow, 1);
+    $tabhigh = MIN($tabhigh, $this->course->numsections);
 
-   
+    /// If selected week in a different set of tabs, move it to the current set...
+    if (($week != 0) && ($week < $tablow)) {
+        $week = $SESSION->G8_selected_week[$this->course->id] = $tablow;
+    } else if ($week > $tabhigh) {
+        $week = $SESSION->G8_selected_week[$this->course->id] = $tabhigh;
+    }
+
+    return array($tablow, $tabhigh, $week);
+}

@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="format/mfntabs/styles.css" />
 <?php
 
 // Display the whole course as "tab" made of of modules
@@ -25,97 +24,98 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
  * @package
  */
-    defined('MOODLE_INTERNAL') || die();      
-    
-    require_once($CFG->libdir . '/filelib.php');
-    require_once($CFG->libdir . '/filelib.php');
-    require_once($CFG->libdir . '/completionlib.php');
-    require_once($CFG->libdir . '/ajax/ajaxlib.php');
-    require_once($CFG->dirroot . '/mod/forum/lib.php');    
+defined('MOODLE_INTERNAL') || die();
 
-    require_once($CFG->dirroot . '/course/format/' . $course->format . '/course_format.class.php');
-    require_once($CFG->dirroot . '/course/format/' . $course->format . '/course_format_fn.class.php');
-    global $DB, $OUTPUT, $THEME, $PAGE;
-    $cobject = new course_format_fn($course);
-    $course = $cobject->course;
-    
-     $cobject->handle_extra_actions(); 
+require_once($CFG->libdir . '/filelib.php');
+require_once($CFG->libdir . '/filelib.php');
+require_once($CFG->libdir . '/completionlib.php');
+require_once($CFG->libdir . '/ajax/ajaxlib.php');
+require_once($CFG->dirroot . '/mod/forum/lib.php');
 
-    /// Add any extra module information to our module structures.
-    //$cobject->add_extra_module_info();
-    //    $week = optional_param('week', -1, PARAM_INT);
-    $selected_week = optional_param('selected_week', -1, PARAM_INT);
-    if ($selected_week != -1) {
-        $displaysection = course_set_display($course->id, $selected_week);       
-    } else {
-        $displaysection = course_get_display($course->id);         
-    }
+require_once($CFG->dirroot . '/course/format/' . $course->format . '/course_format.class.php');
+require_once($CFG->dirroot . '/course/format/' . $course->format . '/course_format_fn.class.php');
+global $DB, $OUTPUT, $THEME, $PAGE;
 
-    $streditsummary = get_string('editsummary');
-    $stradd = get_string('add');
-    $stractivities = get_string('activities');
-    $strshowallweeks = get_string('showallweeks');
-    $strweek = get_string('week');
-    $strgroups = get_string('groups');
-    $strgroupmy = get_string('groupmy');
-    $editing = $PAGE->user_is_editing();
+$cobject = new course_format_fn($course);
+$course = $cobject->course;
 
-    if ($editing) {
-        $strweekhide = get_string('hideweekfromothers');
-        $strweekshow = get_string('showweekfromothers');
-        $strmoveup = get_string('moveup');
-        $strmovedown = get_string('movedown');
-        $strmarkthistopic = get_string("markthistopic");
+$cobject->handle_extra_actions();
+
+/// Add any extra module information to our module structures.
+//$cobject->add_extra_module_info();
+//    $week = optional_param('week', -1, PARAM_INT);
+$selected_week = optional_param('selected_week', -1, PARAM_INT);
+if ($selected_week != -1) {
+    $displaysection = course_set_display($course->id, $selected_week);
+} else {
+    $displaysection = course_get_display($course->id);
+}
+
+$streditsummary = get_string('editsummary');
+$stradd = get_string('add');
+$stractivities = get_string('activities');
+$strshowallweeks = get_string('showallweeks');
+$strweek = get_string('week');
+$strgroups = get_string('groups');
+$strgroupmy = get_string('groupmy');
+$editing = $PAGE->user_is_editing();
+
+if ($editing) {
+    $strweekhide = get_string('hideweekfromothers');
+    $strweekshow = get_string('showweekfromothers');
+    $strmoveup = get_string('moveup');
+    $strmovedown = get_string('movedown');
+    $strmarkthistopic = get_string("markthistopic");
+}
+$tabrange = 0;
+if ($selected_week > 999) {
+    $tabrange = $selected_week;
+    $selected_week = $SESSION->G8_selected_week[$course->id];
+    list($tablow, $tabhigh, $selected_week) = $cobject->get_week_info($tabrange, $selected_week);
+} else if ($selected_week > -1) {
+    $SESSION->G8_selected_week[$course->id] = $selected_week;
+} else if (isset($SESSION->G8_selected_week[$course->id])) {
+    $selected_week = $SESSION->G8_selected_week[$course->id];
+} else {
+    $SESSION->G8_selected_week[$course->id] = $selected_week;
+}
+$context = get_context_instance(CONTEXT_COURSE, $course->id);
+$cobject->context = $context;
+
+if (($marker >= 0) && has_capability('moodle/course:setcurrentsection', $cobject->context) && confirm_sesskey()) {
+    $course->marker = $marker;
+    if (!$DB->set_field("course", "marker", $marker, array("id" => $course->id))) {
+        print_error("Could not mark that topic for this course");
     }
-    $tabrange = 0;
-    if ($selected_week > 999) {
-        $tabrange = $selected_week;
-        $selected_week = $SESSION->G8_selected_week[$course->id];
-        list($tablow, $tabhigh, $selected_week) = $cobject->get_week_info($tabrange, $selected_week);
-    } else if ($selected_week > -1) {
-        $SESSION->G8_selected_week[$course->id] = $selected_week;
-    } else if (isset($SESSION->G8_selected_week[$course->id])) {
-        $selected_week = $SESSION->G8_selected_week[$course->id];
-    } else {
-        $SESSION->G8_selected_week[$course->id] = $selected_week;
-    }
-    $context = get_context_instance(CONTEXT_COURSE, $course->id);
-    $cobject->context =  $context;
-    
-    if (($marker >= 0) && has_capability('moodle/course:setcurrentsection', $cobject->context) && confirm_sesskey()) {
-        $course->marker = $marker;               
-        if (!$DB->set_field("course", "marker", $marker, array("id" => $course->id))) {
-            print_error("Could not mark that topic for this course");
-        }
-    }
+}
 
 /// Add the selected_week to the course object (so it can be used elsewhere).
-    $course->selected_week = $selected_week;
+$course->selected_week = $selected_week;
 
 //Print the Your progress icon if the track completion is enabled
-    $completioninfo = new completion_info($course);    
-    echo $completioninfo->display_help_icon();    
-    echo $OUTPUT->heading(get_string('weeklyoutline'), 2, 'headingblock header outline');
+$completioninfo = new completion_info($course);
+echo $completioninfo->display_help_icon();
+echo $OUTPUT->heading(get_string('weeklyoutline'), 2, 'headingblock header outline');
 
 // Note, an ordered list would confuse - "1" could be the clipboard or summary.
-    echo "<ul class='weeks'>\n";
+echo "<ul class='weeks'>\n";
 
 /// If currently moving a file then show the current clipboard
-     if (ismoving($course->id)) {
-            $stractivityclipboard = strip_tags(get_string('activityclipboard', '', addslashes($USER->activitycopyname)));
-            $strcancel= get_string('cancel');
-            echo '<tr class="clipboard">';
-            echo '<td colspan="3">';
-            echo $stractivityclipboard.'&nbsp;&nbsp;(<a href="mod.php?cancelcopy=true&amp;sesskey='.$USER->sesskey.'">'.$strcancel.'</a>)';
-            echo '</td>';
-            echo '</tr>';
-        }
-    
+if (ismoving($course->id)) {
+    $stractivityclipboard = strip_tags(get_string('activityclipboard', '', addslashes($USER->activitycopyname)));
+    $strcancel = get_string('cancel');
+    echo '<tr class="clipboard">';
+    echo '<td colspan="3">';
+    echo $stractivityclipboard . '&nbsp;&nbsp;(<a href="mod.php?cancelcopy=true&amp;sesskey=' . $USER->sesskey . '">' . $strcancel . '</a>)';
+    echo '</td>';
+    echo '</tr>';
+}
+
 /// Print Section 0 with general activities
 
-    $section = 0;
-    $thissection = $sections[$section];
-    unset($sections[0]);
+$section = 0;
+$thissection = $sections[$section];
+unset($sections[0]);
 //    print_object($course->showsection0);
 
 if (!empty($course->showsection0) && ($thissection->summary or $thissection->sequence or $PAGE->user_is_editing())) {
@@ -139,28 +139,28 @@ if (!empty($course->showsection0) && ($thissection->summary or $thissection->seq
             $course->id . '&amp;edittitle=sec0"><img src="' . $pixpath . '/t/edit.gif" /></a>';
         } else if ($_GET['edittitle'] == 'sec0') {
             echo '<form name="editsec0title" method="post" ' .
-            'action="' . $CFG->wwwroot . '/course/format/mfntabs/mod.php">' .
+            'action="' . $CFG->wwwroot . '/course/format/fntabs/mod.php">' .
             '<input name="id" type="hidden" value="' . $course->id . '" />' .
             '<input name="sec0title" type="text" size="20" value="' . $course->sec0title . '" />' .
             '<input style="font-size: 8pt; margin: 0 0 0 2px; padding: 0 0 0 0;" type="submit" ' .
             'value="ok" title="Save">' .
             '</form>';
         } else {
-             echo "<b>$course->sec0title</b>";
+            echo "<b>$course->sec0title</b>";
         }
     } else {
-         echo "<b>$course->sec0title</b>";
+        echo "<b>$course->sec0title</b>";
     }
-    echo '</td></tr>';    
+    echo '</td></tr>';
     echo '<li id="section-0" class="section main clearfix" >';
     echo '<div class="left side">&nbsp;</div>';
     echo '<div class="right side" >&nbsp;</div>';
     echo '<div class="content">';
     if (!empty($thissection->name)) {
-            echo $OUTPUT->heading($thissection->name, 3, 'sectionname');
-        }
+        echo $OUTPUT->heading($thissection->name, 3, 'sectionname');
+    }
     echo '<div class="summary">';
-    
+
     $coursecontext = get_context_instance(CONTEXT_COURSE, $course->id);
     $summarytext = file_rewrite_pluginfile_urls($thissection->summary, 'pluginfile.php', $coursecontext->id, 'course', 'section', $thissection->id);
     $summaryformatoptions = new stdClass;
@@ -169,17 +169,16 @@ if (!empty($course->showsection0) && ($thissection->summary or $thissection->seq
     echo format_text($summarytext, $thissection->summaryformat, $summaryformatoptions);
 
     if ($PAGE->user_is_editing() && has_capability('moodle/course:update', get_context_instance(CONTEXT_COURSE, $course->id))) {
-        echo '<p><a title="'.$streditsummary.'" '.
-                 ' href="editsection.php?id='.$thissection->id.'"><img src="'.$OUTPUT->pix_url('t/edit') . '" '.
-                 ' class="icon edit" alt="'.$streditsummary.'" /></a></p>';
+        echo '<p><a title="' . $streditsummary . '" ' .
+        ' href="editsection.php?id=' . $thissection->id . '"><img src="' . $OUTPUT->pix_url('t/edit') . '" ' .
+        ' class="icon edit" alt="' . $streditsummary . '" /></a></p>';
     }
 
     echo '</div>';
-//        print_section($course, $thissection, $mods, $modnamesused);
     $cobject->print_section_fn($course, $thissection, $mods, $modnamesused);
 
     if ($PAGE->user_is_editing()) {
-       $cobject->print_section_add_menus($course, $section, $modnames);
+        $cobject->print_section_add_menus($course, $section, $modnames);
     }
 
     echo '</div>';
@@ -195,7 +194,7 @@ if (empty($course->showonlysection0)) {
     $section = 1;
     $weekofseconds = 604800;
     $course->enddate = $course->startdate + ($weekofseconds * $course->numsections);
-    $sectionmenu = array();   
+    $sectionmenu = array();
 
 
     //  Calculate the current week based on today's date and the starting date of the course.
@@ -239,9 +238,9 @@ if (empty($course->showonlysection0)) {
         if (!empty($course->mainheading)) {
             $strmainheading = $course->mainheading;
         } else {
-            $strmainheading = get_string('defaultmainheading', 'format_mfntabs');
+            $strmainheading = get_string('defaultmainheading', 'format_fntabs');
         }
-         echo $OUTPUT->heading($strmainheading, 3, 'fnoutlineheadingblock');
+        echo $OUTPUT->heading($strmainheading, 3, 'fnoutlineheadingblock');
 
         if ($selected_week > 0 && !$PAGE->user_is_editing()) {
             echo '<table class="topicsoutline" border="0" cellpadding="8" cellspacing="0" width="100%">
@@ -255,7 +254,7 @@ if (empty($course->showonlysection0)) {
                 <tr>
                     <td width="100%">
                         ';
-                echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);                
+                echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);
                 echo '
                     </td>
                 </tr>
@@ -300,27 +299,26 @@ if (empty($course->showonlysection0)) {
     // Everything below uses "section" terminology - each "section" is a topic.
 
     if ($section <= 0)
-        $section = 1;    
+        $section = 1;
     while (($course->numsections > 0) && ($section <= $numsections)) {
         echo '<table class="topicsoutline" border="0" cellpadding="4" cellspacing="0" width="100%">';
         if (!empty($sections[$section])) {
-            $thissection = $sections[$section];           
-        } else {            
+            $thissection = $sections[$section];
+        } else {
             unset($thissection);
             $thissection->course = $course->id;   // Create a new week structure
             $thissection->section = $section;
-            $thissection->name    = null;
+            $thissection->name = null;
             $thissection->summary = '';
             $thissection->summaryformat = FORMAT_HTML;
             $thissection->visible = 1;
             $thissection->id = $DB->insert_record('course_sections', $thissection);
-            
-        }       
+        }
 
-          $showsection = (has_capability('moodle/course:viewhiddensections', $context) || ($thissection->visible && ($timenow > $weekdate)));
-              
-        if ($showsection) {   
-                  $currenttopic = ($course->marker == $section);
+        $showsection = (has_capability('moodle/course:viewhiddensections', $context) || ($thissection->visible && ($timenow > $weekdate)));
+
+        if ($showsection) {
+            $currenttopic = ($course->marker == $section);
             //            if (!$cobjectsection->visible || ($timenow < $weekdate) || ($selected_week > $currentweek)) {
             if (!$thissection->visible || ($selected_week > $currentweek)) {
                 $colorsides = "class=\"fntopicsoutlinesidehidden\"";
@@ -339,7 +337,6 @@ if (empty($course->showonlysection0)) {
                 echo '</td></tr>';
                 echo "<tr>";
                 echo '<td nowrap ' . $colorsides . ' valign="top" width="20">&nbsp;</td>';
-               
             } else {
                 echo "<tr>";
             }
@@ -353,17 +350,17 @@ if (empty($course->showonlysection0)) {
 
 
                 if (isset($cobject->course->expforumsec) && ($cobject->course->expforumsec == $thissection->section)) {
-                   echo '<table cellspacing="0" cellpadding="0" border="0" align="center" width="100%">'
+                    echo '<table cellspacing="0" cellpadding="0" border="0" align="center" width="100%">'
                     . '<tr><td>';
                 } else {
                     echo '<table cellspacing="0" cellpadding="0" border="0" align="left">'
                     . '<tr><td>';
                 }
 
-                echo format_text($thissection->summary, FORMAT_HTML);           
+                echo format_text($thissection->summary, FORMAT_HTML);
 
                 if ($PAGE->user_is_editing() && has_capability('moodle/course:update', get_context_instance(CONTEXT_COURSE, $course->id))) {
-                    
+
                     echo ' <a title="' . $streditsummary . '" href="editsection.php?id=' . $thissection->id . '">' .
                     '<img src="' . $OUTPUT->pix_url('t/edit') . '" class="icon edit" alt="' . $streditsummary . '" /></a><br /><br />';
                 }
@@ -371,7 +368,7 @@ if (empty($course->showonlysection0)) {
                 echo '<br clear="all">';
 
                 //   $mandatorypopup = print_section_local($course, $cobjectsection, $mods, $modnamesused);                
-                $cobject->print_section_fn($course, $thissection, $mods, $modnamesused);              
+                $cobject->print_section_fn($course, $thissection, $mods, $modnamesused);
 
                 if ($PAGE->user_is_editing()) {
 //                    $cobject->print_section_add_menus($section);
@@ -392,14 +389,14 @@ if (empty($course->showonlysection0)) {
             if ($PAGE->user_is_editing() && has_capability('moodle/course:update', get_context_instance(CONTEXT_COURSE, $course->id))) {
 
                 if ($course->marker == $section) {  // Show the "light globe" on/off
-                     echo '<a href="view.php?id='.$course->id.'&amp;week=0#section-'.$section.'" title="'.$strshowallweeks.'">'.
-                     '<img src="'.$OUTPUT->pix_url('i/all') . '" class="icon wkall" alt="'.$strshowallweeks.'" /></a><br />';                    
-                } else {              
-                     $strshowonlyweek = get_string("showonlyweek", "", $section);
-                    echo '<a href="view.php?id='.$course->id.'&amp;week='.$section.'" title="'.$strshowonlyweek.'">'.
-                     '<img src="'.$OUTPUT->pix_url('i/one') . '" class="icon wkone" alt="'.$strshowonlyweek.'" /></a><br />';
+                    echo '<a href="view.php?id=' . $course->id . '&amp;week=0#section-' . $section . '" title="' . $strshowallweeks . '">' .
+                    '<img src="' . $OUTPUT->pix_url('i/all') . '" class="icon wkall" alt="' . $strshowallweeks . '" /></a><br />';
+                } else {
+                    $strshowonlyweek = get_string("showonlyweek", "", $section);
+                    echo '<a href="view.php?id=' . $course->id . '&amp;week=' . $section . '" title="' . $strshowonlyweek . '">' .
+                    '<img src="' . $OUTPUT->pix_url('i/one') . '" class="icon wkone" alt="' . $strshowonlyweek . '" /></a><br />';
                 }
-                
+
                 if ($thissection->visible) {      // Show the hide/show eye                          
                     echo '<a href="view.php?id=' . $course->id . '&amp;hide=' . $section . '&amp;sesskey=' . sesskey() . '#section-' . $section . '" title="' . $strweekhide . '">' .
                     '<img src="' . $OUTPUT->pix_url('i/hide') . '" class="icon hide" alt="' . $strweekhide . '" /></a><br />';
@@ -441,7 +438,7 @@ if (empty($course->showonlysection0)) {
         unset($sections[$section]);
         $section++;
     }
-    
+
     if ($selected_week > 0 && !$PAGE->user_is_editing()) {
         echo '
                                 </td>
@@ -475,6 +472,3 @@ echo "</ul>\n";
 //    $select->formid = 'sectionmenu';
 ////    echo $OUTPUT->render($select);
 //}
-
-
-

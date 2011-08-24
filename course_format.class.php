@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="format/mfntabs/styles.css" />
 <?php // $Id: course_format.class.php,v 1.1 2009/04/17 20:45:22 mchurch Exp $
 /**
  * course_format is the base class for all course formats

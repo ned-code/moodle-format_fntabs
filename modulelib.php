@@ -1,4 +1,6 @@
-<?php //$id:$
+<?php
+
+//$id:$
 /**
  * Library of functions to handle specific module operations, such as:
  *  - Completed checks,
@@ -21,92 +23,31 @@
 //    }
 //}
 
-//function assignment_is_completed($mod, $userid) {
-//    
-//    global $CFG,$DB;
-//    require_once ($CFG->dirroot.'/mod/assignment/lib.php');
-//
-//    if (! ($assignment = $DB->get_record('assignment', array('id'=>$mod->instance)))) {
-//        return false;   // Doesn't exist... wtf?
-//    }
-//    require_once ($CFG->dirroot.'/mod/assignment/type/'.$assignment->assignmenttype.'/assignment.class.php');
-//    $assignmentclass = "assignment_$assignment->assignmenttype";
-//    $assignmentinstance = new $assignmentclass($mod->id, $assignment, $mod);   
-////    print_object($assignment->assignmenttype);
-////    print_object($assignmentinstance->get_submission($userid));
-////    if($assignment->assignmenttype=='upload'){
-////        print_object($assignmentinstance->get_submission($userid));
-////    }
-//    
-//    if (!($submission = $assignmentinstance->get_submission($userid)) || empty($submission->timemodified)) {
-//        return false;
-//    }
-//    if($assignment->assignmenttype=='upload'){
-//        if(($submission = $assignmentinstance->get_submission($userid))&& empty($submission->timemarked) && empty($submission->data2)){
-//            return 'saved';
-//
-//        }
-//    }
-//    
-//    if(($assignment->assignmenttype=='upload') && ($submission = $assignmentinstance->get_submission($userid)) && ($submission->numfiles > 0) && empty($submission->timemarked)){
-//        return 'submitted';
-//
-//    }
-//    if(($assignment->assignmenttype=='uploadsingle') && ($submission = $assignmentinstance->get_submission($userid)) && ($submission->numfiles == 0) && empty($submission->timemarked) ){
-//        return 'saved';
-//
-//    }
-//    if(($assignment->assignmenttype=='uploadsingle') && ($submission = $assignmentinstance->get_submission($userid)) && ($submission->numfiles == 1) && empty($submission->timemarked)){
-//        return 'submitted';
-//
-//    }
-//    if(($assignment->assignmenttype=='offline') && ($submission = $assignmentinstance->get_submission($userid)) && empty($submission->timemarked)){
-//        return 'submitted';
-//
-//    }
-//    
-//    if(($assignment->assignmenttype=='online') && ($submission = $assignmentinstance->get_submission($userid)) && empty($submission->timemarked)){
-//        return 'submitted';
-//
-//    }
-//
-//    
-//      
-////     if (empty($submission->timemarked)){
-////        return 'submitted';
-////    } 
-////    else {
-////        return ((int)$assignment->grade > 0) ? (int)($submission->grade / $assignment->grade * 100) : true;
-////    }
-//}
-
 function assignment_is_completed($mod, $userid) {
-    global $CFG,$DB;
-    require_once ($CFG->dirroot.'/mod/assignment/lib.php');
+    global $CFG, $DB;
+    require_once ($CFG->dirroot . '/mod/assignment/lib.php');
 
-    if (! ($assignment = $DB->get_record('assignment', array('id'=>$mod->instance)))) {
+    if (!($assignment = $DB->get_record('assignment', array('id' => $mod->instance)))) {
         return false;   // Doesn't exist... wtf?
     }
 
-    require_once ($CFG->dirroot.'/mod/assignment/type/'.$assignment->assignmenttype.'/assignment.class.php');
+    require_once ($CFG->dirroot . '/mod/assignment/type/' . $assignment->assignmenttype . '/assignment.class.php');
     $assignmentclass = "assignment_$assignment->assignmenttype";
     $assignmentinstance = new $assignmentclass($mod->id, $assignment, $mod);
 
     if (!($submission = $assignmentinstance->get_submission($userid)) || empty($submission->timemodified)) {
         return false;
-    }    
+    }
 
     if (empty($submission->timemarked) && !empty($submission->data2)) {
         return 'submitted';
     }
     if (empty($submission->timemarked) && empty($submission->data2) && empty($submission->data1)) {
         return 'saved';
-    }
-    else {
-        return ((int)$assignment->grade > 0) ? (int)($submission->grade / $assignment->grade * 100) : true;
+    } else {
+        return ((int) $assignment->grade > 0) ? (int) ($submission->grade / $assignment->grade * 100) : true;
     }
 }
-
 
 //function fnassignment_is_completed($mod, $userid) {
 //    global $CFG,$DB;
@@ -201,5 +142,3 @@ function assignment_is_completed($mod, $userid) {
 //  global $DB;
 //    return $DB->get_record("practice_submissions", array("practiceid"=>$mod->instance, "userid"=>$userid)) ? true : false;
 //}
-
-?>

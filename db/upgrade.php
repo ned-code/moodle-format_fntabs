@@ -46,6 +46,3 @@ function xmldb_format_fn_upgrade($oldversion=0) {
     }
     return true;
 }
-
-
-

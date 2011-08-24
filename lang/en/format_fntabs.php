@@ -15,9 +15,9 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for component 'format_weeks', language 'en', branch 'MOODLE_20_STABLE'
+ * Strings for component 'format_fntabs', language 'en', branch 'MOODLE_20_STABLE'
  *
- * @package   format_fn_week
+ * @package   format_fntabs
  * @copyright 1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -213,5 +213,3 @@ $string['usemandatory'] = 'Use Mandatory Activities';
 $string['usesitegroups'] = 'Use site groups';
 $string['usesitegroupreg'] = 'Use Site Group Registration';
 $string['usinglogo'] = 'Using $a';
-
-
