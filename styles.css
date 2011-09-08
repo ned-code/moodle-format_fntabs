@@ -136,20 +136,6 @@
     text-align: center;
 }
 
-.markingcontainer {
-    border-style: solid;
-    border-width: 1px;
-    border-color: #73C1E1;
-    background-color: #F3F3F3;
-}
-
-.markingcontainer td.generalbox {
-  background-color: #9dbb61;
-}
-
-.markingcontainer td.generalbox2 {
-  background-color: #C5EFFF;
-}
 
 .markingcontainer td.generalbox3 {
   background-color: #73C1E1;
