@@ -196,7 +196,7 @@ class course_format_fn extends course_format {
         $actbar .= '<td width="4" align="center" height="25"></td>';
 
         if ($tablow <= 1) {
-            $actbar .= '<td height="25">' . $strtopicheading . ':&nbsp;</td>';
+            $actbar .= '<td height="25" class="tab-heading"><strong>' . $strtopicheading . ':&nbsp;</strong></td>';
         } else {
             $prv = ($tablow - FNMAXTABS) * 1000;
             if ($prv < 0) {
@@ -225,27 +225,31 @@ class course_format_fn extends course_format {
                 $actbar .= '<td class="' . $css . '" height="25" width="' . $width . '%" alt="Upcoming sections" title="Upcoming sections">' . $f . '</td>';
             } else if ($i == $week) {
 
-                if (!$isteacher && !empty($completioninfo) &&
-                        $this->is_section_finished($this->sections[$i], $this->mods)) {
-                    $a = $this->activities_notattempted_in_section($this->sections[$i], $this->mods);
+                if (!$isteacher && !is_siteadmin() && !empty($completioninfo)) {
+                    
+                    $f = $this->is_section_finished($this->sections[$i], $this->mods)?'green-tab':'red-tab';                    
+//                    $a = $this->activities_notattempted_in_section($this->sections[$i], $this->mods);
 
-                    $f = '<img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/sectcompleted.gif" ' .
-                            'height="18" width="16" alt="Section Completed" title="Section Completed" align="right" hspace="0" vspace="0">';
+                   // $f = '<img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/sectcompleted.gif" ' .
+                    //        'height="18" width="16" alt="Section Completed" title="Section Completed" align="right" hspace="0" vspace="0">';
+//					$f = 'green';
+                        
                 } else {
-                    $f = '';
+                    $f = '';                   
                 }
-                $actbar .= '<td class="fnweeklynavselected" id=fnweeklynav' . $i . ' width="' . $width . '%" height="25"> ' . $f . $i . ' </td>';
+                $actbar .= '<td class="fnweeklynavselected '.$f.'" id=fnweeklynav' . $i . ' width="' . $width . '%" height="25"> ' . $i . ' </td>';
             } else {
-                if (!$isteacher && !empty($completioninfo) &&
-                        $this->is_section_finished($this->sections[$i], $this->mods)) {
-
-                    $f = '<img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/sectcompleted.gif" ' .
-                            'height="18" width="16" alt="Section Completed" title="Section Completed" align="right" hspace="0" vspace="0">';
-                } else {
-                    $f = '';
+                if (!$isteacher  && !is_siteadmin() && !empty($completioninfo)
+                        ) {
+                   // $f = '<img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/sectcompleted.gif" ' .
+                     //       'height="18" width="16" alt="Section Completed" title="Section Completed" align="right" hspace="0" vspace="0">';
+//					 $f = 'green';		
+                    $f = $this->is_section_finished($this->sections[$i], $this->mods)?'green-tab':'red-tab';
                 }
-                $actbar .= '<td class="fnweeklynavnorm" id=fnweeklynav' . $i . ' width="' . $width . '%" height="25" title="hi"  alt="hi">' .
-                        $f . '<a href="' . $url . '&selected_week=' . $i . '">&nbsp;' . $i . '&nbsp;</a>' . '</td>';
+                else {
+                    $f = '';                
+                }
+                $actbar .= '<td class="fnweeklynavnorm '.$f.'" id=fnweeklynav' . $i . ' width="' . $width . '%" height="25"><a href="' . $url . '&selected_week=' . $i . '">&nbsp;' . $i . '&nbsp;</a>' . '</td>';
             }
             $weekdate += ( $weekofseconds);
             $actbar .= '<td align="center" height="25" style="width: 2px;">' .

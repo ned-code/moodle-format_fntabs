@@ -243,7 +243,7 @@ if (empty($course->showonlysection0)) {
         echo $OUTPUT->heading($strmainheading, 3, 'fnoutlineheadingblock');
 
         if ($selected_week > 0 && !$PAGE->user_is_editing()) {
-            echo '<table class="topicsoutline" border="0" cellpadding="8" cellspacing="0" width="100%">
+            echo '<table class="topicsoutline" border="0" cellpadding="0" cellspacing="0" width="100%">
             <tr><td valign=top class="fntopicsoutlinecontent fnsectionouter" width="100%">
             <!-- Tabbed section container -->
             <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
@@ -267,20 +267,20 @@ if (empty($course->showonlysection0)) {
                     <!-- This cell holds the same colour as the selected tab. -->
                     <td width="100%" class="fnweeklynavselected">
                         <!-- This table creates a selected colour box around the content -->
-                        <table width="100%" cellpadding="5" cellspacing="0" border="0">
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
                             <tr>
-                                <td>
-                        <table width="100%" cellpadding="1" cellspacing="0" border="0">
+                                <td class="content-section">
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
                             <tr>
                                 <td>
                     ';
         } else if ($course->numsections > 1) {
             echo '<table class="topicsoutline" border="0" cellpadding="8" cellspacing="0" width="100%">';
-            echo '<tr>';
-            echo '<td valign="top" class="fntopicsoutlinecontent fnsectionouter" width="100%">';
-            echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);
-            echo '</td>';
-            echo '</tr>';
+				echo '<tr>';
+					echo '<td valign="top" class="fntopicsoutlinecontent fnsectionouter" width="100%">';
+						echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);
+					echo '</td>';
+				echo '</tr>';
             echo '</table>';
         }
 
@@ -301,7 +301,7 @@ if (empty($course->showonlysection0)) {
     if ($section <= 0)
         $section = 1;
     while (($course->numsections > 0) && ($section <= $numsections)) {
-        echo '<table class="topicsoutline" border="0" cellpadding="4" cellspacing="0" width="100%">';
+        echo '<table class="topicsoutline" border="0" cellpadding="0" cellspacing="0" width="100%">';
         if (!empty($sections[$section])) {
             $thissection = $sections[$section];
         } else {
@@ -353,8 +353,8 @@ if (empty($course->showonlysection0)) {
                     echo '<table cellspacing="0" cellpadding="0" border="0" align="center" width="100%">'
                     . '<tr><td>';
                 } else {
-                    echo '<table cellspacing="0" cellpadding="0" border="0" align="left">'
-                    . '<tr><td>';
+                    echo '<table width="100%" cellspacing="0" cellpadding="0" border="0">'
+                    . '<tr><td align="left">';
                 }
 
                 echo format_text($thissection->summary, FORMAT_HTML);
@@ -362,10 +362,11 @@ if (empty($course->showonlysection0)) {
                 if ($PAGE->user_is_editing() && has_capability('moodle/course:update', get_context_instance(CONTEXT_COURSE, $course->id))) {
 
                     echo ' <a title="' . $streditsummary . '" href="editsection.php?id=' . $thissection->id . '">' .
-                    '<img src="' . $OUTPUT->pix_url('t/edit') . '" class="icon edit" alt="' . $streditsummary . '" /></a><br /><br />';
+                    '<img src="' . $OUTPUT->pix_url('t/edit') . '" class="icon edit" alt="' . $streditsummary . '" /></a>';
+					echo '<br clear="all">';
                 }
 
-                echo '<br clear="all">';
+               // echo '<br clear="all">';
 
                 //   $mandatorypopup = print_section_local($course, $cobjectsection, $mods, $modnamesused);                
                 $cobject->print_section_fn($course, $thissection, $mods, $modnamesused);
@@ -425,9 +426,10 @@ if (empty($course->showonlysection0)) {
 
             if ($selected_week <= 0 || $PAGE->user_is_editing()) {
                 echo '<tr><td colspan="3" ' . $colorsides . ' align="center">';
-                echo '&nbsp;';
-                echo '</td></tr>';
-//                echo "<tr><td colspan=3><img src=\"../pix/spacer.gif\" width=1 height=1></td></tr>";
+           		echo '&nbsp;';
+             	echo '</td></tr>';		 
+			 
+            echo "<tr><td colspan=3><img src=\"../pix/spacer.gif\" width=1 height=1></td></tr>";
 //                echo '<li id="section-' . $section . '" class="section main clearfix stealth hidden">';
             }
 
