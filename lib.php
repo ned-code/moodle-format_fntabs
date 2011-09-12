@@ -220,3 +220,62 @@ function get_week_info($tabrange, $week) {
 
     return array($tablow, $tabhigh, $week);
 }
+function get_course_section_mods($courseid, $sectionid) {
+    global $DB;
+
+    if (empty($courseid)) {
+        return false; // avoid warnings
+    }
+
+    if (empty($sectionid)) {
+        return false; // avoid warnings
+    }
+
+    return $DB->get_records_sql("SELECT cm.*, m.name as modname
+                                   FROM {modules} m, {course_modules} cm
+                                  WHERE cm.course = ? AND cm.section= ? AND cm.module = m.id AND m.visible = 1", array($courseid, $sectionid)); // no disabled mods
+}
+
+function get_activities_status($course, $section) {
+
+    global $CFG, $USER;
+    require_once($CFG->libdir . '/completionlib.php');
+    require_once($CFG->dirroot . '/course/lib.php');
+    $complete = 0;
+    $incomplete = 0;
+    $saved = 0;
+    $notattempted = 0;
+    $waitingforgrade = 0;
+
+    if ($section->visible) {
+//        $modules=get_array_of_course_section_activities($course, $section);
+        $modules = get_course_section_mods($course->id, $section->id);
+        $completion = new completion_info($course);
+        if ((isset($CFG->enablecompletion)) && !empty($completion)) {
+            foreach ($modules as $module) {
+                if ($completion->is_enabled($course = null, $module)) {
+                    $data = $completion->get_data($module, false, $USER->id, null);
+                    $completionstate = $data->completionstate;
+                    if ($completionstate == -1) {
+                        $waitingforgrade++;
+                    } elseif ($completionstate == 0) {
+                        $notattempted++;
+                    } elseif ($completionstate == 1 || $completionstate == 2) {
+                        $complete++;
+                    } elseif ($completionstate == 3) {
+                        $incomplete++;
+                        echo "Sudhansu";
+                    } else {
+                        $saved++;
+                    }
+                }
+            }
+            $array["complete"] = "$complete";
+            $array["incomplete"] = "$incomplete";
+            $array["saved"] = "$saved";
+            $array["notattempted"] = "$notattempted";
+            $array["waitngforgrade"] = "$waitingforgrade";
+            return $array;
+        }
+    }
+}

@@ -412,3 +412,16 @@ tr.oddrow {
 	border-top:5px solid red;
 	padding-top:0;
 }
+
+/*** Tool Tips ***/
+.fnweeklynav .tooltip {border-bottom:1px dotted #000000; color:#000000; outline:none; text-decoration:none; position:relative; cursor:pointer;}
+.fnweeklynav .tooltip span {margin-left:-999em;	position:absolute;}
+.fnweeklynav .tooltip:hover span {position:absolute; left:-3.2em; top:-12.5em; z-index:999; margin-left:0; width:175px;}
+.fnweeklynav .tooltip:hover img.arrows {border:0; margin:0px; position:absolute; left:50px; bottom:-19px;}
+.fnweeklynav .tooltip:hover div.head {text-align:center; background:#DCDCDC; padding:0.2em 0; color:#18a3e6; font-weight:bold; font-size:18px; margin:0;}
+.fnweeklynav .tooltip:hover ul {margin:0; padding:0.4em 0.8em 0.4em 0.8em; list-style-type:none;}
+.fnweeklynav .tooltip:hover li {margin:0 0 2px 0; padding:0; font-size:14px; text-align:left; list-style-type:none;}
+
+.fnweeklynav .custom {padding:0em}
+* html a:hover { background: transparent; }
+.fnweeklynav .info { background: #fff; border:3px solid #2BB0D7;	}
