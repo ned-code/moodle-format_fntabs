@@ -662,7 +662,7 @@ class course_format_fn extends course_format {
                     if ($completionicon) {
                         $imgsrc = '' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/completion-' . $completionicon . '.gif';                       
                         $imgalt = s(get_string('completion-alt-' . $completionicon, 'format_fntabs'));
-                        if ($completion == COMPLETION_TRACKING_MANUAL && !$isediting && has_capability('mod/assignment:submit', get_context_instance(CONTEXT_COURSE, $course->id))) {
+                        if ($completion == COMPLETION_TRACKING_MANUAL && !$isediting && has_capability('mod/assignment:submit', get_context_instance(CONTEXT_COURSE, $course->id)) && !is_primary_admin($USER->id)) {
                             $imgtitle = s(get_string('completion-title-' . $completionicon, 'format_fntabs'));
                             $newstate =
                                     $completiondata->completionstate == COMPLETION_COMPLETE ? COMPLETION_INCOMPLETE : COMPLETION_COMPLETE;
@@ -670,7 +670,7 @@ class course_format_fn extends course_format {
                             // In manual mode the icon is a toggle form...
                             // If this completion state is used by the
                             // conditional activities system, we need to turn
-                            // off the JS.
+                            // off the JS.i
                             if (!empty($CFG->enableavailability) &&
                                     condition_info::completion_value_used_as_condition($course, $mod)) {
                                 $extraclass = ' preventjs';
@@ -691,7 +691,7 @@ class course_format_fn extends course_format {
                         }
                     }
                 }
-
+                
                 // If there is content AND a link, then display the content here
                 // (AFTER any icons). Otherwise it was displayed before
                 if (!empty($url)) {
