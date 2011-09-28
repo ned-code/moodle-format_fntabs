@@ -40,7 +40,6 @@ $cobject = new course_format_fn($course);
 $course = $cobject->course;
 
 $cobject->handle_extra_actions();
-
 /// Add any extra module information to our module structures.
 //$cobject->add_extra_module_info();
 //    $week = optional_param('week', -1, PARAM_INT);
@@ -67,6 +66,7 @@ if ($editing) {
     $strmovedown = get_string('movedown');
     $strmarkthistopic = get_string("markthistopic");
 }
+
 $tabrange = 0;
 if ($selected_week > 999) {
     $tabrange = $selected_week;
@@ -79,6 +79,7 @@ if ($selected_week > 999) {
 } else {
     $SESSION->G8_selected_week[$course->id] = $selected_week;
 }
+
 $context = get_context_instance(CONTEXT_COURSE, $course->id);
 $cobject->context = $context;
 
@@ -94,9 +95,6 @@ $course->selected_week = $selected_week;
 
 //Print the Your progress icon if the track completion is enabled
 $completioninfo = new completion_info($course);
-echo $completioninfo->display_help_icon();
-echo $OUTPUT->heading(get_string('weeklyoutline'), 2, 'headingblock header outline');
-
 // Note, an ordered list would confuse - "1" could be the clipboard or summary.
 echo "<ul class='weeks'>\n";
 
@@ -116,10 +114,9 @@ if (ismoving($course->id)) {
 $section = 0;
 $thissection = $sections[$section];
 unset($sections[0]);
-//    print_object($course->showsection0);
 
 if (!empty($course->showsection0) && ($thissection->summary or $thissection->sequence or $PAGE->user_is_editing())) {
-
+    
     // Note, 'right side' is BEFORE content.
     echo "<tr id=\"section-0\" class=\"section main\">";
     echo '<td colspan="3" align="center" width="100%" id="fnsection0" class="content">';
@@ -235,13 +232,20 @@ if (empty($course->showonlysection0)) {
     // If the course has been set to more than zero sections, display normal.
     if ($course->numsections > 0) {
         /// Forcing a style here, seems to be the only way to force a zero bottom margin...
-        if (!empty($course->mainheading)) {
+        if (empty($course->mainheading)) {
             $strmainheading = $course->mainheading;
         } else {
             $strmainheading = get_string('defaultmainheading', 'format_fntabs');
         }
-        echo $OUTPUT->heading($strmainheading, 3, 'fnoutlineheadingblock');
-
+        if ($course->showsection0){
+            $headerextraclass='';            
+        }
+        else{
+            $headerextraclass='fnoutlineheadingblockone';
+        }
+//        echo $completioninfo->display_help_icon();
+        echo $OUTPUT->heading($strmainheading, 2, 'fnoutlineheadingblock '.$headerextraclass.'');      
+       
         if ($selected_week > 0 && !$PAGE->user_is_editing()) {
             echo '<table class="topicsoutline" border="0" cellpadding="0" cellspacing="0" width="100%">
             <tr><td valign=top class="fntopicsoutlinecontent fnsectionouter" width="100%">
@@ -252,7 +256,7 @@ if (empty($course->showonlysection0)) {
                 echo '
                 <!-- Tabs -->
                 <tr>
-                    <td width="100%">
+                    <td width="100%" align="center">
                         ';
                 echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);
                 echo '
@@ -276,11 +280,11 @@ if (empty($course->showonlysection0)) {
                     ';
         } else if ($course->numsections > 1) {
             echo '<table class="topicsoutline" border="0" cellpadding="8" cellspacing="0" width="100%">';
-				echo '<tr>';
-					echo '<td valign="top" class="fntopicsoutlinecontent fnsectionouter" width="100%">';
-						echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);
-					echo '</td>';
-				echo '</tr>';
+            echo '<tr>';
+            echo '<td valign="top" class="fntopicsoutlinecontent fnsectionouter" width="100%" align="center">';
+            	echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);
+            echo '</td>';
+            echo '</tr>';
             echo '</table>';
         }
 
@@ -363,17 +367,13 @@ if (empty($course->showonlysection0)) {
 
                     echo ' <a title="' . $streditsummary . '" href="editsection.php?id=' . $thissection->id . '">' .
                     '<img src="' . $OUTPUT->pix_url('t/edit') . '" class="icon edit" alt="' . $streditsummary . '" /></a>';
-					echo '<br clear="all">';
+                    echo '<br clear="all">';
                 }
 
-               // echo '<br clear="all">';
 
-                //   $mandatorypopup = print_section_local($course, $cobjectsection, $mods, $modnamesused);                
                 $cobject->print_section_fn($course, $thissection, $mods, $modnamesused);
 
                 if ($PAGE->user_is_editing()) {
-//                    $cobject->print_section_add_menus($section);
-//                    print_section_add_menus($course, $section, $modnames);
                     $cobject->print_section_add_menus($course, $section, $modnames);
                 }
 
@@ -426,11 +426,10 @@ if (empty($course->showonlysection0)) {
 
             if ($selected_week <= 0 || $PAGE->user_is_editing()) {
                 echo '<tr><td colspan="3" ' . $colorsides . ' align="center">';
-           		echo '&nbsp;';
-             	echo '</td></tr>';		 
-			 
-            echo "<tr><td colspan=3><img src=\"../pix/spacer.gif\" width=1 height=1></td></tr>";
-//                echo '<li id="section-' . $section . '" class="section main clearfix stealth hidden">';
+                echo '&nbsp;';
+                echo '</td></tr>';
+
+                echo "<tr><td colspan=3><img src=\"../pix/spacer.gif\" width=1 height=1></td></tr>";
             }
 
             $weekdate += ( $weekofseconds);
@@ -466,11 +465,3 @@ if (empty($course->showonlysection0)) {
 }
 
 echo "</ul>\n";
-
-//if (empty($sectionmenu)) {
-//    $select = new single_select(new moodle_url('/course/view.php', array('id' => $course->id)), 'week', $sectionmenu);
-//    $select->label = get_string('jumpto');
-//    $select->class = 'jumpmenu';
-//    $select->formid = 'sectionmenu';
-////    echo $OUTPUT->render($select);
-//}

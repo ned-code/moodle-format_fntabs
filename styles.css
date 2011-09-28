@@ -55,6 +55,7 @@
 .fnweeklynav .tab-heading {
 	width:50px;
 	font-size:16px;
+	color:#FFF;
 }
 .fnweeklynavnorm {
     text-align: center;
@@ -124,9 +125,6 @@
     text-align: center;
     background-color: #dcdcdc;
     color: #bdbbbb;
-}
-.fnoutlineheadingblock {
-    text-align: center;
 }
 .markingcontainer td.generalbox3 {
 	background-color: #73C1E1;
@@ -413,15 +411,61 @@ tr.oddrow {
 	padding-top:0;
 }
 
+table {
+	font-size:100% !important;
+}
+/*#page-course-view-fntabs #page-content .region-content {
+	overflow:visible !important;
+}
+#page-course-view-fntabs #page-content #region-main {
+	overflow:visible !important;
+}
+#page-course-view-fntabs #page-content {
+	overflow:visible !important;
+}*/
+
+
+#page-course-view-fntabs .weeks .fntopicsoutlineinner ul.section {
+	margin-left:10em;
+}
+
 /*** Tool Tips ***/
-.fnweeklynav .tooltip {border-bottom:1px dotted #000000; color:#000000; outline:none; text-decoration:none; position:relative; cursor:pointer;}
+.fnweeklynav .tooltip {color:#000000; outline:none; text-decoration:none; position:relative; cursor:pointer;}
 .fnweeklynav .tooltip span {margin-left:-999em;	position:absolute;}
-.fnweeklynav .tooltip:hover span {position:absolute; left:-3.2em; top:-12.5em; z-index:999; margin-left:0; width:175px;}
-.fnweeklynav .tooltip:hover img.arrows {border:0; margin:0px; position:absolute; left:50px; bottom:-19px;}
-.fnweeklynav .tooltip:hover div.head {text-align:center; background:#DCDCDC; padding:0.2em 0; color:#18a3e6; font-weight:bold; font-size:18px; margin:0;}
-.fnweeklynav .tooltip:hover ul {margin:0; padding:0.4em 0.8em 0.4em 0.8em; list-style-type:none;}
-.fnweeklynav .tooltip:hover li {margin:0 0 2px 0; padding:0; font-size:14px; text-align:left; list-style-type:none;}
+.fnweeklynav .tooltip:hover span {position:absolute; left:-3.2em; top:-12em; z-index:999; margin-left:0; width:170px;}
+.fnweeklynav .tooltip:hover img.arrows {border:0; margin:0px; position:absolute; left:60px; bottom:-19px;}
+.fnweeklynav .tooltip:hover div.head {text-align:center; background:#DCDCDC; padding:0.1em 0; color:#18a3e6; font-weight:bold; font-size:16px; margin:0;}
+.fnweeklynav .tooltip:hover ul {margin:0; padding:0.3em 0.8em 0.3em 0.8em; list-style-type:none;}
+.fnweeklynav .tooltip:hover li {margin:0 0 1px 0; padding:0; font-size:14px; text-align:left; list-style-type:none;}
 
 .fnweeklynav .custom {padding:0em}
 * html a:hover { background: transparent; }
-.fnweeklynav .info { background: #fff; border:3px solid #2BB0D7;	}
+.fnweeklynav .info { background: #fff; border:3px solid #2BB0D7;}
+
+
+
+
+.fnoutlineheadingblock {
+    text-align: center;
+    padding:5px 0 10px 0;
+    border: 1px solid #DDDDDD;
+    background-color: #E1E1DF;
+    background-image: url("image.php?theme=standard&image=hgradient&component=theme");
+    background-repeat: repeat-x;
+}
+.fnoutlineheadingblockone {
+    text-align: center;
+    margin-bottom: 86px;
+    margin-top: 12px;
+	
+}
+h2.fnoutlineheadingblock {
+    font-size: 1.1em;
+}
+.tab-greaterthan5 {
+    width:40px;
+}
+.tab-lessthan5 {
+    width:85px;
+}
+

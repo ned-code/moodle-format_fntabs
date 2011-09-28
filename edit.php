@@ -188,12 +188,14 @@ if (!empty($course)) {
 
 $navigation = build_navigation($navlinks);
 print_header($title, $fullname, $navigation, $editform->focus());
-global$OUTPUT;
-//    print_heading($streditcoursesettings);
+global $OUTPUT;
+
 echo $OUTPUT->header($streditcoursesettings);
 $editform->display();
 
-print_footer($course);
+//print_footer($course);
+echo $OUTPUT->footer($course);
+
 
 //-------------------------------------------------------------------------------------------------------
 

@@ -7,7 +7,7 @@
  */
 define('FNMAXTABS', 10);
 define('COMPLETION_WAITFORGRADE_FN', -1);
-define('COMPLETION_SAVED_FN', -2);
+define('COMPLETION_SAVED_FN', 4);
 
 require_once($CFG->libdir . '/filelib.php');
 require_once($CFG->libdir . '/completionlib.php');
@@ -23,11 +23,10 @@ class course_format_fn extends course_format {
      * @param $course object The pre-defined course object. Passed by reference, so that extended info can be added.
      *
      */
-
     function course_format_fn(&$course) {
         global $mods, $modnames, $modnamesplural, $modnamesused, $sections, $DB;
 
-        parent::course_format($course);
+        parent::course_format($course);       
 
         $this->mods = &$mods;
         $this->modnames = &$modnames;
@@ -35,7 +34,6 @@ class course_format_fn extends course_format {
         $this->modnamesused = &$modnamesused;
         $this->sections = &$sections;
     }
-
 
     function get_course($course=null) {
         global $DB;
@@ -65,8 +63,7 @@ class course_format_fn extends course_format {
         return $course;
     }
 
-    /** Custom functions **/
-     
+    /** Custom functions * */
     function handle_extra_actions() {
         global $USER, $CFG, $DB;
 
@@ -122,7 +119,6 @@ class course_format_fn extends course_format {
         }
     }
 
-
     function get_week_info($tabrange, $week) {
         global $SESSION;
 
@@ -174,7 +170,6 @@ class course_format_fn extends course_format {
         return array($tablow, $tabhigh, $week);
     }
 
-
     function print_weekly_activities_bar($week=0, $tabrange=0) {
         global $THEME, $FULLME, $CFG, $course, $DB, $USER;
 
@@ -186,6 +181,13 @@ class course_format_fn extends course_format {
         $weekdate = $this->course->startdate;    // this should be 0:00 Monday of that week
         $weekdate += 7200;                 // Add two hours to avoid possible DST problems
         $weekofseconds = 604800;
+        
+        if($course->numsections >5){
+                $extraclassfortab="tab-greaterthan5";
+           }
+        else{
+            $extraclassfortab="tab-lessthan5";
+        }
 
         if (isset($this->course->topicheading) && !empty($this->course->topicheading)) {
             $strtopicheading = $this->course->topicheading;
@@ -198,7 +200,8 @@ class course_format_fn extends course_format {
         $url = preg_replace('/(^.*)(&selected_week\=\d+)(.*)/', '$1$3', $FULLME);
 
         $actbar = '';
-        $actbar .= '<table cellpadding="0" cellspacing="0" width="100%" class="fnweeklynav"><tr>';
+		$actbar .= '<table cellpadding="0" cellspacing="0"><tr><td>';
+        $actbar .= '<table cellpadding="0" cellspacing="0"  class="fnweeklynav"><tr>';
         $width = (int) (100 / ($tabhigh - $tablow + 3));
         $actbar .= '<td width="4" align="center" height="25"></td>';
 
@@ -211,9 +214,10 @@ class course_format_fn extends course_format {
             }
             $actbar .= '<td id="fn_tab_previous" height="25"><a href="' . $url . '&selected_week=' . $prv . '">Previous</a></td>';
         }
+        
 
-
-        for ($i = $tablow; $i <= $tabhigh; $i++) {
+        for ($i = $tablow; $i <= $tabhigh; $i++) {           
+           
 
             if (empty($this->sections[$i]->visible) || ($timenow < $weekdate)) {
                 if ($i == $week) {
@@ -228,39 +232,38 @@ class course_format_fn extends course_format {
                 } else {
                     $f = ' ' . $i . ' ';
                 }
-                $actbar .= '<td class="' . $css . '" height="25" width="' . $width . '%" alt="Upcoming sections" title="Upcoming sections">' . $f . '</td>';
+                $actbar .= '<td class="' . $css . ' ' . $extraclassfortab . '" height="25" width="" alt="Upcoming sections" title="Upcoming sections">' . $f . '</td>';
             } else if ($i == $week) {
-                    if (!$isteacher && !is_siteadmin() && !empty($completioninfo) && !$iseditingteacher) {
-                            if($completioninfo->is_enabled() && $CFG->enablecompletion){ 
-                                $f = $this->is_section_finished($this->sections[$i], $this->mods) ? 'green-tab' : 'red-tab';                        
-                             }else{
-                                  $f='';
-                             }
+                if (!$isteacher && !is_siteadmin() && !empty($completioninfo) && !$iseditingteacher) {
+                    if ($completioninfo->is_enabled() && $CFG->enablecompletion) {
+                        $f = $this->is_section_finished($this->sections[$i], $this->mods) ? 'green-tab' : 'red-tab';
                     } else {
                         $f = '';
                     }
-                    $actbar .= '<td class="fnweeklynavselected ' . $f . '" id=fnweeklynav' . $i . ' width="' . $width . '%" height="25"> ' . $i . ' </td>';
-            } else {
-                if (!$isteacher && !is_siteadmin()   && !$iseditingteacher) {                   
-                        if($completioninfo->is_enabled() && $CFG->enablecompletion){                            
-                            $f = $this->is_section_finished($this->sections[$i], $this->mods) ? 'green-tab' : 'red-tab';
-                            $w = $i;
-                            $sectionid = $i;
-                            $section = $DB->get_record("course_sections", array("section" => $sectionid, "course" => $course->id));
-                            $activitiesstatusarray = get_activities_status($course, $section);
-                            $compl = $activitiesstatusarray['complete'];
-                            $incompl = $activitiesstatusarray['incomplete'];
-                            $svd = $activitiesstatusarray['saved'];
-                            $notattemptd = $activitiesstatusarray['notattempted'];
-                            $waitforgrade = $activitiesstatusarray['waitngforgrade'];                    
-                        }
-                        else{
-                             $f='';
-                        }
                 } else {
                     $f = '';
                 }
-                $actbar .= '<td class="fnweeklynavnorm ' . $f . '" id=fnweeklynav' . $i . ' width="' . $width . '%" height="25"><a class="tooltip" href="' . $url . '&selected_week=' . $i . '">&nbsp;' . $i . '&nbsp;';
+                $actbar .= '<td class="fnweeklynavselected ' . $f . ' ' . $extraclassfortab . '" id=fnweeklynav' . $i . ' width="" height="25"> ' . $i . ' </td>';
+            } else {
+                if (!$isteacher && !is_siteadmin() && !$iseditingteacher) {
+                    if ($completioninfo->is_enabled() && $CFG->enablecompletion) {
+                        $f = $this->is_section_finished($this->sections[$i], $this->mods) ? 'green-tab' : 'red-tab';
+                        $w = $i;
+                        $sectionid = $i;
+                        $section = $DB->get_record("course_sections", array("section" => $sectionid, "course" => $course->id));
+                        $activitiesstatusarray = get_activities_status($course, $section);
+                        $compl = $activitiesstatusarray['complete'];
+                        $incompl = $activitiesstatusarray['incomplete'];
+                        $svd = $activitiesstatusarray['saved'];
+                        $notattemptd = $activitiesstatusarray['notattempted'];
+                        $waitforgrade = $activitiesstatusarray['waitngforgrade'];
+                    } else {
+                        $f = '';
+                    }
+                } else {
+                    $f = '';
+                }
+                $actbar .= '<td class="fnweeklynavnorm ' . $f . ' ' . $extraclassfortab . '" id=fnweeklynav' . $i . ' width="" height="25"><a class="tooltip" href="' . $url . '&selected_week=' . $i . '">&nbsp;' . $i . '&nbsp;';
                 if (!$isteacher && !is_siteadmin() && !is_primary_admin($USER->id) && !$iseditingteacher && $CFG->enablecompletion && $completioninfo->is_enabled()) {
                     $actbar .= '<span class="custom info">
                             <div class="head">Week ' . $i . '</div>
@@ -282,9 +285,9 @@ class course_format_fn extends course_format {
         }
 
         if (($week == 0) && ($tabhigh >= $this->course->numsections)) {
-            $actbar .= '<td class="fnweeklynavselected"  width="' . $width . '%" height="25">All</td>';
+            $actbar .= '<td class="fnweeklynavselected '.$extraclassfortab.'"  width="" height="25">All</td>';
         } else if ($tabhigh >= $this->course->numsections) {
-            $actbar .= '<td class="fnweeklynavnorm" width="' . $width . '%" height="25">' .
+            $actbar .= '<td class="fnweeklynavnorm '.$extraclassfortab.'" width="" height="25">' .
                     '<a href="' . $url . '&selected_week=0">All</a></td>';
         } else {
             $nxt = ($tabhigh + 1) * 1000;
@@ -306,11 +309,12 @@ class course_format_fn extends course_format {
         $actbar .= '<td height="3" colspan="2"></td>';
         $actbar .= '</tr>';
         $actbar .= '</table>';
+		$actbar .= '</td></tr></table>';
 
         return $actbar;
     }
 
-   /**LIBRARY REPLACEMENT**/
+    /*     * LIBRARY REPLACEMENT* */
 
     /**
      * Prints a section full of activity modules
@@ -606,7 +610,19 @@ class course_format_fn extends course_format {
                                 break;
                             default: // wtf
                         }
-                    } else if ($completion == COMPLETION_TRACKING_MANUAL) {
+                    }
+                    else if (!$isediting && has_capability('moodle/grade:viewall', get_context_instance(CONTEXT_COURSE, $course->id))) {
+                        switch ($completion) {
+                            case COMPLETION_TRACKING_MANUAL :
+                                $completionicon = 'manual-enabled';
+                                break;
+                            case COMPLETION_TRACKING_AUTOMATIC :
+                                $completionicon = 'auto-enabled';
+                                break;
+                            default: // wtf
+                        }
+                    } 
+                    else if ($completion == COMPLETION_TRACKING_MANUAL) {
                         switch ($completiondata->completionstate) {
                             case COMPLETION_INCOMPLETE:
                                 $completionicon = 'manual-n';
@@ -615,11 +631,12 @@ class course_format_fn extends course_format {
                                 $completionicon = 'manual-y';
                                 break;
                         }
-                    } else { // Automatic                        
-                        $act_compl = assignment_is_completed($mod, $USER->id);
-                        if ($act_compl == 'submitted') {
-                            $completiondata->completionstate = COMPLETION_WAITFORGRADE_FN;
-                        }                                                                        
+                    } else { // Automatic
+                                $act_compl = assignment_is_completed($mod, $USER->id);
+                                if ($act_compl == 'submitted') {
+                                    $completiondata->completionstate = COMPLETION_WAITFORGRADE_FN;
+                                }
+                            
                         switch ($completiondata->completionstate) {
 
                             case COMPLETION_INCOMPLETE:
@@ -643,10 +660,9 @@ class course_format_fn extends course_format {
                         }
                     }
                     if ($completionicon) {
-                        $imgsrc = '' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/completion-' . $completionicon . '.gif';
-
+                        $imgsrc = '' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/completion-' . $completionicon . '.gif';                       
                         $imgalt = s(get_string('completion-alt-' . $completionicon, 'format_fntabs'));
-                        if ($completion == COMPLETION_TRACKING_MANUAL && !$isediting) {
+                        if ($completion == COMPLETION_TRACKING_MANUAL && !$isediting && has_capability('mod/assignment:submit', get_context_instance(CONTEXT_COURSE, $course->id))) {
                             $imgtitle = s(get_string('completion-title-' . $completionicon, 'format_fntabs'));
                             $newstate =
                                     $completiondata->completionstate == COMPLETION_COMPLETE ? COMPLETION_INCOMPLETE : COMPLETION_COMPLETE;
@@ -667,7 +683,7 @@ class course_format_fn extends course_format {
                                     <input type='hidden' name='sesskey' value='" . sesskey() . "' />
                                     <input type='hidden' name='completionstate' value='$newstate' />
                                     <input type='image' src='$imgsrc' alt='$imgalt' title='$imgtitle' />
-                                    </div></form>";
+                                    </div></form>";                           
                         } else {
                             // In auto mode, or when editing, the icon is just an image
                             echo "<span class='autocompletion'>";
@@ -733,7 +749,7 @@ class course_format_fn extends course_format {
                     $mod = $mods[$modnumber];
                     if (isset($mod) && $mod->uservisible && $completioninfo->is_enabled($mod)) {
                         $completiondata = $completioninfo->get_data($mod, true);
-                        if ($completiondata->completionstate >= 1) {
+                        if ($completiondata->completionstate == 1 || $completiondata->completionstate == 2) {
                             $count++;
                         }
                     }
@@ -818,5 +834,4 @@ class course_format_fn extends course_format {
             }
         }
     }
-
 }

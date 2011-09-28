@@ -22,6 +22,8 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 $string['pluginname'] = 'MoodleFN Format';
+$string['namefntabs'] = 'FN Week';
+
 $string['defaultmainheading'] = 'Weekly Activities';
 $string['sectionname'] = 'Moodle FN Tab';
 $string['section0name'] = 'General';
@@ -67,6 +69,7 @@ $string['completion_manual'] = 'Students can manually mark the activity as compl
 $string['completion_none'] = 'Do not indicate activity completion';
 $string['completion-title-manual-n'] = 'Mark as complete';
 $string['completion-title-manual-y'] = 'Mark as not complete';
+$string['completion-title-manual-enabled'] = 'Mark as not complete';
 $string['completionnotenabled'] = 'Completion is not enabled';
 $string['completionnotenabledforcourse'] = 'Completion is not enabled for this course';
 $string['completionnotenabledforsite'] = 'Completion is not enabled for this site';

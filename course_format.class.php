@@ -1,4 +1,4 @@
-<?php // $Id: course_format.class.php,v 1.1 2009/04/17 20:45:22 mchurch Exp $
+<?php
 /**
  * course_format is the base class for all course formats
  *
@@ -28,15 +28,6 @@ class course_format {
         /// Method should load any other course data into the course property.
         $this->get_course();
     }
-
-
-/******************************************************************************/
-/*   MAIN DATA FUNCTIONS:                                                     */
-/******************************************************************************/
-/**
- * Override these if you have any format-specific data needs.
- *
- */
 
 /**
  * Get any additional course data and return it. Also add it to the course property, and the optional

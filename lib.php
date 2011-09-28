@@ -248,7 +248,6 @@ function get_activities_status($course, $section) {
     $waitingforgrade = 0;
 
     if ($section->visible) {
-//        $modules=get_array_of_course_section_activities($course, $section);
         $modules = get_course_section_mods($course->id, $section->id);
         $completion = new completion_info($course);
         if ((isset($CFG->enablecompletion)) && !empty($completion)) {
@@ -263,8 +262,7 @@ function get_activities_status($course, $section) {
                     } elseif ($completionstate == 1 || $completionstate == 2) {
                         $complete++;
                     } elseif ($completionstate == 3) {
-                        $incomplete++;
-                        echo "Sudhansu";
+                        $incomplete++;                       
                     } else {
                         $saved++;
                     }
