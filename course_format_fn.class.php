@@ -6,7 +6,7 @@
  * This class provides all the functionality for a course format
  */
 define('FNMAXTABS', 10);
-define('COMPLETION_WAITFORGRADE_FN', -1);
+define('COMPLETION_WAITFORGRADE_FN', 5);
 define('COMPLETION_SAVED_FN', 4);
 
 require_once($CFG->libdir . '/filelib.php');
@@ -26,7 +26,7 @@ class course_format_fn extends course_format {
     function course_format_fn(&$course) {
         global $mods, $modnames, $modnamesplural, $modnamesused, $sections, $DB;
 
-        parent::course_format($course);       
+        parent::course_format($course);
 
         $this->mods = &$mods;
         $this->modnames = &$modnames;
@@ -67,36 +67,7 @@ class course_format_fn extends course_format {
     function handle_extra_actions() {
         global $USER, $CFG, $DB;
 
-        if (($resid = optional_param('rescomplete', 0, PARAM_INT)) && confirm_sesskey()) {
-
-            if (!$cm = $DB->get_record("course_modules", array("id" => optional_param('id', 0, PARAM_INT)))) {
-                print_error("This course module doesn't exist");
-            }
-
-            set_resource_complete($resid, $USER->id);
-        } else if ((($hide = optional_param('hidegrades', false, PARAM_INT)) !== false) && confirm_sesskey()) {
-
-            if (!$cm = $DB->get_record("course_modules", array("id" => optional_param('mid', 0, PARAM_INT)))) {
-                print_error("This course module doesn't exist");
-            }
-            /// Replace with a capability...
-            if (!is_primary_admin()) {
-                print_error("You can't modify the gradebook settings!");
-            }
-
-            $this->set_gradebook_for_module($cm->id, $hide);
-        } else if (isset($_GET['mandatory']) and confirm_sesskey()) {
-
-            if (!$cm = $DB->get_record("course_modules", array("id" => $_GET['id']))) {
-                print_error("This course module doesn't exist");
-            }
-
-            if (!is_primary_admin()) {
-                print_error("You can't modify the mandatory settings!");
-            }
-
-            fn_set_mandatory_for_module($cm->id, $_GET['mandatory']);
-        } else if (isset($_POST['sec0title'])) {
+        if (isset($_POST['sec0title'])) {
             if (!$course = $DB->get_record('course', array('id' => $_POST['id']))) {
                 print_error('This course doesn\'t exist.');
             }
@@ -104,18 +75,6 @@ class course_format_fn extends course_format {
             $course->sec0title = $_POST['sec0title'];
             FN_update_course($course);
             $cm->course = $course->id;
-        } else if (isset($_GET['openchat'])) {
-            if ($varrec = $DB->get_record('course_config_FN', array('courseid' => $this->course->id, 'variable' => 'classchatopen'))) {
-                $varrec->value = $_GET['openchat'];
-                $DB->update_record('course_config_fn', $varrec);
-            } else {
-                $varrec->courseid = $this->course->id;
-                $varrec->variable = 'classchatopen';
-                $varrec->value = $_GET['openchat'];
-                $DB->insert_record('course_config_fn', $varrec);
-            }
-            $this->course->classchatopen = $varrec->value;
-            $cm->course = $tgis->course->id;
         }
     }
 
@@ -181,12 +140,11 @@ class course_format_fn extends course_format {
         $weekdate = $this->course->startdate;    // this should be 0:00 Monday of that week
         $weekdate += 7200;                 // Add two hours to avoid possible DST problems
         $weekofseconds = 604800;
-        
-        if($course->numsections >5){
-                $extraclassfortab="tab-greaterthan5";
-           }
-        else{
-            $extraclassfortab="tab-lessthan5";
+
+        if ($course->numsections > 5) {
+            $extraclassfortab = "tab-greaterthan5";
+        } else {
+            $extraclassfortab = "tab-lessthan5";
         }
 
         if (isset($this->course->topicheading) && !empty($this->course->topicheading)) {
@@ -200,7 +158,7 @@ class course_format_fn extends course_format {
         $url = preg_replace('/(^.*)(&selected_week\=\d+)(.*)/', '$1$3', $FULLME);
 
         $actbar = '';
-		$actbar .= '<table cellpadding="0" cellspacing="0"><tr><td>';
+        $actbar .= '<table cellpadding="0" cellspacing="0"><tr><td>';
         $actbar .= '<table cellpadding="0" cellspacing="0"  class="fnweeklynav"><tr>';
         $width = (int) (100 / ($tabhigh - $tablow + 3));
         $actbar .= '<td width="4" align="center" height="25"></td>';
@@ -214,10 +172,10 @@ class course_format_fn extends course_format {
             }
             $actbar .= '<td id="fn_tab_previous" height="25"><a href="' . $url . '&selected_week=' . $prv . '">Previous</a></td>';
         }
-        
 
-        for ($i = $tablow; $i <= $tabhigh; $i++) {           
-           
+
+        for ($i = $tablow; $i <= $tabhigh; $i++) {
+
 
             if (empty($this->sections[$i]->visible) || ($timenow < $weekdate)) {
                 if ($i == $week) {
@@ -285,9 +243,9 @@ class course_format_fn extends course_format {
         }
 
         if (($week == 0) && ($tabhigh >= $this->course->numsections)) {
-            $actbar .= '<td class="fnweeklynavselected '.$extraclassfortab.'"  width="" height="25">All</td>';
+            $actbar .= '<td class="fnweeklynavselected ' . $extraclassfortab . '"  width="" height="25">All</td>';
         } else if ($tabhigh >= $this->course->numsections) {
-            $actbar .= '<td class="fnweeklynavnorm '.$extraclassfortab.'" width="" height="25">' .
+            $actbar .= '<td class="fnweeklynavnorm ' . $extraclassfortab . '" width="" height="25">' .
                     '<a href="' . $url . '&selected_week=0">All</a></td>';
         } else {
             $nxt = ($tabhigh + 1) * 1000;
@@ -309,7 +267,7 @@ class course_format_fn extends course_format {
         $actbar .= '<td height="3" colspan="2"></td>';
         $actbar .= '</tr>';
         $actbar .= '</table>';
-		$actbar .= '</td></tr></table>';
+        $actbar .= '</td></tr></table>';
 
         return $actbar;
     }
@@ -611,7 +569,8 @@ class course_format_fn extends course_format {
                             default: // wtf
                         }
                     }
-                    else if (!$isediting && has_capability('moodle/grade:viewall', get_context_instance(CONTEXT_COURSE, $course->id))) {
+                    ///this condition is added by sudhanshu
+                    else if (is_siteadmin() || has_capability('gradereport/grader:view', get_context_instance(CONTEXT_COURSE, $USER->id))) {
                         switch ($completion) {
                             case COMPLETION_TRACKING_MANUAL :
                                 $completionicon = 'manual-enabled';
@@ -621,8 +580,7 @@ class course_format_fn extends course_format {
                                 break;
                             default: // wtf
                         }
-                    } 
-                    else if ($completion == COMPLETION_TRACKING_MANUAL) {
+                    } else if ($completion == COMPLETION_TRACKING_MANUAL) {
                         switch ($completiondata->completionstate) {
                             case COMPLETION_INCOMPLETE:
                                 $completionicon = 'manual-n';
@@ -632,13 +590,17 @@ class course_format_fn extends course_format {
                                 break;
                         }
                     } else { // Automatic
-                                $act_compl = assignment_is_completed($mod, $USER->id);
-                                if ($act_compl == 'submitted') {
-                                    $completiondata->completionstate = COMPLETION_WAITFORGRADE_FN;
-                                }
-                            
-                        switch ($completiondata->completionstate) {
+                        if ($mod->modname == 'assignment') {
+                            $act_compl = assignment_is_completed($mod, $USER->id);
+                            if ($act_compl == 'submitted') {
+                                $completiondata->completionstate = COMPLETION_WAITFORGRADE_FN;
+                            } else if ($act_compl == 'saved') {
+                                $completiondata->completionstate = COMPLETION_SAVED_FN;
+                            }
+                        }
 
+
+                        switch ($completiondata->completionstate) {
                             case COMPLETION_INCOMPLETE:
                                 $completionicon = 'auto-n';
                                 break;
@@ -660,7 +622,7 @@ class course_format_fn extends course_format {
                         }
                     }
                     if ($completionicon) {
-                        $imgsrc = '' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/completion-' . $completionicon . '.gif';                       
+                        $imgsrc = '' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/completion-' . $completionicon . '.gif';
                         $imgalt = s(get_string('completion-alt-' . $completionicon, 'format_fntabs'));
                         if ($completion == COMPLETION_TRACKING_MANUAL && !$isediting && has_capability('mod/assignment:submit', get_context_instance(CONTEXT_COURSE, $course->id)) && !is_primary_admin($USER->id)) {
                             $imgtitle = s(get_string('completion-title-' . $completionicon, 'format_fntabs'));
@@ -683,7 +645,7 @@ class course_format_fn extends course_format {
                                     <input type='hidden' name='sesskey' value='" . sesskey() . "' />
                                     <input type='hidden' name='completionstate' value='$newstate' />
                                     <input type='image' src='$imgsrc' alt='$imgalt' title='$imgtitle' />
-                                    </div></form>";                           
+                                    </div></form>";
                         } else {
                             // In auto mode, or when editing, the icon is just an image
                             echo "<span class='autocompletion'>";
@@ -691,7 +653,7 @@ class course_format_fn extends course_format {
                         }
                     }
                 }
-                
+
                 // If there is content AND a link, then display the content here
                 // (AFTER any icons). Otherwise it was displayed before
                 if (!empty($url)) {
@@ -740,27 +702,21 @@ class course_format_fn extends course_format {
 
     function is_section_finished(&$section, $mods) {
         global $USER, $course;
-
         $completioninfo = new completion_info($course);
+        $modules = get_course_section_mods($course->id, $section->id);
         $count = 0;
-        if ($sectionmods = explode(",", $section->sequence)) {
-            if (count($sectionmods) > 1) {
-                foreach ($sectionmods as $modnumber) {
-                    $mod = $mods[$modnumber];
-                    if (isset($mod) && $mod->uservisible && $completioninfo->is_enabled($mod)) {
-                        $completiondata = $completioninfo->get_data($mod, true);
-                        if ($completiondata->completionstate == 1 || $completiondata->completionstate == 2) {
-                            $count++;
-                        }
-                    }
+        if (count($modules) >= 1) {
+            foreach ($modules as $modu) {
+                $completiondata = $completioninfo->get_data($modu, true);
+                if ($completiondata->completionstate == 1 || $completiondata->completionstate == 2) {
+                    $count++;
                 }
             }
-        }
-
-        if ($count == count($sectionmods)) {
-            return true;
-        } else {
-            return false;
+            if ($count == count($modules)) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -777,61 +733,5 @@ class course_format_fn extends course_format {
         return false;
     }
 
-    function get_course_section_mods($courseid, $sectionid) {
-        global $DB;
 
-        if (empty($courseid)) {
-            return false; // avoid warnings
-        }
-
-        if (empty($sectionid)) {
-            return false; // avoid warnings
-        }
-
-        return $DB->get_records_sql("SELECT cm.*, m.name as modname
-                                   FROM {modules} m, {course_modules} cm
-                                  WHERE cm.course = ? AND cm.section= ? AND cm.module = m.id AND m.visible = 1", array($courseid, $sectionid)); // no disabled mods
-    }
-
-    function get_activities_status($course, $section) {
-        global $CFG, $USER;
-
-        require_once($CFG->libdir . '/completionlib.php');
-        require_once($CFG->dirroot . '/course/lib.php');
-        $complete = 0;
-        $incomplete = 0;
-        $saved = 0;
-        $notattempted = 0;
-        $waitingforgrade = 0;
-
-        if ($section->visible) {
-            $modules = get_course_section_mods($course->id, $section->id);
-            $completion = new completion_info($course);
-            if ((isset($CFG->enablecompletion)) && !empty($completion)) {
-                foreach ($modules as $module) {
-                    if ($completion->is_enabled($course = null, $module)) {
-                        $data = $completion->get_data($module, false, $USER->id, null);
-                        $completionstate = $data->completionstate;
-                        if ($completionstate == -1) {
-                            $waitingforgrade++;
-                        } elseif ($completionstate == 0) {
-                            $notattempted++;
-                        } elseif ($completionstate == 1 || $completionstate == 2) {
-                            $complete++;
-                        } elseif ($completionstate == 3) {
-                            $incomplete++;
-                        } else {
-                            $saved++;
-                        }
-                    }
-                }
-                $array["complete"] = "$complete";
-                $array["incomplete"] = "$incomplete";
-                $array["saved"] = "$saved";
-                $array["notattempted"] = "$notattempted";
-                $array["waitngforgrade"] = "$waitingforgrade";
-                return $array;
-            }
-        }
-    }
 }

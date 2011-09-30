@@ -4,7 +4,6 @@
 // Edit course settings
 
 require_once('../../../config.php');
-//    require_once($CFG->dirroot.'/enrol/enrol.class.php');
 require_once($CFG->libdir . '/blocklib.php');
 require_once('lib.php');
 require_once('edit_form.php');
@@ -84,7 +83,7 @@ if ($editform->is_cancelled()) {
     if (empty($course)) {
         redirect($CFG->wwwroot);
     } else {
-        redirect($CFG->wwwroot . '/course/view.php?id=' . $course->id);
+        redirect($CFG->wwwroot . '/course/view.php?id=' . $course->id);        
     }
 } else if ($data = $editform->get_data()) {
 

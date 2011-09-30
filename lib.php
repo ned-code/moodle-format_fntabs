@@ -233,7 +233,7 @@ function get_course_section_mods($courseid, $sectionid) {
 
     return $DB->get_records_sql("SELECT cm.*, m.name as modname
                                    FROM {modules} m, {course_modules} cm
-                                  WHERE cm.course = ? AND cm.section= ? AND cm.module = m.id AND m.visible = 1", array($courseid, $sectionid)); // no disabled mods
+                                  WHERE cm.course = ? AND cm.section= ? AND cm.completion !=0 AND cm.module = m.id AND m.visible = 1", array($courseid, $sectionid)); // no disabled mods
 }
 
 function get_activities_status($course, $section) {
@@ -255,7 +255,7 @@ function get_activities_status($course, $section) {
                 if ($completion->is_enabled($course = null, $module)) {
                     $data = $completion->get_data($module, false, $USER->id, null);
                     $completionstate = $data->completionstate;
-                    if ($completionstate == -1) {
+                    if ($completionstate == 5) {
                         $waitingforgrade++;
                     } elseif ($completionstate == 0) {
                         $notattempted++;
@@ -263,8 +263,10 @@ function get_activities_status($course, $section) {
                         $complete++;
                     } elseif ($completionstate == 3) {
                         $incomplete++;                       
-                    } else {
+                    } elseif ($completionstate == 4) {
                         $saved++;
+                    }else {
+                        //
                     }
                 }
             }

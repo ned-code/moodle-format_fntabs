@@ -452,6 +452,8 @@ table {
     background-color: #E1E1DF;
     background-image: url("image.php?theme=standard&image=hgradient&component=theme");
     background-repeat: repeat-x;
+    margin-top: 20px;
+    margin-bottom: 28px;
 }
 .fnoutlineheadingblockone {
     text-align: center;

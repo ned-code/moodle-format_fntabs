@@ -34,11 +34,12 @@ require_once($CFG->dirroot . '/mod/forum/lib.php');
 
 require_once($CFG->dirroot . '/course/format/' . $course->format . '/course_format.class.php');
 require_once($CFG->dirroot . '/course/format/' . $course->format . '/course_format_fn.class.php');
+require_once($CFG->dirroot.'/course/format/'.$course->format.'/lib.php');
+require_once($CFG->dirroot.'/course/format/'.$course->format.'/modulelib.php');
 global $DB, $OUTPUT, $THEME, $PAGE;
 
 $cobject = new course_format_fn($course);
 $course = $cobject->course;
-
 $cobject->handle_extra_actions();
 /// Add any extra module information to our module structures.
 //$cobject->add_extra_module_info();
@@ -230,9 +231,9 @@ if (empty($course->showonlysection0)) {
 
 
     // If the course has been set to more than zero sections, display normal.
-    if ($course->numsections > 0) {
+    if ($course->numsections > 0) {       
         /// Forcing a style here, seems to be the only way to force a zero bottom margin...
-        if (empty($course->mainheading)) {
+        if (!empty($course->mainheading)) {
             $strmainheading = $course->mainheading;
         } else {
             $strmainheading = get_string('defaultmainheading', 'format_fntabs');
