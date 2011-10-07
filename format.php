@@ -40,10 +40,14 @@ global $DB, $OUTPUT, $THEME, $PAGE;
 
 $cobject = new course_format_fn($course);
 $course = $cobject->course;
+if(!isset($course->showsection0)){
+    $course->showsection0=0;
+}
 $cobject->handle_extra_actions();
 /// Add any extra module information to our module structures.
 //$cobject->add_extra_module_info();
 //    $week = optional_param('week', -1, PARAM_INT);
+//print_object($course);
 $selected_week = optional_param('selected_week', -1, PARAM_INT);
 if ($selected_week != -1) {
     $displaysection = course_set_display($course->id, $selected_week);
@@ -244,7 +248,7 @@ if (empty($course->showonlysection0)) {
         else{
             $headerextraclass='fnoutlineheadingblockone';
         }
-//        echo $completioninfo->display_help_icon();
+        echo $completioninfo->display_help_icon();
         echo $OUTPUT->heading($strmainheading, 2, 'fnoutlineheadingblock '.$headerextraclass.'');      
        
         if ($selected_week > 0 && !$PAGE->user_is_editing()) {
