@@ -591,7 +591,7 @@ class course_format_fn extends course_format {
                         }
                     } else { // Automatic
                         if ($mod->modname == 'assignment') {
-                            $act_compl = assignment_is_completed($mod, $USER->id);
+                                $act_compl = assignment_is_completed($mod, $USER->id);
                             if ($act_compl == 'submitted') {
                                 $completiondata->completionstate = COMPLETION_WAITFORGRADE_FN;
                             } else if ($act_compl == 'saved') {

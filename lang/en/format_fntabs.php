@@ -21,7 +21,7 @@
  * @copyright 1999 onwards Martin Dougiamas  {@link http://moodle.com}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-$string['pluginname'] = 'MoodleFN Format';
+$string['pluginname'] = 'FN- Tabs Format';
 $string['namefntabs'] = 'FN Week';
 
 $string['defaultmainheading'] = 'Weekly Activities';
