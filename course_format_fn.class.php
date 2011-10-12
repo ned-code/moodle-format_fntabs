@@ -5,7 +5,7 @@
  *
  * This class provides all the functionality for a course format
  */
-define('FNMAXTABS', 10);
+define('FNMAXTABS', 20);
 define('COMPLETION_WAITFORGRADE_FN', 5);
 define('COMPLETION_SAVED_FN', 4);
 
@@ -141,7 +141,7 @@ class course_format_fn extends course_format {
         $weekdate += 7200;                 // Add two hours to avoid possible DST problems
         $weekofseconds = 604800;
 
-        if ($course->numsections > 5) {
+        if ($course->numsections > 20) {
             $extraclassfortab = "tab-greaterthan5";
         } else {
             $extraclassfortab = "tab-lessthan5";

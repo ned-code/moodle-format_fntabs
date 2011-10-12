@@ -248,6 +248,10 @@ tr.oddrow {
 }
 .fnsectionouter {
     background-color: #9dbb61;
+	padding:0;
+}
+.number-select {
+	padding:0.5em;
 }
 .fntopicsoutlineside {
     background-color: #9dbb61;
@@ -465,9 +469,10 @@ h2.fnoutlineheadingblock {
     font-size: 1.1em;
 }
 .tab-greaterthan5 {
-    width:40px;
+    width:60px;
 }
 .tab-lessthan5 {
-    width:85px;
+    width:86px;
+	max-width:86px;
 }
 

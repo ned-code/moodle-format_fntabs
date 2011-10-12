@@ -48,7 +48,7 @@ class course_fntabs_edit_form extends course_edit_form {
         $mform->setDefault('topicheading', get_string('defaulttopicheading', 'format_fntabs'));
         $mform->setType('topicheading', PARAM_MULTILANG);
         $choices["0"] = get_string("hide");
-        $choices["1"] = get_string("show");
+        $choices["1"] = get_string("show");        
         $mform->addElement('header', 'FN Other', 'FN Other');
         unset($choices);
         $choices["0"] = get_string("hide");

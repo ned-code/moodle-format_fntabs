@@ -254,6 +254,7 @@ if (empty($course->showonlysection0)) {
         if ($selected_week > 0 && !$PAGE->user_is_editing()) {
             echo '<table class="topicsoutline" border="0" cellpadding="0" cellspacing="0" width="100%">
             <tr><td valign=top class="fntopicsoutlinecontent fnsectionouter" width="100%">
+			<div class="number-select">
             <!-- Tabbed section container -->
             <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
                     ';
@@ -261,8 +262,7 @@ if (empty($course->showonlysection0)) {
                 echo '
                 <!-- Tabs -->
                 <tr>
-                    <td width="100%" align="center">
-                        ';
+                    <td width="100%" align="center">';
                 echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);
                 echo '
                     </td>
@@ -286,9 +286,9 @@ if (empty($course->showonlysection0)) {
         } else if ($course->numsections > 1) {
             echo '<table class="topicsoutline" border="0" cellpadding="8" cellspacing="0" width="100%">';
             echo '<tr>';
-            echo '<td valign="top" class="fntopicsoutlinecontent fnsectionouter" width="100%" align="center">';
+            echo '<td valign="top" class="fntopicsoutlinecontent fnsectionouter" width="100%" align="center"><div class="number-select">';
             	echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);
-            echo '</td>';
+            echo '</div></td>';
             echo '</tr>';
             echo '</table>';
         }
@@ -462,7 +462,7 @@ if (empty($course->showonlysection0)) {
                 <!-- Selected Tab Content -->
             </table>
             <!-- Tabbed section container -->
-            </td></tr></table>
+            </div></td></tr></table>
             <br><br>
             <!-- Tabbed section container -->
                     ';
