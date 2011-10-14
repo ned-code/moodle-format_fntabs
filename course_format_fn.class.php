@@ -5,7 +5,8 @@
  *
  * This class provides all the functionality for a course format
  */
-define('FNMAXTABS', 20);
+
+define('FNMAXTABS', 10);
 define('COMPLETION_WAITFORGRADE_FN', 5);
 define('COMPLETION_SAVED_FN', 4);
 
@@ -23,6 +24,9 @@ class course_format_fn extends course_format {
      * @param $course object The pre-defined course object. Passed by reference, so that extended info can be added.
      *
      */
+    
+    public $tdselectedclass; 
+    
     function course_format_fn(&$course) {
         global $mods, $modnames, $modnamesplural, $modnamesused, $sections, $DB;
 
@@ -34,6 +38,7 @@ class course_format_fn extends course_format {
         $this->modnamesused = &$modnamesused;
         $this->sections = &$sections;
     }
+    
 
     function get_course($course=null) {
         global $DB;
@@ -62,6 +67,7 @@ class course_format_fn extends course_format {
 
         return $course;
     }
+        
 
     /** Custom functions * */
     function handle_extra_actions() {
@@ -77,6 +83,7 @@ class course_format_fn extends course_format {
             $cm->course = $course->id;
         }
     }
+    
 
     function get_week_info($tabrange, $week) {
         global $SESSION;
@@ -84,15 +91,19 @@ class course_format_fn extends course_format {
         if ($this->course->numsections == FNMAXTABS) {
             $tablow = 1;
             $tabhigh = FNMAXTABS;
+            
         } else if ($tabrange > 1000) {
             $tablow = $tabrange / 1000;
             $tabhigh = $tablow + FNMAXTABS - 1;
+            
         } else if (($tabrange == 0) && ($week == 0)) {
             $tablow = ((int) ((int) ($this->course->numsections - 1) / (int) FNMAXTABS) * FNMAXTABS) + 1;
             $tabhigh = $tablow + FNMAXTABS - 1;
+            
         } else if ($tabrange == 0) {
             $tablow = ((int) ((int) $week / (int) FNMAXTABS) * FNMAXTABS) + 1;
             $tabhigh = $tablow + FNMAXTABS - 1;
+            
         } else {
             $tablow = 1;
             $tabhigh = FNMAXTABS;
@@ -173,6 +184,7 @@ class course_format_fn extends course_format {
             $actbar .= '<td id="fn_tab_previous" height="25"><a href="' . $url . '&selected_week=' . $prv . '">Previous</a></td>';
         }
 
+        $tdselectedclass = array();
 
         for ($i = $tablow; $i <= $tabhigh; $i++) {
 
@@ -183,7 +195,7 @@ class course_format_fn extends course_format {
                 } else {
                     $css = 'fnweeklynavdisabled';
                 }
-
+                $tdselectedclass[$i] =  $css;
                 if ($isteacher) {
                     $f = '<a href="' . $url . '&selected_week=' . $i . '" ><span class="' . $css . '">&nbsp;' .
                             $i . '&nbsp;</span></a>';
@@ -201,6 +213,7 @@ class course_format_fn extends course_format {
                 } else {
                     $f = '';
                 }
+                $tdselectedclass[$i] = 'fnweeklynavselected';
                 $actbar .= '<td class="fnweeklynavselected ' . $f . ' ' . $extraclassfortab . '" id=fnweeklynav' . $i . ' width="" height="25"> ' . $i . ' </td>';
             } else {
                 if (!$isteacher && !is_siteadmin() && !$iseditingteacher) {
@@ -221,6 +234,7 @@ class course_format_fn extends course_format {
                 } else {
                     $f = '';
                 }
+                $tdselectedclass[$i] = 'fnweeklynavnorm';
                 $actbar .= '<td class="fnweeklynavnorm ' . $f . ' ' . $extraclassfortab . '" id=fnweeklynav' . $i . ' width="" height="25"><a class="tooltip" href="' . $url . '&selected_week=' . $i . '">&nbsp;' . $i . '&nbsp;';
                 if (!$isteacher && !is_siteadmin() && !is_primary_admin($USER->id) && !$iseditingteacher && $CFG->enablecompletion && $completioninfo->is_enabled()) {
                     $actbar .= '<span class="custom info">
@@ -256,9 +270,12 @@ class course_format_fn extends course_format {
         $actbar .= '<tr>';
         $actbar .= '<td height="3" colspan="2"></td>';
 
+
+	$this->tdselectedclass  = $tdselectedclass ;
+		 
         for ($i = $tablow; $i <= $tabhigh; $i++) {
             if ($i == $week) {
-                $actbar .= '<td height="3" class="fnweeklynavselected"></td>';
+                 $actbar .= '<td height="3" class="'.$tdselectedclass[$i].'"></td>';
             } else {
                 $actbar .= '<td height="3"></td>';
             }

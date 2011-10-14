@@ -1,6 +1,4 @@
 <?php
-
-// $Id: settings.php,v 1.2 2009/05/04 21:13:33 mchurch Exp $
 // Edit course settings
 
 require_once('../../../config.php');
@@ -15,10 +13,10 @@ $id = optional_param('id', 0, PARAM_INT);       // course id
 $categoryid = optional_param('category', 0, PARAM_INT); // course category - can be changed in edit form
 $PAGE->set_url('/course/format/fntabs/settings.php', array('id' => $id, 'extraonly' => '1'));
 
+
 /// basic access control checks
 if ($id) { // editing course
     if ($id == SITEID) {
-
         // don't allow editing of  'site course' using this from
         print_error('You cannot edit the site course using this form');
     }
@@ -26,44 +24,43 @@ if ($id) { // editing course
     if (!$course = $DB->get_record('course', array('id' => $id))) {
         print_error('Course ID was incorrect');
     }
-    require_login($course->id);
-    $category = $DB->get_record('course_categories', array('id' => $course->category));
-    require_capability('moodle/course:update', get_context_instance(CONTEXT_COURSE, $course->id));
+    require_login($course);   
+    $category = $DB->get_record('course_categories', array('id'=>$course->category), '*', MUST_EXIST);
+    $coursecontext = get_context_instance(CONTEXT_COURSE, $course->id);
+    require_capability('moodle/course:update', $coursecontext);
+    
 } else if ($categoryid) { // creating new course in this category
     $course = null;
-    require_login($course->id);
+    require_login();
     if (!$category = $DB->get_record('course_categories', array('id' => $categoryid))) {
         print_error('Category ID was incorrect');
     }
     require_capability('moodle/course:create', get_context_instance(CONTEXT_COURSECAT, $category->id));
+    
 } else {
-    require_login($course->id);
+    require_login();
     print_error('Either course id or category must be specified');
 }
 
 /// prepare course
+$editoroptions = array('maxfiles' => EDITOR_UNLIMITED_FILES, 'maxbytes'=>$CFG->maxbytes, 'trusttext'=>false, 'noclean'=>true);
 if (!empty($course)) {
     $allowedmods = array();
-    if (!empty($course)) {
-
-        if ($am = $DB->get_records('course_allowed_modules', array('course' => $course->id))) {
-            foreach ($am as $m) {
-                $allowedmods[] = $m->module;
-            }
-        } else {
-            if (empty($course->restrictmodules)) {
-                $allowedmods = explode(',', $CFG->defaultallowedmodules);
-            } // it'll be greyed out but we want these by default anyway.
+    if ($am = $DB->get_records('course_allowed_modules', array('course'=>$course->id))) {
+        foreach ($am as $m) {
+            $allowedmods[] = $m->module;
         }
-        $course->allowedmods = $allowedmods;
-
-        //    if ($course->enrolstartdate){
-        //       $course->enrolstartdisabled = 0;
-        //    }
-        //   if ($course->enrolenddate) {
-        //       $course->enrolenddisabled = 0;
-        //   }
+    } else {
+        // this happens in case we edit course created before enabling module restrictions or somebody disabled everything :-(
+        if (empty($course->restrictmodules) and !empty($CFG->defaultallowedmodules)) {
+            $allowedmods = explode(',', $CFG->defaultallowedmodules);
+        }
     }
+    $course->allowedmods = $allowedmods;
+    $course = file_prepare_standard_editor($course, 'summary', $editoroptions, $coursecontext, 'course', 'summary', 0);
+
+} else {
+    $course = file_prepare_standard_editor($course, 'summary', $editoroptions, null, 'course', 'summary', null);
 }
 
 
@@ -74,11 +71,7 @@ unset($cobject);
 
 /// first create the form
 $editform = new course_fntabs_edit_form('settings.php', compact('course', 'category'));
-// now override defaults if course already exists
-if (!empty($course)) {
-    #  $course->enrolpassword = $course->password; // we need some other name for password field MDL-9929
-    $editform->set_data($course);
-}
+
 if ($editform->is_cancelled()) {
     if (empty($course)) {
         redirect($CFG->wwwroot);
@@ -86,24 +79,36 @@ if ($editform->is_cancelled()) {
         redirect($CFG->wwwroot . '/course/view.php?id=' . $course->id);        
     }
 } else if ($data = $editform->get_data()) {
-
-
+    
+    
     if (empty($data->extraonly)) {
-        $data->password = $data->enrolpassword;  // we need some other name for password field MDL-9929
-        /// process data if submitted
-        //preprocess data
-        if ($data->enrolstartdisabled) {
-            $data->enrolstartdate = 0;
-        }
+            if (empty($course->id)) {
+            // In creating the course
+            $course = create_course($data, $editoroptions);
 
-        if ($data->enrolenddisabled) {
-            $data->enrolenddate = 0;
-        }
+            // Get the context of the newly created course
+            $context = get_context_instance(CONTEXT_COURSE, $course->id, MUST_EXIST);
 
-        $data->timemodified = time();
+            if (!empty($CFG->creatornewroleid) and !is_viewing($context, NULL, 'moodle/role:assign') and !is_enrolled($context, NULL, 'moodle/role:assign')) {
+                // deal with course creators - enrol them internally with default role
+                enrol_try_internal_enrol($course->id, $USER->id, $CFG->creatornewroleid);
 
-        if (!update_course($data)) {
-            print_error('coursenotupdated');
+            }
+            if (!is_enrolled($context)) {
+                // Redirect to manual enrolment page if possible
+                $instances = enrol_get_instances($course->id, true);
+                foreach($instances as $instance) {
+                    if ($plugin = enrol_get_plugin($instance->enrol)) {
+                        if ($plugin->get_manual_enrol_link($instance)) {
+                            // we know that the ajax enrol UI will have an option to enrol
+                            redirect(new moodle_url('/enrol/users.php', array('id'=>$course->id)));
+                        }
+                    }
+                }
+            }
+        } else {
+            // Save any changes to the files used in the editor
+            update_course($data, $editoroptions);
         }
     }
 
@@ -114,60 +119,51 @@ if ($editform->is_cancelled()) {
 
     $variable = 'showonlysection0';
     update_course_fn_setting($variable, $data->$variable);
-
-//        $variable = 'expforumsec';
-//        update_course_fn_setting($variable, $data->$variable);
-
+    
     $variable = 'mainheading';
     update_course_fn_setting($variable, $data->$variable);
 
     $variable = 'topicheading';
     update_course_fn_setting($variable, $data->$variable);
-
-//        $variable = 'defreadconfirmmess';
-//        update_course_fn_setting($variable, $data->$variable);
-
+    
+    $variable = 'maxtabs';
+    update_course_fn_setting($variable, $data->$variable);
     redirect($CFG->wwwroot . "/course/view.php?id=$course->id");
 }
 
-// $PAGE->set_url($CFG->wwwroot."/course/view.php?id=$course->id");
 /// Print the form
-
 $site = get_site();
+
 $streditcoursesettings = get_string("editcoursesettings");
 $straddnewcourse = get_string("addnewcourse");
 $stradministration = get_string("administration");
 $strcategories = get_string("categories");
 $navlinks = array();
 
-if (!empty($course)) {
-    $navlinks[] = array('name' => $streditcoursesettings,
-        'link' => null,
-        'type' => 'misc');
-    $title = $streditcoursesettings;
+if (!empty($course)) {    
+    $PAGE->navbar->add($streditcoursesettings);
+    $title = $streditcoursesettings;    
     $fullname = $course->fullname;
+    
 } else {
-    $navlinks[] = array('name' => $stradministration,
-        'link' => "$CFG->wwwroot/$CFG->admin/index.php",
-        'type' => 'misc');
-    $navlinks[] = array('name' => $strcategories,
-        'link' => 'index.php',
-        'type' => 'misc');
-    $navlinks[] = array('name' => $straddnewcourse,
-        'link' => null,
-        'type' => 'misc');
+    $PAGE->navbar->add($stradministration, new moodle_url('/admin/index.php'));
+    $PAGE->navbar->add($strcategories, new moodle_url('/course/index.php'));
+    $PAGE->navbar->add($straddnewcourse);
     $title = "$site->shortname: $straddnewcourse";
     $fullname = $site->fullname;
 }
 
-$navigation = build_navigation($navlinks);
-print_header($title, $fullname, $navigation, $editform->focus());
+$PAGE->set_title($title);
+$PAGE->set_heading($fullname);
+
+echo $OUTPUT->header();
 echo $OUTPUT->heading($streditcoursesettings);
 
 $editform->display();
-echo $OUTPUT->footer($course);
 
-//-------------------------------------------------------------------------------------------------------
+echo $OUTPUT->footer();
+
+////////////////////////////////////////////////////////////////////
 
 function update_course_fn_setting($variable, $data) {
     global $course, $DB;

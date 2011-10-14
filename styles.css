@@ -40,6 +40,7 @@
     border-right: 0px;
     border-color: #AAAAAA;
     background-color: #D3D3D3;
+	padding:10px !important;
 }
 .fntopicsoutlinecontenthighlight {
     border-style: solid;
@@ -86,6 +87,12 @@
     color: black;
 }
 .fnweeklynavselected .content-section {
+	padding:5px;
+}
+.fnweeklynavdisabledselected1 {
+    background-color:#F5E49C;
+}
+.fnweeklynavdisabledselected1 .content-section {
 	padding:5px;
 }
 .topicsoutline {
@@ -258,7 +265,7 @@ tr.oddrow {
 }
 .fntopicsoutlineinner {
     background-color: #FFFFFF;
-	padding:8px !important;
+	padding:10px !important;
 }
 .fntopicsoutlinesidehidden {
     background-color: #AAAAAA;

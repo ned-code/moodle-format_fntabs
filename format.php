@@ -38,11 +38,14 @@ require_once($CFG->dirroot.'/course/format/'.$course->format.'/lib.php');
 require_once($CFG->dirroot.'/course/format/'.$course->format.'/modulelib.php');
 global $DB, $OUTPUT, $THEME, $PAGE;
 
+
 $cobject = new course_format_fn($course);
 $course = $cobject->course;
 if(!isset($course->showsection0)){
     $course->showsection0=0;
 }
+
+
 $cobject->handle_extra_actions();
 /// Add any extra module information to our module structures.
 //$cobject->add_extra_module_info();
@@ -233,7 +236,6 @@ if (empty($course->showonlysection0)) {
     }
     $selected_week = ($selected_week < 0) ? 1 : $selected_week;
 
-
     // If the course has been set to more than zero sections, display normal.
     if ($course->numsections > 0) {       
         /// Forcing a style here, seems to be the only way to force a zero bottom margin...
@@ -264,17 +266,20 @@ if (empty($course->showonlysection0)) {
                 <tr>
                     <td width="100%" align="center">';
                 echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);
+               
                 echo '
                     </td>
                 </tr>
                 <!-- Tabs -->
                         ';
             }
+            $class =   $cobject->tdselectedclass[$selected_week]=='fnweeklynavdisabledselected'?'fnweeklynavdisabledselected1':'fnweeklynavselected';
+                //print_object($cobject->tdselectedclass);
             echo '
                 <!-- Selected Tab Content -->
                 <tr>
                     <!-- This cell holds the same colour as the selected tab. -->
-                    <td width="100%" class="fnweeklynavselected">
+                    <td width="100%" class="'.$class.'">
                         <!-- This table creates a selected colour box around the content -->
                         <table width="100%" cellpadding="0" cellspacing="0" border="0">
                             <tr>
@@ -288,6 +293,7 @@ if (empty($course->showonlysection0)) {
             echo '<tr>';
             echo '<td valign="top" class="fntopicsoutlinecontent fnsectionouter" width="100%" align="center"><div class="number-select">';
             	echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);
+               // print_object($cobject->tdselectedclass);
             echo '</div></td>';
             echo '</tr>';
             echo '</table>';

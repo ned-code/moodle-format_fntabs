@@ -1,6 +1,5 @@
 <?php
 
-// $Id: edit.php,v 1.1 2009/02/26 16:39:29 mchurch Exp $
 // Edit course settings
 
 require_once('../../../config.php');
