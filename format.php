@@ -50,7 +50,6 @@ $cobject->handle_extra_actions();
 /// Add any extra module information to our module structures.
 //$cobject->add_extra_module_info();
 //    $week = optional_param('week', -1, PARAM_INT);
-//print_object($course);
 $selected_week = optional_param('selected_week', -1, PARAM_INT);
 if ($selected_week != -1) {
     $displaysection = course_set_display($course->id, $selected_week);
@@ -78,13 +77,17 @@ if ($editing) {
 $tabrange = 0;
 if ($selected_week > 999) {
     $tabrange = $selected_week;
-    $selected_week = $SESSION->G8_selected_week[$course->id];
+    $selected_week = $SESSION->G8_selected_week[$course->id];    
     list($tablow, $tabhigh, $selected_week) = $cobject->get_week_info($tabrange, $selected_week);
+    
 } else if ($selected_week > -1) {
-    $SESSION->G8_selected_week[$course->id] = $selected_week;
+    
+    $SESSION->G8_selected_week[$course->id] = $selected_week;    
 } else if (isset($SESSION->G8_selected_week[$course->id])) {
+    
     $selected_week = $SESSION->G8_selected_week[$course->id];
 } else {
+    
     $SESSION->G8_selected_week[$course->id] = $selected_week;
 }
 
@@ -205,16 +208,18 @@ if (empty($course->showonlysection0)) {
     //  Calculate the current week based on today's date and the starting date of the course.
     $currentweek = ($timenow > $course->startdate) ?
             (int) ((($timenow - $course->startdate) / $weekofseconds) + 1) : 0;
+   
     $currentweek = min($currentweek, $course->numsections);
 
-    $strftimedateshort = " " . get_string("strftimedateshort");
+    $strftimedateshort = " " . get_string("strftimedateshort");   
 
     /// If the selected_week variable is 0, all weeks are selected.
     if ($selected_week == -1 && $currentweek == 0) {
         $selected_week = 0;
         $section = $selected_week;
         $numsections = $course->numsections;
-    } else if ($selected_week == -1) {
+        
+    } else if ($selected_week == -1) {        
         if ($PAGE->user_is_editing() ||
                 (!empty($course->activitytracking) && ($selected_week = $cobject->first_unfinished_section()) === false)) {
             $selected_week = $currentweek;
@@ -222,7 +227,8 @@ if (empty($course->showonlysection0)) {
         $selected_week = ($selected_week > $currentweek) ? $currentweek : $selected_week;
         $section = $selected_week;
         $numsections = MAX($section, 1);
-    } else if ($selected_week != 0) {
+        
+    } else if ($selected_week != 0) {       
         /// Teachers can select a future week; students can't.
         $isteacher = has_capability('moodle/grade:viewall', $cobject->context);
         if (($selected_week > $currentweek) && !$isteacher) {
@@ -231,9 +237,11 @@ if (empty($course->showonlysection0)) {
             $section = $selected_week;
         }
         $numsections = $section;
+        
     } else {
         $numsections = $course->numsections;
     }
+    
     $selected_week = ($selected_week < 0) ? 1 : $selected_week;
 
     // If the course has been set to more than zero sections, display normal.
@@ -260,12 +268,12 @@ if (empty($course->showonlysection0)) {
             <!-- Tabbed section container -->
             <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
                     ';
-            if ($course->numsections > 1) {
+            if ($course->numsections > 1) {                
                 echo '
                 <!-- Tabs -->
                 <tr>
                     <td width="100%" align="center">';
-                echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);
+                 echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);
                
                 echo '
                     </td>
@@ -274,7 +282,7 @@ if (empty($course->showonlysection0)) {
                         ';
             }
             $class =   $cobject->tdselectedclass[$selected_week]=='fnweeklynavdisabledselected'?'fnweeklynavdisabledselected1':'fnweeklynavselected';
-                //print_object($cobject->tdselectedclass);
+                
             echo '
                 <!-- Selected Tab Content -->
                 <tr>
@@ -292,8 +300,7 @@ if (empty($course->showonlysection0)) {
             echo '<table class="topicsoutline" border="0" cellpadding="8" cellspacing="0" width="100%">';
             echo '<tr>';
             echo '<td valign="top" class="fntopicsoutlinecontent fnsectionouter" width="100%" align="center"><div class="number-select">';
-            	echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);
-               // print_object($cobject->tdselectedclass);
+            	echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);               
             echo '</div></td>';
             echo '</tr>';
             echo '</table>';
@@ -338,9 +345,11 @@ if (empty($course->showonlysection0)) {
             if (!$thissection->visible || ($selected_week > $currentweek)) {
                 $colorsides = "class=\"fntopicsoutlinesidehidden\"";
                 $colormain = "class=\"fntopicsoutlinecontenthidden\"";
+                
             } else if ($currenttopic) {
                 $colorsides = "class=\"fntopicsoutlinesidehighlight\"";
                 $colormain = "class=\"fntopicsoutlinecontenthighlight\"";
+                
             } else {
                 $colorsides = "class=\"fntopicsoutlineside\"";
                 $colormain = "class=\"fntopicsoutlinecontent fntopicsoutlineinner\"";
@@ -352,6 +361,7 @@ if (empty($course->showonlysection0)) {
                 echo '</td></tr>';
                 echo "<tr>";
                 echo '<td nowrap ' . $colorsides . ' valign="top" width="20">&nbsp;</td>';
+                
             } else {
                 echo "<tr>";
             }

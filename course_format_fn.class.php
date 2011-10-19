@@ -6,7 +6,7 @@
  * This class provides all the functionality for a course format
  */
 
-define('FNMAXTABS', 10);
+
 define('COMPLETION_WAITFORGRADE_FN', 5);
 define('COMPLETION_SAVED_FN', 4);
 
@@ -25,7 +25,7 @@ class course_format_fn extends course_format {
      *
      */
     
-    public $tdselectedclass; 
+    public $tdselectedclass;
     
     function course_format_fn(&$course) {
         global $mods, $modnames, $modnamesplural, $modnamesused, $sections, $DB;
@@ -37,7 +37,7 @@ class course_format_fn extends course_format {
         $this->modnamesplural = &$modnamesplural;
         $this->modnamesused = &$modnamesused;
         $this->sections = &$sections;
-    }
+    }  
     
 
     function get_course($course=null) {
@@ -86,37 +86,45 @@ class course_format_fn extends course_format {
     
 
     function get_week_info($tabrange, $week) {
-        global $SESSION;
-
-        if ($this->course->numsections == FNMAXTABS) {
+        global $SESSION, $DB; 
+        
+        $fnmaxtab=$DB->get_field('course_config_fn','value',array('courseid'=>$this->course->id, 'variable'=>'maxtabs'));
+        if($fnmaxtab){
+            $maximumtabs=$fnmaxtab;           
+        }
+        else{            
+            $maximumtabs=12;
+        }       
+        if ($this->course->numsections ==$maximumtabs) {
+            echo "sudhanshu";
             $tablow = 1;
-            $tabhigh = FNMAXTABS;
+            $tabhigh = $maximumtabs;           
             
         } else if ($tabrange > 1000) {
             $tablow = $tabrange / 1000;
-            $tabhigh = $tablow + FNMAXTABS - 1;
+            $tabhigh = $tablow + $maximumtabs - 1;
             
         } else if (($tabrange == 0) && ($week == 0)) {
-            $tablow = ((int) ((int) ($this->course->numsections - 1) / (int) FNMAXTABS) * FNMAXTABS) + 1;
-            $tabhigh = $tablow + FNMAXTABS - 1;
+            $tablow = ((int) ((int) ($this->course->numsections - 1) / (int) $maximumtabs) * $maximumtabs) + 1;
+            $tabhigh = $tablow + $maximumtabs - 1;
             
-        } else if ($tabrange == 0) {
-            $tablow = ((int) ((int) $week / (int) FNMAXTABS) * FNMAXTABS) + 1;
-            $tabhigh = $tablow + FNMAXTABS - 1;
+        } else if ($tabrange == 0) {           
+            $tablow = ((int) ((int) $week / (int) $maximumtabs) * $maximumtabs) + 1;
+            $tabhigh = $tablow + $maximumtabs - 1;           
             
         } else {
             $tablow = 1;
-            $tabhigh = FNMAXTABS;
+            $tabhigh = $maximumtabs;
         }
         $tabhigh = MIN($tabhigh, $this->course->numsections);
 
 
         /// Normalize the tabs to always display FNMAXTABS...
-        if (($tabhigh - $tablow + 1) < FNMAXTABS) {
-            $tablow = $tabhigh - FNMAXTABS + 1;
+        if (($tabhigh - $tablow + 1) < $maximumtabs) {
+            $tablow = $tabhigh - $maximumtabs + 1;
         }
 
-
+        
         /// Save the low and high week in SESSION variables... If they already exist, and the selected
         /// week is in their range, leave them as is.
         if (($tabrange >= 1000) || !isset($SESSION->FN_tablow[$this->course->id]) || !isset($SESSION->FN_tabhigh[$this->course->id]) ||
@@ -136,26 +144,37 @@ class course_format_fn extends course_format {
         } else if ($week > $tabhigh) {
             $week = $SESSION->G8_selected_week[$this->course->id] = $tabhigh;
         }
-
+        unset($maximumtabs);
         return array($tablow, $tabhigh, $week);
     }
 
     function print_weekly_activities_bar($week=0, $tabrange=0) {
         global $THEME, $FULLME, $CFG, $course, $DB, $USER;
+        
+         $fnmaxtab=$DB->get_field('course_config_fn','value',array('courseid'=>$this->course->id, 'variable'=>'maxtabs'));
+        if($fnmaxtab){
+            $maximumtabs=$fnmaxtab;
+            
+        }
+        else{
+            $maximumtabs=12;
+        }
+        
 
-        $completioninfo = new completion_info($course);
+        $completioninfo = new completion_info($course);      
 
-        list($tablow, $tabhigh, $week) = $this->get_week_info($tabrange, $week);
+        list($tablow, $tabhigh, $week) = $this->get_week_info($tabrange, $week);        
 
         $timenow = time();
         $weekdate = $this->course->startdate;    // this should be 0:00 Monday of that week
         $weekdate += 7200;                 // Add two hours to avoid possible DST problems
         $weekofseconds = 604800;
 
-        if ($course->numsections > 20) {
+        if ($this->course->numsections > 20) {
             $extraclassfortab = "tab-greaterthan5";
         } else {
             $extraclassfortab = "tab-lessthan5";
+            
         }
 
         if (isset($this->course->topicheading) && !empty($this->course->topicheading)) {
@@ -177,7 +196,7 @@ class course_format_fn extends course_format {
         if ($tablow <= 1) {
             $actbar .= '<td height="25" class="tab-heading"><strong>' . $strtopicheading . ':&nbsp;</strong></td>';
         } else {
-            $prv = ($tablow - FNMAXTABS) * 1000;
+            $prv = ($tablow - $maximumtabs) * 1000;
             if ($prv < 0) {
                 $prv = 1000;
             }
@@ -285,6 +304,8 @@ class course_format_fn extends course_format {
         $actbar .= '</tr>';
         $actbar .= '</table>';
         $actbar .= '</td></tr></table>';
+        rebuild_course_cache($this->course->id);
+        unset($maximumtabs);
 
         return $actbar;
     }

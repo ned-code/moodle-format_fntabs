@@ -3,10 +3,7 @@
 /**
  * This file contains general functions for the course format MoodleFN format
  *
- * @since 2.0
- * @package moodlecore
- * @copyright 2009 Sam Hemelryk
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ 
  */
 
 require_once ($CFG->dirroot . '/course/lib.php');
@@ -19,18 +16,23 @@ function FN_update_course($form, $oldformat = false) {
 
     /// Updates course specific variables.
     /// Variables are: 'showsection0', 'showannouncements'.
+    
+    
 //    $config_vars = array('showsection0', 'showannouncements', 'sec0title', 'showhelpdoc', 'showclassforum',
-//                         'showclasschat', 'logo', 'mycourseblockdisplay',
-//                         'showgallery', 'gallerydefault', 'usesitegroups', 'mainheading', 'topicheading',
+//                         'showclasschat', 'logo', 'mycourseblockdisplay','showgallery', 'gallerydefault', 'usesitegroups', 'mainheading', 'topicheading',
 //                         'activitytracking', 'ttmarking', 'ttgradebook', 'ttdocuments', 'ttstaff',
 //                         'defreadconfirmmess', 'usemandatory', 'expforumsec');
+    
 
-    $config_vars = array('showsection0', 'sec0title', 'mainheading', 'topicheading');
+    $config_vars = array('showsection0', 'sec0title', 'mainheading', 'topicheading','maxtabs');
+    
     
     foreach ($config_vars as $config_var) {
+        
         if ($varrec = $DB->get_record('course_config_fn', array('courseid' => $form->id, 'variable' => $config_var))) {
             $varrec->value = $form->$config_var;
             $DB->update_record('course_config_fn', $varrec);
+            
         } else {
             $varrec->courseid = $form->id;
             $varrec->variable = $config_var;
@@ -172,29 +174,37 @@ function callback_weeks_ajax_support() {
 
 function get_week_info($tabrange, $week) {
     global $SESSION;
+    
+    $fnmaxtab=$DB->get_field('course_config_fn','value',array('courseid'=>$this->course->id, 'variable'=>'maxtabs'));
+     if($fnmaxtab){
+            $maximumtabs=$fnmaxtab;      
+        }
+        else{
+            $maximumtabs=12;
+        }
 
-    if ($this->course->numsections == FNMAXTABS) {
+    if ($this->course->numsections == $maximumtabs) {
         $tablow = 1;
-        $tabhigh = FNMAXTABS;
+        $tabhigh = $maximumtabs;
     } else if ($tabrange > 1000) {
         $tablow = $tabrange / 1000;
-        $tabhigh = $tablow + FNMAXTABS - 1;
+        $tabhigh = $tablow + $maximumtabs - 1;
     } else if (($tabrange == 0) && ($week == 0)) {
-        $tablow = ((int) ((int) ($this->course->numsections - 1) / (int) FNMAXTABS) * FNMAXTABS) + 1;
-        $tabhigh = $tablow + FNMAXTABS - 1;
+        $tablow = ((int) ((int) ($this->course->numsections - 1) / (int) $maximumtabs) * $maximumtabs) + 1;
+        $tabhigh = $tablow + $maximumtabs - 1;
     } else if ($tabrange == 0) {
-        $tablow = ((int) ((int) $week / (int) FNMAXTABS) * FNMAXTABS) + 1;
-        $tabhigh = $tablow + FNMAXTABS - 1;
+        $tablow = ((int) ((int) $week / (int) $maximumtabs) * $maximumtabs) + 1;
+        $tabhigh = $tablow + $maximumtabs - 1;
     } else {
         $tablow = 1;
-        $tabhigh = FNMAXTABS;
+        $tabhigh = $maximumtabs;
     }
     $tabhigh = MIN($tabhigh, $this->course->numsections);
 
 
     /// Normalize the tabs to always display FNMAXTABS...
-    if (($tabhigh - $tablow + 1) < FNMAXTABS) {
-        $tablow = $tabhigh - FNMAXTABS + 1;
+    if (($tabhigh - $tablow + 1) < $maximumtabs) {
+        $tablow = $tabhigh - $maximumtabs + 1;
     }
 
 
