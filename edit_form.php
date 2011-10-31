@@ -20,7 +20,7 @@ class course_fntabs_edit_form extends course_edit_form {
     }
 
     function definition2($extraonly) {
-        global $USER, $CFG, $COURSE;
+        global $USER, $CFG, $COURSE,$DB;
 
         $mform = & $this->_form;
 
@@ -35,7 +35,43 @@ class course_fntabs_edit_form extends course_edit_form {
         // the upload manager is used directly in post precessing, moodleform::save_files() is not used yet
         //  $this->set_upload_manager(new upload_manager('logo', true, false, $this->_customdata['course'], false, $CFG->maxbytes, true, trset_upload_managerue));
         
-        // Set the header FN course tabs
+        
+        
+        //get the max tabs set from database
+        $configvariabletabs=$DB->record_exists('course_config_fn',array('courseid'=>$COURSE->id, 'variable'=>'maxtabs'));
+        
+        if($configvariabletabs){
+            $maxtabsindb =$DB->get_field('course_config_fn','value',array('courseid'=>$COURSE->id, 'variable'=>'maxtabs'));            
+        }
+        
+        //get mainheading from database
+        $configvariabeheading =$DB->record_exists('course_config_fn',array('courseid'=>$COURSE->id, 'variable'=>'mainheading'));
+        
+        if($configvariabletabs){
+            $mainheadingindb =$DB->get_field('course_config_fn','value',array('courseid'=>$COURSE->id, 'variable'=>'mainheading'));            
+        }
+        
+         //get topic heading from database
+        $configvariabetopicheading =$DB->record_exists('course_config_fn',array('courseid'=>$COURSE->id, 'variable'=>'topicheading'));
+       
+        if($configvariabetopicheading){
+            $topicmainheadingindb =$DB->get_field('course_config_fn','value',array('courseid'=>$COURSE->id, 'variable'=>'topicheading'));            
+        }
+        
+         //get showsection0 heading from database
+        $configvariabeshowsection0 =$DB->record_exists('course_config_fn',array('courseid'=>$COURSE->id, 'variable'=>'showsection0'));
+       
+        if($configvariabeshowsection0){
+            $showsection0indb =$DB->get_field('course_config_fn','value',array('courseid'=>$COURSE->id, 'variable'=>'showsection0'));            
+        }
+        
+        //get showsectiononly0 heading from database
+        $configvariabeshowonlysection0 =$DB->record_exists('course_config_fn',array('courseid'=>$COURSE->id, 'variable'=>'showonlysection0'));
+       
+        if($configvariabeshowonlysection0){
+            $showonlysection0indb =$DB->get_field('course_config_fn','value',array('courseid'=>$COURSE->id, 'variable'=>'showonlysection0'));            
+        }       
+       
         $mform->addElement('header', 'FN Course Tabs', 'FN Course Tabs');
         $mform->addElement('hidden', 'extraonly', $extraonly);
 
@@ -44,7 +80,14 @@ class course_fntabs_edit_form extends course_edit_form {
         $mform->addElement('text', 'mainheading', $label, 'maxlength="254" size="50"');
         $mform->addRule('mainheading', get_string('missingmainheading','format_fntabs'), 'required', null, 'client');
         $mform->addHelpButton('mainheading', 'mainheading', 'format_fntabs');
-        $mform->setDefault('mainheading', get_string('defaultmainheading', 'format_fntabs'));
+        
+        if($mainheadingindb){            
+            $mform->setDefault('mainheading',$mainheadingindb);            
+        }
+        else{
+            $mform->setDefault('mainheading', get_string('defaultmainheading', 'format_fntabs'));            
+        }
+        
         $mform->setType('mainheading', PARAM_MULTILANG);
         
 
@@ -53,7 +96,14 @@ class course_fntabs_edit_form extends course_edit_form {
         $mform->addElement('text', 'topicheading', $label, 'maxlength="254" size="50"');
         $mform->addRule('topicheading', get_string('missingtopicheading','format_fntabs'), 'required', null, 'client');
         $mform->addHelpButton('topicheading', 'topicheading', 'format_fntabs');
-        $mform->setDefault('topicheading', get_string('defaulttopicheading', 'format_fntabs'));
+        
+        if($topicmainheadingindb){            
+            $mform->setDefault('topicheading',$topicmainheadingindb);            
+        }
+        else{            
+            $mform->setDefault('topicheading', get_string('defaulttopicheading', 'format_fntabs'));            
+        }
+       
         $mform->setType('topicheading', PARAM_MULTILANG);
         
 
@@ -65,7 +115,14 @@ class course_fntabs_edit_form extends course_edit_form {
 
         $mform->addElement('select', 'maxtabs', get_string('setnumberoftabs', 'format_fntabs'), $numberoftabs);
         $mform->addHelpButton('maxtabs', 'setnumberoftabs', 'format_fntabs');
-        $mform->setDefault('maxtabs', $numberoftabs[12]);
+         
+        if($maxtabsindb){            
+            $mform->setDefault('maxtabs',$maxtabsindb);            
+        }
+        else{
+            $mform->setDefault('maxtabs',  $numberoftabs[12]);
+            
+        }       
 
         //header for FN other setting 
         $mform->addElement('header', 'FN Other', 'FN Other');        
@@ -75,8 +132,14 @@ class course_fntabs_edit_form extends course_edit_form {
         $choices["1"] = get_string("show");
         $label = get_string('showsection0', 'format_fntabs');
         $mform->addElement('select', 'showsection0', $label, $choices);
-        $mform->addHelpButton('showsection0', 'showsection0', 'format_fntabs');
-        $mform->setDefault('showsection0', '0');
+        $mform->addHelpButton('showsection0', 'showsection0', 'format_fntabs');        
+        if($showsection0indb){        
+            $mform->setDefault('showsection0', $showsection0indb);         
+        }
+        else{
+            $mform->setDefault('showsection0','0');            
+        }         
+        
         unset($choices);
 
         //for shwo only section 0 setting
@@ -85,7 +148,13 @@ class course_fntabs_edit_form extends course_edit_form {
         $label = get_string('showonlysection0', 'format_fntabs');
         $mform->addElement('select', 'showonlysection0', $label, $choices);
         $mform->addHelpButton('showonlysection0', 'showonlysection0', 'format_fntabs');
-        $mform->setDefault('showonlysection0', '0');
+        if($showonlysection0indb){        
+            $mform->setDefault('showonlysection0', $showonlysection0indb);         
+        }
+        else{
+            $mform->setDefault('showonlysection0', '0');            
+        } 
+        
 
         unset($choices);
         $choices["-1"] = 'none';

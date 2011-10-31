@@ -51,11 +51,6 @@ $cobject->handle_extra_actions();
 //$cobject->add_extra_module_info();
 //    $week = optional_param('week', -1, PARAM_INT);
 $selected_week = optional_param('selected_week', -1, PARAM_INT);
-if ($selected_week != -1) {
-    $displaysection = course_set_display($course->id, $selected_week);
-} else {
-    $displaysection = course_get_display($course->id);
-}
 
 $streditsummary = get_string('editsummary');
 $stradd = get_string('add');
