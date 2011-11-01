@@ -128,7 +128,7 @@ if ($editform->is_cancelled()) {
     
     $variable = 'maxtabs';
     update_course_fn_setting($variable, $data->$variable);
-    redirect($CFG->wwwroot . "/course/view.php?id=$course->id");
+    redirect($CFG->wwwroot . "/course/view.php?id=$course->id".'&selected_week=1000');
 }
 
 /// Print the form
