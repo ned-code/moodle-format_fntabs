@@ -49,7 +49,7 @@ if(!isset($course->showsection0)){
 $cobject->handle_extra_actions();
 /// Add any extra module information to our module structures.
 //$cobject->add_extra_module_info();
-//    $week = optional_param('week', -1, PARAM_INT);
+// $week = optional_param('week', -1, PARAM_INT);
 $selected_week = optional_param('selected_week', -1, PARAM_INT);
 
 $streditsummary = get_string('editsummary');
@@ -69,25 +69,23 @@ if ($editing) {
     $strmarkthistopic = get_string("markthistopic");
 }
 
-$tabrange = 0;
-if ($selected_week > 999) {
-    $tabrange = $selected_week;
-    $selected_week = $SESSION->G8_selected_week[$course->id];    
-    list($tablow, $tabhigh, $selected_week) = $cobject->get_week_info($tabrange, $selected_week);
-    
-} else if ($selected_week > -1) {
-    
-    $SESSION->G8_selected_week[$course->id] = $selected_week;    
-} else if (isset($SESSION->G8_selected_week[$course->id])) {
-    
-    $selected_week = $SESSION->G8_selected_week[$course->id];
-} else {
-    
-    $SESSION->G8_selected_week[$course->id] = $selected_week;
-}
+    $tabrange = 0;
+    if ($selected_week > 999) {
+        $tabrange = $selected_week;
+        $selected_week = $SESSION->G8_selected_week[$course->id];
+        list($tablow, $tabhigh, $selected_week) = $cobject->get_week_info($tabrange, $selected_week);
+    } else if ($selected_week > -1) {
+        $SESSION->G8_selected_week[$course->id] = $selected_week;
+    }
+    else if (isset($SESSION->G8_selected_week[$course->id])) {
+        //$selected_week = $SESSION->G8_selected_week[$course->id];
+    }
+    else {
+        $SESSION->G8_selected_week[$course->id] = $selected_week;
+    }
 
-$context = get_context_instance(CONTEXT_COURSE, $course->id);
-$cobject->context = $context;
+$cobject->context = get_context_instance(CONTEXT_COURSE, $course->id);
+ 
 
 if (($marker >= 0) && has_capability('moodle/course:setcurrentsection', $cobject->context) && confirm_sesskey()) {
     $course->marker = $marker;

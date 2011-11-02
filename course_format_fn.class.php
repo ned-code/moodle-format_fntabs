@@ -94,19 +94,20 @@ class course_format_fn extends course_format {
         }
         else{            
             $maximumtabs=12;
-        }       
-        if ($this->course->numsections ==$maximumtabs) {
-            echo "sudhanshu";
+        }
+//        print_object($this->course->numsections);
+//        print_object($maximumtabs);
+        if ($this->course->numsections == $maximumtabs) {            
             $tablow = 1;
             $tabhigh = $maximumtabs;           
             
         } else if ($tabrange > 1000) {
-            $tablow = $tabrange / 1000;
-            $tabhigh = $tablow + $maximumtabs - 1;
+            $tablow = (int) ($tabrange / 1000);
+            $tabhigh = (int)($tablow + $maximumtabs - 1);            
             
         } else if (($tabrange == 0) && ($week == 0)) {
             $tablow = ((int) ((int) ($this->course->numsections - 1) / (int) $maximumtabs) * $maximumtabs) + 1;
-            $tabhigh = $tablow + $maximumtabs - 1;
+            $tabhigh = $tablow + $maximumtabs - 1;           
             
         } else if ($tabrange == 0) {           
             $tablow = ((int) ((int) $week / (int) $maximumtabs) * $maximumtabs) + 1;
@@ -153,8 +154,7 @@ class course_format_fn extends course_format {
         
          $fnmaxtab=$DB->get_field('course_config_fn','value',array('courseid'=>$this->course->id, 'variable'=>'maxtabs'));
         if($fnmaxtab){
-            $maximumtabs=$fnmaxtab;
-            
+            $maximumtabs=$fnmaxtab;            
         }
         else{
             $maximumtabs=12;
