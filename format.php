@@ -34,15 +34,15 @@ require_once($CFG->dirroot . '/mod/forum/lib.php');
 
 require_once($CFG->dirroot . '/course/format/' . $course->format . '/course_format.class.php');
 require_once($CFG->dirroot . '/course/format/' . $course->format . '/course_format_fn.class.php');
-require_once($CFG->dirroot.'/course/format/'.$course->format.'/lib.php');
-require_once($CFG->dirroot.'/course/format/'.$course->format.'/modulelib.php');
+require_once($CFG->dirroot . '/course/format/' . $course->format . '/lib.php');
+require_once($CFG->dirroot . '/course/format/' . $course->format . '/modulelib.php');
 global $DB, $OUTPUT, $THEME, $PAGE;
 
 
 $cobject = new course_format_fn($course);
 $course = $cobject->course;
-if(!isset($course->showsection0)){
-    $course->showsection0=0;
+if (!isset($course->showsection0)) {
+    $course->showsection0 = 0;
 }
 
 
@@ -69,23 +69,21 @@ if ($editing) {
     $strmarkthistopic = get_string("markthistopic");
 }
 
-    $tabrange = 0;
-    if ($selected_week > 999) {
-        $tabrange = $selected_week;
-        $selected_week = $SESSION->G8_selected_week[$course->id];
-        list($tablow, $tabhigh, $selected_week) = $cobject->get_week_info($tabrange, $selected_week);
-    } else if ($selected_week > -1) {
-        $SESSION->G8_selected_week[$course->id] = $selected_week;
-    }
-    else if (isset($SESSION->G8_selected_week[$course->id])) {
-        //$selected_week = $SESSION->G8_selected_week[$course->id];
-    }
-    else {
-        $SESSION->G8_selected_week[$course->id] = $selected_week;
-    }
+$tabrange = 0;
+if ($selected_week > 999) {
+    $tabrange = $selected_week;
+    $selected_week = $SESSION->G8_selected_week[$course->id];
+    list($tablow, $tabhigh, $selected_week) = $cobject->get_week_info($tabrange, $selected_week);
+} else if ($selected_week > -1) {
+    $SESSION->G8_selected_week[$course->id] = $selected_week;
+} else if (isset($SESSION->G8_selected_week[$course->id])) {
+    //$selected_week = $SESSION->G8_selected_week[$course->id];
+} else {
+    $SESSION->G8_selected_week[$course->id] = $selected_week;
+}
 
 $cobject->context = get_context_instance(CONTEXT_COURSE, $course->id);
- 
+
 
 if (($marker >= 0) && has_capability('moodle/course:setcurrentsection', $cobject->context) && confirm_sesskey()) {
     $course->marker = $marker;
@@ -120,7 +118,7 @@ $thissection = $sections[$section];
 unset($sections[0]);
 
 if (!empty($course->showsection0) && ($thissection->summary or $thissection->sequence or $PAGE->user_is_editing())) {
-    
+
     // Note, 'right side' is BEFORE content.
     echo "<tr id=\"section-0\" class=\"section main\">";
     echo '<td colspan="3" align="center" width="100%" id="fnsection0" class="content">';
@@ -201,18 +199,17 @@ if (empty($course->showonlysection0)) {
     //  Calculate the current week based on today's date and the starting date of the course.
     $currentweek = ($timenow > $course->startdate) ?
             (int) ((($timenow - $course->startdate) / $weekofseconds) + 1) : 0;
-   
+
     $currentweek = min($currentweek, $course->numsections);
 
-    $strftimedateshort = " " . get_string("strftimedateshort");   
+    $strftimedateshort = " " . get_string("strftimedateshort");
 
     /// If the selected_week variable is 0, all weeks are selected.
     if ($selected_week == -1 && $currentweek == 0) {
         $selected_week = 0;
         $section = $selected_week;
         $numsections = $course->numsections;
-        
-    } else if ($selected_week == -1) {        
+    } else if ($selected_week == -1) {
         if ($PAGE->user_is_editing() ||
                 (!empty($course->activitytracking) && ($selected_week = $cobject->first_unfinished_section()) === false)) {
             $selected_week = $currentweek;
@@ -220,8 +217,7 @@ if (empty($course->showonlysection0)) {
         $selected_week = ($selected_week > $currentweek) ? $currentweek : $selected_week;
         $section = $selected_week;
         $numsections = MAX($section, 1);
-        
-    } else if ($selected_week != 0) {       
+    } else if ($selected_week != 0) {
         /// Teachers can select a future week; students can't.
         $isteacher = has_capability('moodle/grade:viewall', $cobject->context);
         if (($selected_week > $currentweek) && !$isteacher) {
@@ -230,30 +226,28 @@ if (empty($course->showonlysection0)) {
             $section = $selected_week;
         }
         $numsections = $section;
-        
     } else {
         $numsections = $course->numsections;
     }
-    
+
     $selected_week = ($selected_week < 0) ? 1 : $selected_week;
 
     // If the course has been set to more than zero sections, display normal.
-    if ($course->numsections > 0) {       
+    if ($course->numsections > 0) {
         /// Forcing a style here, seems to be the only way to force a zero bottom margin...
         if (!empty($course->mainheading)) {
             $strmainheading = $course->mainheading;
         } else {
             $strmainheading = get_string('defaultmainheading', 'format_fntabs');
         }
-        if ($course->showsection0){
-            $headerextraclass='';            
+        if ($course->showsection0) {
+            $headerextraclass = '';
+        } else {
+            $headerextraclass = 'fnoutlineheadingblockone';
         }
-        else{
-            $headerextraclass='fnoutlineheadingblockone';
-        }
-        echo $completioninfo->display_help_icon();
-        echo $OUTPUT->heading($strmainheading, 2, 'fnoutlineheadingblock '.$headerextraclass.'');      
-       
+       // echo $completioninfo->display_help_icon();
+        echo $OUTPUT->heading($strmainheading, 2, 'fnoutlineheadingblock ' . $headerextraclass . '');
+
         if ($selected_week > 0 && !$PAGE->user_is_editing()) {
             echo '<table class="topicsoutline" border="0" cellpadding="0" cellspacing="0" width="100%">
             <tr><td valign=top class="fntopicsoutlinecontent fnsectionouter" width="100%">
@@ -261,26 +255,26 @@ if (empty($course->showonlysection0)) {
             <!-- Tabbed section container -->
             <table border="0" cellpadding="0" cellspacing="0" width="100%" align="center">
                     ';
-            if ($course->numsections > 1) {                
+            if ($course->numsections > 1) {
                 echo '
                 <!-- Tabs -->
                 <tr>
                     <td width="100%" align="center">';
-                 echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);
-               
+                echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);
+
                 echo '
                     </td>
                 </tr>
                 <!-- Tabs -->
                         ';
             }
-            $class =   $cobject->tdselectedclass[$selected_week]=='fnweeklynavdisabledselected'?'fnweeklynavdisabledselected1':'fnweeklynavselected';
-                
+            $class = $cobject->tdselectedclass[$selected_week] == 'fnweeklynavdisabledselected' ? 'fnweeklynavdisabledselected1' : 'fnweeklynavselected';
+
             echo '
                 <!-- Selected Tab Content -->
                 <tr>
                     <!-- This cell holds the same colour as the selected tab. -->
-                    <td width="100%" class="'.$class.'">
+                    <td width="100%" class="' . $class . '">
                         <!-- This table creates a selected colour box around the content -->
                         <table width="100%" cellpadding="0" cellspacing="0" border="0">
                             <tr>
@@ -293,7 +287,7 @@ if (empty($course->showonlysection0)) {
             echo '<table class="topicsoutline" border="0" cellpadding="8" cellspacing="0" width="100%">';
             echo '<tr>';
             echo '<td valign="top" class="fntopicsoutlinecontent fnsectionouter" width="100%" align="center"><div class="number-select">';
-            	echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);               
+            echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);
             echo '</div></td>';
             echo '</tr>';
             echo '</table>';
@@ -338,11 +332,9 @@ if (empty($course->showonlysection0)) {
             if (!$thissection->visible || ($selected_week > $currentweek)) {
                 $colorsides = "class=\"fntopicsoutlinesidehidden\"";
                 $colormain = "class=\"fntopicsoutlinecontenthidden\"";
-                
             } else if ($currenttopic) {
                 $colorsides = "class=\"fntopicsoutlinesidehighlight\"";
                 $colormain = "class=\"fntopicsoutlinecontenthighlight\"";
-                
             } else {
                 $colorsides = "class=\"fntopicsoutlineside\"";
                 $colormain = "class=\"fntopicsoutlinecontent fntopicsoutlineinner\"";
@@ -354,7 +346,6 @@ if (empty($course->showonlysection0)) {
                 echo '</td></tr>';
                 echo "<tr>";
                 echo '<td nowrap ' . $colorsides . ' valign="top" width="20">&nbsp;</td>';
-                
             } else {
                 echo "<tr>";
             }
