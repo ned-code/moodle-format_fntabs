@@ -490,4 +490,7 @@ h2.fnoutlineheadingblock {
     width:86px;
 	max-width:86px;
 }
+.mod-indent-1 {
+    margin-left: 0px !important;
+}
 
