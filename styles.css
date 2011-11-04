@@ -435,9 +435,17 @@ table {
 	overflow:visible !important;
 }*/
 
-
+#page-course-view-fntabs .weeks .fntopicsoutlineinner .section-boxs {
+    text-align: center;
+    overflow: hidden;
+    margin: 0 auto;
+    width: 50%;
+}
 #page-course-view-fntabs .weeks .fntopicsoutlineinner ul.section {
-	margin-left:10em;
+	margin:1em 0 1em 1.9em;
+}
+#page-course-view-fntabs .weeks .fntopicsoutlineinner ul.section li {
+        text-align: left;
 }
 
 /*** Tool Tips ***/

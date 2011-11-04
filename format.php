@@ -375,8 +375,9 @@ if (empty($course->showonlysection0)) {
                     echo '<br clear="all">';
                 }
 
-
-                $cobject->print_section_fn($course, $thissection, $mods, $modnamesused);
+                echo '<div class="section-boxs">';
+                    $cobject->print_section_fn($course, $thissection, $mods, $modnamesused);
+                echo '</div>';
 
                 if ($PAGE->user_is_editing()) {
                     $cobject->print_section_add_menus($course, $section, $modnames);
