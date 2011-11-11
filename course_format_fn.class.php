@@ -628,16 +628,16 @@ class course_format_fn extends course_format {
                                 break;
                         }
                     } else { // Automatic
-                        if ($mod->modname == 'assignment') {
+                        if (($mod->modname == 'assignment')  && isset($mod->completiongradeitemnumber)) {                            
                                 $act_compl = assignment_is_completed($mod, $USER->id);
+                                $completiondata1 = $completioninfo->get_data($mod,true);                                
                             if ($act_compl == 'submitted') {
                                 $completiondata->completionstate = COMPLETION_WAITFORGRADE_FN;
                             } else if ($act_compl == 'saved') {
                                 $completiondata->completionstate = COMPLETION_SAVED_FN;
                             }
                         }
-
-
+                       
                         switch ($completiondata->completionstate) {
                             case COMPLETION_INCOMPLETE:
                                 $completionicon = 'auto-n';
