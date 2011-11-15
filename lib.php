@@ -342,7 +342,10 @@ function get_activities_status($course, $section) {
         $modules = get_course_section_mods($course->id, $section->id);
         $completion = new completion_info($course);
         if ((isset($CFG->enablecompletion)) && !empty($completion)) {
-            foreach ($modules as $module) {                
+            foreach ($modules as $module) {
+                 if (!$module->visible) {
+                        continue;
+                    }
                 if ($completion->is_enabled($course = null, $module)) {
                     $data = $completion->get_data($module, false, $USER->id, null);
                     $completionstate = $data->completionstate;

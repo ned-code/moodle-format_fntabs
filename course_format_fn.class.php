@@ -590,7 +590,8 @@ class course_format_fn extends course_format {
                 }
 
                 // Completion
-                require_once('modulelib.php');
+                require_once('modulelib.php');             
+                
                 $completion = $hidecompletion ? COMPLETION_TRACKING_NONE : $completioninfo->is_enabled($mod);
                 if ($completion != COMPLETION_TRACKING_NONE && isloggedin() &&
                         !isguestuser() && $mod->uservisible) {
@@ -607,8 +608,8 @@ class course_format_fn extends course_format {
                             default: // wtf
                         }
                     }
-                    ///this condition is added by sudhanshu
-                    else if (is_siteadmin() || has_capability('gradereport/grader:view', get_context_instance(CONTEXT_COURSE, $USER->id))) {
+                    ///this condition is added by sudhanshu                    
+                    else if (is_siteadmin() || !has_capability('mod/assignment:submit', get_context_instance(CONTEXT_COURSE, $course->id))) {
                         switch ($completion) {
                             case COMPLETION_TRACKING_MANUAL :
                                 $completionicon = 'manual-enabled';
