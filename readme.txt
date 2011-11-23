@@ -1,17 +1,3 @@
-This is readme file for the fntabs course format which is for moodle 2.1
-This course format has the one dependent block that can be downloaded from https://github.com/fernandooliveira/moodlefn-admin 
-How to install the FN Tabs course format
+For more info about this plugin download the PDF help file from the link given below
 
-Step1:download from github.com https://github.com/fernandooliveira/moodlefn-tabs
-Step2:rename the repo to "fntabs"
-step3:place in the yourmoodle/course/format directory
-step4:login as an admin on your browser and click notification
-
-How to install the dependent block that is FN TABS
-
-step1:download from https://github.com/fernandooliveira/moodlefn-admin
-step2:rename the downloaded git repository to fn_tabs
-step3:now note and confirm that repo name should be fn_tabs
-step4:place the fn_tabs block in yourmoodle/blocks
-step5:login as an admin on your browser and click notification
-
+https://github.com/fernandooliveira/moodlefn-tabsadmin/blob/master/MoodleFN_Tabs_with_ATS.pdf?raw=true
