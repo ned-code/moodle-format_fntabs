@@ -11,6 +11,8 @@ global $DB, $OUTPUT, $PAGE;
 
 $id = optional_param('id', 0, PARAM_INT);       // course id       
 $categoryid = optional_param('category', 0, PARAM_INT); // course category - can be changed in edit form
+
+$PAGE->set_pagelayout('admin');
 $PAGE->set_url('/course/format/fntabs/settings.php', array('id' => $id, 'extraonly' => '1'));
 
 
@@ -35,7 +37,10 @@ if ($id) { // editing course
     if (!$category = $DB->get_record('course_categories', array('id' => $categoryid))) {
         print_error('Category ID was incorrect');
     }
-    require_capability('moodle/course:create', get_context_instance(CONTEXT_COURSECAT, $category->id));
+    $catcontext = get_context_instance(CONTEXT_COURSECAT, $category->id);
+    require_capability('moodle/course:create', $catcontext);
+    $PAGE->url->param('category',$categoryid);
+    $PAGE->set_context($catcontext);   
     
 } else {
     require_login();
@@ -71,7 +76,8 @@ unset($cobject);
 
 /// first create the form
 $editform = new course_fntabs_edit_form('settings.php', compact('course', 'category'));
-
+//$editform = new course_fntabs_edit_form(NULL, array('course'=>$course, 'category'=>$category, 'editoroptions'=>$editoroptions, 'returnto'=>$returnto));
+//print_object($editform->get_data());
 if ($editform->is_cancelled()) {
     if (empty($course)) {
         redirect($CFG->wwwroot);
@@ -79,13 +85,13 @@ if ($editform->is_cancelled()) {
         redirect($CFG->wwwroot . '/course/view.php?id=' . $course->id);        
     }
 } else if ($data = $editform->get_data()) {
-    
+     // process data if submitted
     
     if (empty($data->extraonly)) {
             if (empty($course->id)) {
             // In creating the course
             $course = create_course($data, $editoroptions);
-
+            
             // Get the context of the newly created course
             $context = get_context_instance(CONTEXT_COURSE, $course->id, MUST_EXIST);
 
@@ -143,8 +149,7 @@ $navlinks = array();
 if (!empty($course)) {    
     $PAGE->navbar->add($streditcoursesettings);
     $title = $streditcoursesettings;    
-    $fullname = $course->fullname;
-    
+    $fullname = $course->fullname;    
 } else {
     $PAGE->navbar->add($stradministration, new moodle_url('/admin/index.php'));
     $PAGE->navbar->add($strcategories, new moodle_url('/course/index.php'));
@@ -160,7 +165,6 @@ echo $OUTPUT->header();
 echo $OUTPUT->heading($streditcoursesettings);
 
 $editform->display();
-
 echo $OUTPUT->footer();
 
 ////////////////////////////////////////////////////////////////////
@@ -175,7 +179,6 @@ function update_course_fn_setting($variable, $data) {
     if ($DB->get_field('course_config_fn', 'id', array('courseid' => $course->id, 'variable' => $variable))) {
         $id = $DB->get_field('course_config_fn', 'id', array('courseid' => $course->id, 'variable' => $variable));
         $rec->id = $id;
-
         $DB->update_record('course_config_fn', $rec);
     } else {
         $rec->id = $DB->insert_record('course_config_fn', $rec);
