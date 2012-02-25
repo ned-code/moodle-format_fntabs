@@ -25,8 +25,7 @@
  * @package
  */
 defined('MOODLE_INTERNAL') || die();
-
-    require_once($CFG->libdir . '/filelib.php');
+    
     require_once($CFG->libdir . '/filelib.php');
     require_once($CFG->libdir . '/completionlib.php');
     require_once($CFG->libdir . '/ajax/ajaxlib.php');
@@ -47,9 +46,7 @@ defined('MOODLE_INTERNAL') || die();
     }
 
     $cobject->handle_extra_actions();
-    /// Add any extra module information to our module structures.
-    //$cobject->add_extra_module_info();
-    // $week = optional_param('week', -1, PARAM_INT);
+
     $selected_week = optional_param('selected_week', -1, PARAM_INT);
 
     $streditsummary = get_string('editsummary');
@@ -78,7 +75,7 @@ defined('MOODLE_INTERNAL') || die();
     } else if ($selected_week > -1) {
         $SESSION->G8_selected_week[$course->id] = $selected_week;
     } else if (isset($SESSION->G8_selected_week[$course->id])) {
-        //$selected_week = $SESSION->G8_selected_week[$course->id];
+        $selected_week = $SESSION->G8_selected_week[$course->id];
     } else {
         $SESSION->G8_selected_week[$course->id] = $selected_week;
     }
@@ -176,7 +173,8 @@ defined('MOODLE_INTERNAL') || die();
         $summaryformatoptions = new stdClass;
         $summaryformatoptions->noclean = true;
         $summaryformatoptions->overflowdiv = true;
-        echo format_text($summarytext, $thissection->summaryformat, $summaryformatoptions);
+       // echo format_text($summarytext, $thissection->summaryformat, $summaryformatoptions);
+         echo format_text($summarytext, FORMAT_HTML, $summaryformatoptions);
 
         if ($PAGE->user_is_editing() && has_capability('moodle/course:update', get_context_instance(CONTEXT_COURSE, $course->id))) {
             echo '<p><a title="' . $streditsummary . '" ' .
@@ -421,9 +419,10 @@ defined('MOODLE_INTERNAL') || die();
                     echo '<td nowrap ' . $colorsides . ' valign="top" align="center" width="20">';
                     echo "<font size=1>";
                 }
+               
 
                 if ($PAGE->user_is_editing() && has_capability('moodle/course:update', get_context_instance(CONTEXT_COURSE, $course->id))) {
-
+                     
                     if ($course->marker == $section) {  // Show the "light globe" on/off
                         echo '<a href="view.php?id=' . $course->id . '&amp;week=0#section-' . $section . '" title="' . $strshowallweeks . '">' .
                         '<img src="' . $OUTPUT->pix_url('i/all') . '" class="icon wkall" alt="' . $strshowallweeks . '" /></a><br />';
