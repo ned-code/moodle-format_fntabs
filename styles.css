@@ -439,13 +439,20 @@ table {
     text-align: center;
     overflow: hidden;
     margin: 0 auto;
-    width: 50%;
+    width: 100%;
 }
 #page-course-view-fntabs .weeks .fntopicsoutlineinner ul.section {
-	margin:1em 0 1em 1.9em;
+	margin-top:1em;
+        display:inline-block;
 }
 #page-course-view-fntabs .weeks .fntopicsoutlineinner ul.section li {
         text-align: left;
+}
+#page-course-view-fntabs .weeks .fntopicsoutlineinner ul.section table td{
+    padding: 5px;
+}
+#page-course-view-fntabs .weeks .fntopicsoutlineinner ul.section table td p{
+    margin:0px;
 }
 
 /*** Tool Tips ***/
