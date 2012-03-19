@@ -17,8 +17,8 @@ class course_format {
 
 /**
  * Contructor
- *
- * @param $course object The pre-defined course object. Passed by reference, so that extended info can be added.
+ * @param $course object The pre-defined course object. 
+ * Passed by reference, so that extended info can be added.
  *
  */
     function course_format(&$course) {

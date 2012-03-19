@@ -10,20 +10,9 @@ define('FN_EXTRASECTION', 9999);     // A non-existant section to hold hidden mo
 /// Format Specific Functions:
 function FN_update_course($form, $oldformat = false) {
     global $CFG, $DB, $OUTPUT;
-
-    /// Updates course specific variables.
-    /// Variables are: 'showsection0', 'showannouncements'.
-//    $config_vars = array('showsection0', 'showannouncements', 'sec0title', 'showhelpdoc', 'showclassforum',
-//                         'showclasschat', 'logo', 'mycourseblockdisplay','showgallery', 'gallerydefault', 'usesitegroups', 'mainheading', 'topicheading',
-//                         'activitytracking', 'ttmarking', 'ttgradebook', 'ttdocuments', 'ttstaff',
-//                         'defreadconfirmmess', 'usemandatory', 'expforumsec');
-
-
     $config_vars = array('showsection0', 'sec0title', 'mainheading', 'topicheading', 'maxtabs');
-
-
+    
     foreach ($config_vars as $config_var) {
-
         if ($varrec = $DB->get_record('course_config_fn', array('courseid' => $form->id, 'variable' => $config_var))) {
             $varrec->value = $form->$config_var;
             $DB->update_record('course_config_fn', $varrec);
@@ -66,43 +55,15 @@ function FN_update_course($form, $oldformat = false) {
     rebuild_course_cache($form->id);
 }
 
-/**
- * Indicates this format uses sections.
- *
- * @return bool Returns true
- */
-//function callback_weeks_uses_sections() {
-//    return true;
-//}
 
-/**
- * Used to display the course structure for a course where format=weeks
- *
- * This is called automatically by {@link load_course()} if the current course
- * format = weeks.
- *
- * @param navigation_node $navigation The course node
- * @param array $path An array of keys to the course node
- * @param stdClass $course The course we are loading the section for
+/* get the generic
+ *  course object and 
+ * them to course object
+ * 
  */
-//function callback_weeks_load_content(&$navigation, $course, $coursenode) {
-//    return $navigation->load_generic_course_sections($course, $coursenode, 'weeks');
-//}
-
-/**
- * The string that is used to describe a section of the course
- * e.g. Topic, Week...
- *
- * @return string
- */
-//function callback_weeks_definition() {
-//    return get_string('week');
-//}
-
 function FN_get_course(&$course) {
     global $DB;
     /// Add course specific variable to the passed in parameter.
-
     if ($config_vars = $DB->get_records('course_config_fn', array('courseid' => $course->id))) {
         foreach ($config_vars as $config_var) {
             $course->{$config_var->variable} = $config_var->value;
@@ -110,61 +71,12 @@ function FN_get_course(&$course) {
     }
 }
 
-/**
- * The GET argument variable that is used to identify the section being
- * viewed by the user (if there is one)
- *
- * @return string
- */
-//function callback_weeks_request_key() {
-//    return 'week';
-//}
 
-/**
- * Gets the name for the provided section.
- *
- * @param stdClass $course
- * @param stdClass $section
- * @return string
+/* get the get wwek info
+ *  course object and 
+ * them to course object
+ * 
  */
-//function callback_weeks_get_section_name($course, $section) {
-//    // We can't add a node without text
-//    if (!empty($section->name)) {
-//        // Return the name the user set
-//        return $section->name;
-//    } else if ($section->section == 0) {
-//        // Return the section0name
-//        return get_string('section0name', 'format_weeks');
-//    } else {
-//        // Got to work out the date of the week so that we can show it
-//        $sections = get_all_sections($course->id);
-//        $weekdate = $course->startdate + 7200;
-//        foreach ($sections as $sec) {
-//            if ($sec->id == $section->id) {
-//                break;
-//            } else if ($sec->section != 0) {
-//                $weekdate += 604800;
-//            }
-//        }
-//        $strftimedateshort = ' ' . get_string('strftimedateshort');
-//        $weekday = userdate($weekdate, $strftimedateshort);
-//        $endweekday = userdate($weekdate + 518400, $strftimedateshort);
-//        return $weekday . ' - ' . $endweekday;
-//    }
-//}
-
-/**
- * Declares support for course AJAX features
- *
- * @see course_format_ajax_support()
- * @return stdClass
- */
-//function callback_weeks_ajax_support() {
-//    $ajaxsupport = new stdClass();
-//    $ajaxsupport->capable = true;
-//    $ajaxsupport->testedbrowsers = array('MSIE' => 6.0, 'Gecko' => 20061111, 'Safari' => 531, 'Chrome' => 6.0);
-//    return $ajaxsupport;
-//}
 
 function get_week_info($tabrange, $week) {
     global $SESSION;
@@ -211,6 +123,8 @@ function get_week_info($tabrange, $week) {
         $tablow = $SESSION->FN_tablow[$this->course->id];
         $tabhigh = $SESSION->FN_tabhigh[$this->course->id];
     }
+    
+    
     $tablow = MAX($tablow, 1);
     $tabhigh = MIN($tabhigh, $this->course->numsections);
 

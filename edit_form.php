@@ -11,8 +11,6 @@ class course_fntabs_edit_form extends moodleform {
     function definition() {
 
         global $CFG, $COURSE, $DB;
-
-
         $mform = & $this->_form;
         /// form definition with new course defaults
         $course = $this->_customdata['course']; // this contains the data of this form 
@@ -20,70 +18,27 @@ class course_fntabs_edit_form extends moodleform {
             $coursecontext = get_context_instance(CONTEXT_COURSE, $course->id);
             $context = $coursecontext;
         }
-        //get the max tabs set from database       
+
         $mform->addElement('hidden', 'id', $this->_customdata['course']->id);
         $mform->setType('id', PARAM_INT);
+        $mform->addElement('hidden', 'defaulttabwhenset', time());
+        $mform->setType('id', PARAM_INT);
 
-        $configvariabletabs = $DB->record_exists('course_config_fn', array('courseid' => $course->id, 'variable' => 'maxtabs'));
-        if (isset($configvariabletabs)) {
-            $maxtabsindb = $DB->get_field('course_config_fn', 'value', array('courseid' => $course->id, 'variable' => 'maxtabs'));
-        }
+        //get showsection0 heading from database         
 
+        $mform->addElement('header', 'FN Course Tabs', 'Tabs');
 
-        //get mainheading from database
-        $configvariabeheading = $DB->record_exists('course_config_fn', array('courseid' => $course->id, 'variable' => 'mainheading'));
-        if (isset($configvariabletabs)) {
-            $mainheadingindb = $DB->get_field('course_config_fn', 'value', array('courseid' => $course->id, 'variable' => 'mainheading'));
-        }
-
-
-        //get topic heading from database
-        $configvariabetopicheading = $DB->record_exists('course_config_fn', array('courseid' => $course->id, 'variable' => 'topicheading'));
-        if (isset($configvariabetopicheading)) {
-            $topicmainheadingindb = $DB->get_field('course_config_fn', 'value', array('courseid' => $course->id, 'variable' => 'topicheading'));
-        }
-
-
-        //get showsection0 heading from database
-        $configvariabeshowsection0 = $DB->record_exists('course_config_fn', array('courseid' => $course->id, 'variable' => 'showsection0'));
-        if (isset($configvariabeshowsection0)) {
-            $showsection0indb = $DB->get_field('course_config_fn', 'value', array('courseid' => $course->id, 'variable' => 'showsection0'));
-        }
-
-
-        //get showsectiononly0 heading from database
-        $configvariabeshowonlysection0 = $DB->record_exists('course_config_fn', array('courseid' => $course->id, 'variable' => 'showonlysection0'));
-        if (isset($configvariabeshowonlysection0)) {
-            $showonlysection0indb = $DB->get_field('course_config_fn', 'value', array('courseid' => $course->id, 'variable' => 'showonlysection0'));
-        }
-
-        $mform->addElement('header', 'FN Course Tabs', 'FN Course Tabs');
-        // $mform->addElement('hidden', 'extraonly', $extraonly); 
         //For mainheading for the course
         $label = get_string('mainheading', 'format_fntabs');
-        $mform->addElement('text', 'mainheading', $label, 'maxlength="254" size="50"');
+        $mform->addElement('text', 'mainheading', $label, 'maxlength="24" size="25"');
         $mform->addRule('mainheading', get_string('missingmainheading', 'format_fntabs'), 'required', null, 'client');
-        $mform->addHelpButton('mainheading', 'mainheading', 'format_fntabs');
-
-        if (isset($mainheadingindb)) {
-            $mform->setDefault('mainheading', $mainheadingindb);
-        } else {
-            $mform->setDefault('mainheading', get_string('defaultmainheading', 'format_fntabs'));
-        }
-
+        $mform->setDefault('mainheading', get_string('defaultmainheading', 'format_fntabs'));
         $mform->setType('mainheading', PARAM_MULTILANG);
         //For topic heading for example Week Section
         $label = get_string('topicheading', 'format_fntabs');
-        $mform->addElement('text', 'topicheading', $label, 'maxlength="254" size="50"');
+        $mform->addElement('text', 'topicheading', $label, 'maxlength="24" size="25"');
         $mform->addRule('topicheading', get_string('missingtopicheading', 'format_fntabs'), 'required', null, 'client');
-        $mform->addHelpButton('topicheading', 'topicheading', 'format_fntabs');
-
-        if (isset($topicmainheadingindb)) {
-            $mform->setDefault('topicheading', $topicmainheadingindb);
-        } else {
-            $mform->setDefault('topicheading', get_string('defaulttopicheading', 'format_fntabs'));
-        }
-
+        $mform->setDefault('topicheading', get_string('defaulttopicheading', 'format_fntabs'));
         $mform->setType('topicheading', PARAM_MULTILANG);
 
         //for changing the number of tab to show before next link
@@ -93,45 +48,66 @@ class course_fntabs_edit_form extends moodleform {
         }
 
         $mform->addElement('select', 'maxtabs', get_string('setnumberoftabs', 'format_fntabs'), $numberoftabs);
-        $mform->addHelpButton('maxtabs', 'setnumberoftabs', 'format_fntabs');
+        $mform->setDefault('maxtabs', $numberoftabs[12]);
 
-        if (isset($maxtabsindb)) {
-            $mform->setDefault('maxtabs', $maxtabsindb);
-        } else {
-            $mform->setDefault('maxtabs', $numberoftabs[12]);
+        //////work to be done for default tab
+        $radioarray = array();
+        $attributes = array();
+        $radioarray[] = &MoodleQuickForm::createElement('radio', 'defaulttab', '', get_string('default_tab_text', 'format_fntabs'), 'option1', array('checked' => true, 'class' => 'padding_before_radio', 'style' => 'padding-left:10px;'));
+        // add second option if the course completion is enabled
+        $completion = new completion_info($course);
+        if ($completion->is_enabled()) {
+            $radioarray[] = &MoodleQuickForm::createElement('radio', 'defaulttab', '', get_string('default_tab_notattempted_text', 'format_fntabs'), 'option2');
         }
 
+        $radioarray[] = &MoodleQuickForm::createElement('radio', 'defaulttab', '', get_string('default_tab_specifyweek_text', 'format_fntabs'), 'option3');
+        $mform->addGroup($radioarray, 'radioar', get_string('label_deafulttab_text', 'format_fntabs'), array('<br /><br /> '), false);
+        $mform->setDefault('defaulttab', 'option1');
+
+
+        //dropdown will contain week upto current section
+        $timenow = time();
+        $weekdate = $course->startdate;    // this should be 0:00 Monday of that week
+        $weekdate += 7200;              // Add two hours to avoid possible DST problems        
+        $weekofseconds = 604800;
+        $course->enddate = $course->startdate + ($weekofseconds * $course->numsections);
+
+
+        //  Calculate the current week based on today's date and the starting date of the course.
+        $currentweek = ($timenow > $course->startdate) ?
+                (int) ((($timenow - $course->startdate) / $weekofseconds) + 1) : 0;
+
+        $currentweek = min($currentweek, $course->numsections);
+        $topiclist = array();
+        if ($currentweek > 0) {
+            for ($i = 1; $i <= $currentweek; $i++) {
+                $topiclist[$i] = $i;
+            }
+        } else {
+            $topiclist[1] = 1;
+        }
+
+        ////////////
+        $mform->addElement('select', 'topictoshow', '', $topiclist, array('class' => 'ddl_padding'));
+        $mform->setDefault('topictoshow', $topiclist[1]);
+        ///default tab end
         //header for FN other setting 
-        $mform->addElement('header', 'FN Other', 'FN Other');
+        $mform->addElement('header', 'Section 0', 'Section 0');
         //For shwosection 0 or not
-        $choices["0"] = get_string("hide");
-        $choices["1"] = get_string("show");
+        $choices['0'] = get_string("hide");
+        $choices['1'] = get_string("show");
         $label = get_string('showsection0', 'format_fntabs');
         $mform->addElement('select', 'showsection0', $label, $choices);
-        $mform->addHelpButton('showsection0', 'showsection0', 'format_fntabs');
-        if (isset($showsection0indb)) {
-            $mform->setDefault('showsection0', $showsection0indb);
-        } else {
-            $mform->setDefault('showsection0', '0');
-        }
-
+        $mform->setDefault('showsection0', $choices['0']);
         unset($choices);
+
         //for shwo only section 0 setting
         $choices['0'] = get_string("no");
         $choices['1'] = get_string("yes");
         $label = get_string('showonlysection0', 'format_fntabs');
         $mform->addElement('select', 'showonlysection0', $label, $choices);
-        $mform->addHelpButton('showonlysection0', 'showonlysection0', 'format_fntabs');
-        if (isset($showonlysection0indb)) {
-            $mform->setDefault('showonlysection0', $showonlysection0indb);
-        } else {
-            $mform->setDefault('showonlysection0', '0');
-        }
-
-
+        $mform->setDefault('showonlysection0', $choices['0']);
         unset($choices);
-
-        /// Remove the already in place submit buttons and put them back at the end.        
         $this->add_action_buttons();
     }
 

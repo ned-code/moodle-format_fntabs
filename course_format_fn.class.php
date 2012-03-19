@@ -5,8 +5,6 @@
  *
  * This class provides all the functionality for a course format
  */
-
-
 define('COMPLETION_WAITFORGRADE_FN', 5);
 define('COMPLETION_SAVED_FN', 4);
 
@@ -24,9 +22,8 @@ class course_format_fn extends course_format {
      * @param $course object The pre-defined course object. Passed by reference, so that extended info can be added.
      *
      */
-    
     public $tdselectedclass;
-    
+
     function course_format_fn(&$course) {
         global $mods, $modnames, $modnamesplural, $modnamesused, $sections, $DB;
 
@@ -37,8 +34,12 @@ class course_format_fn extends course_format {
         $this->modnamesplural = &$modnamesplural;
         $this->modnamesused = &$modnamesused;
         $this->sections = &$sections;
-    }  
-    
+    }
+
+    /*
+     * Add extra config options in course object
+     * 
+     * * */
 
     function get_course($course=null) {
         global $DB;
@@ -62,16 +63,12 @@ class course_format_fn extends course_format {
             }
         }
 
-        $this->course->uselogo = !empty($course->logo);
-        $course->uselogo = !empty($course->logo);
-
         return $course;
     }
-        
 
     /** Custom functions * */
     function handle_extra_actions() {
-        global $USER, $CFG, $DB;
+        global $DB;
 
         if (isset($_POST['sec0title'])) {
             if (!$course = $DB->get_record('course', array('id' => $_POST['id']))) {
@@ -83,36 +80,29 @@ class course_format_fn extends course_format {
             $cm->course = $course->id;
         }
     }
-    
 
     function get_week_info($tabrange, $week) {
-        global $SESSION, $DB; 
-        
-        $fnmaxtab=$DB->get_field('course_config_fn','value',array('courseid'=>$this->course->id, 'variable'=>'maxtabs'));
-        if($fnmaxtab){
-            $maximumtabs=$fnmaxtab;           
-        }
-        else{            
-            $maximumtabs=12;
-        }
-//        print_object($this->course->numsections);
-//        print_object($maximumtabs);
-        if ($this->course->numsections == $maximumtabs) {            
+        global $SESSION, $DB;
+
+        $fnmaxtab = $DB->get_field('course_config_fn', 'value', array('courseid' => $this->course->id, 'variable' => 'maxtabs'));
+
+        if ($fnmaxtab) {
+            $maximumtabs = $fnmaxtab;
+        } else {
+            $maximumtabs = 12;
+        }        
+        if ($this->course->numsections == $maximumtabs) {
             $tablow = 1;
-            $tabhigh = $maximumtabs;           
-            
+            $tabhigh = $maximumtabs;
         } else if ($tabrange > 1000) {
             $tablow = (int) ($tabrange / 1000);
-            $tabhigh = (int)($tablow + $maximumtabs - 1);            
-            
+            $tabhigh = (int) ($tablow + $maximumtabs - 1);
         } else if (($tabrange == 0) && ($week == 0)) {
             $tablow = ((int) ((int) ($this->course->numsections - 1) / (int) $maximumtabs) * $maximumtabs) + 1;
-            $tabhigh = $tablow + $maximumtabs - 1;           
-            
-        } else if ($tabrange == 0) {           
+            $tabhigh = $tablow + $maximumtabs - 1;
+        } else if ($tabrange == 0) {
             $tablow = ((int) ((int) $week / (int) $maximumtabs) * $maximumtabs) + 1;
-            $tabhigh = $tablow + $maximumtabs - 1;           
-            
+            $tabhigh = $tablow + $maximumtabs - 1;
         } else {
             $tablow = 1;
             $tabhigh = $maximumtabs;
@@ -125,7 +115,7 @@ class course_format_fn extends course_format {
             $tablow = $tabhigh - $maximumtabs + 1;
         }
 
-        
+
         /// Save the low and high week in SESSION variables... If they already exist, and the selected
         /// week is in their range, leave them as is.
         if (($tabrange >= 1000) || !isset($SESSION->FN_tablow[$this->course->id]) || !isset($SESSION->FN_tabhigh[$this->course->id]) ||
@@ -151,19 +141,18 @@ class course_format_fn extends course_format {
 
     function print_weekly_activities_bar($week=0, $tabrange=0) {
         global $THEME, $FULLME, $CFG, $course, $DB, $USER;
-        
-         $fnmaxtab=$DB->get_field('course_config_fn','value',array('courseid'=>$this->course->id, 'variable'=>'maxtabs'));
-        if($fnmaxtab){
-            $maximumtabs=$fnmaxtab;            
-        }
-        else{
-            $maximumtabs=12;
-        }
-        
 
-        $completioninfo = new completion_info($course);      
+        $fnmaxtab = $DB->get_field('course_config_fn', 'value', array('courseid' => $this->course->id, 'variable' => 'maxtabs'));
+        if ($fnmaxtab) {
+            $maximumtabs = $fnmaxtab;
+        } else {
+            $maximumtabs = 12;
+        }
 
-        list($tablow, $tabhigh, $week) = $this->get_week_info($tabrange, $week);        
+
+        $completioninfo = new completion_info($course);
+
+        list($tablow, $tabhigh, $week) = $this->get_week_info($tabrange, $week);
 
         $timenow = time();
         $weekdate = $this->course->startdate;    // this should be 0:00 Monday of that week
@@ -174,7 +163,6 @@ class course_format_fn extends course_format {
             $extraclassfortab = "tab-greaterthan5";
         } else {
             $extraclassfortab = "tab-lessthan5";
-            
         }
 
         if (isset($this->course->topicheading) && !empty($this->course->topicheading)) {
@@ -214,7 +202,7 @@ class course_format_fn extends course_format {
                 } else {
                     $css = 'fnweeklynavdisabled';
                 }
-                $tdselectedclass[$i] =  $css;
+                $tdselectedclass[$i] = $css;
                 if ($isteacher) {
                     $f = '<a href="' . $url . '&selected_week=' . $i . '" ><span class="' . $css . '">&nbsp;' .
                             $i . '&nbsp;</span></a>';
@@ -290,11 +278,11 @@ class course_format_fn extends course_format {
         $actbar .= '<td height="3" colspan="2"></td>';
 
 
-	$this->tdselectedclass  = $tdselectedclass ;
-		 
+        $this->tdselectedclass = $tdselectedclass;
+
         for ($i = $tablow; $i <= $tabhigh; $i++) {
             if ($i == $week) {
-                 $actbar .= '<td height="3" class="'.$tdselectedclass[$i].'"></td>';
+                $actbar .= '<td height="3" class="' . $tdselectedclass[$i] . '"></td>';
             } else {
                 $actbar .= '<td height="3"></td>';
             }
@@ -590,8 +578,8 @@ class course_format_fn extends course_format {
                 }
 
                 // Completion
-                require_once('modulelib.php');             
-                
+                require_once('modulelib.php');
+
                 $completion = $hidecompletion ? COMPLETION_TRACKING_NONE : $completioninfo->is_enabled($mod);
                 if ($completion != COMPLETION_TRACKING_NONE && isloggedin() &&
                         !isguestuser() && $mod->uservisible) {
@@ -629,16 +617,16 @@ class course_format_fn extends course_format {
                                 break;
                         }
                     } else { // Automatic
-                        if (($mod->modname == 'assignment')  && isset($mod->completiongradeitemnumber)) {                            
-                                $act_compl = assignment_is_completed($mod, $USER->id);
-                                $completiondata1 = $completioninfo->get_data($mod,true);                                
+                        if (($mod->modname == 'assignment') && isset($mod->completiongradeitemnumber)) {
+                            $act_compl = assignment_is_completed($mod, $USER->id);
+                            $completiondata1 = $completioninfo->get_data($mod, true);
                             if ($act_compl == 'submitted') {
                                 $completiondata->completionstate = COMPLETION_WAITFORGRADE_FN;
                             } else if ($act_compl == 'saved') {
                                 $completiondata->completionstate = COMPLETION_SAVED_FN;
                             }
                         }
-                       
+
                         switch ($completiondata->completionstate) {
                             case COMPLETION_INCOMPLETE:
                                 $completionicon = 'auto-n';
@@ -763,7 +751,7 @@ class course_format_fn extends course_format {
         if (is_array($this->sections) && is_array($this->mods)) {
             foreach ($this->sections as $section) {
                 if ($section->section > 0) {
-                    if (!is_section_finished($section, $this->mods)) {
+                    if (!$this->is_section_finished($section, $this->mods)) {
                         return $section->section;
                     }
                 }
@@ -771,6 +759,5 @@ class course_format_fn extends course_format {
         }
         return false;
     }
-
 
 }

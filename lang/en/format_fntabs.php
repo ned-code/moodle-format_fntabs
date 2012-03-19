@@ -172,54 +172,28 @@ $string['completion-alt-submitted'] = 'Waiting for grade';
 $string['completion-title-submitted'] = 'Waiting for grade';
 $string['setnumberoftabs'] = 'Max tabs shown ';
 $string['mainheading'] = 'Main Heading';
-$string['mainheading_help'] = 'Set the main heading of the course for example Weekly Outline';
+
 $string['sectionname'] = 'Section';
 $string['activitytracking'] = 'Activity Tracking';
-$string['allusers'] = 'Registered Users';
-$string['courselogo'] = 'Logo';
-$string['courseparticipants'] = 'Course Participants';
 $string['defaultmainheading'] = 'Weekly Activities';
 $string['defaulttopicheading'] = 'Week';
-$string['defreadconfirmmess'] = 'Default read confirmation message';
-$string['defaultdefreadconfirmmess'] = 'Click here to mark this activity as complete.';
-$string['everyone'] = 'Everyone';
-$string['expforumsec'] = 'Expanded Forum Section';
 $string['formatfn'] = 'FN Tabs'; // Name to display for format
 $string['namefn'] = 'Week'; // Name of a section within your format
-$string['showhelpdoc'] = 'Show help documents';
+
 $string['showsection0'] = 'Show section zero';
-$string['showsection0_help'] = 'This setting allows you to show section0';
+
 $string['announcements'] = 'Announcements';
-$string['nameFN'] = 'Moodle FN';
-$string['newsitemsnumber'] = 'Announcements to show';
-$string['newsitem'] = 'announcement';
-$string['newsitems'] = 'announcements';
-$string['notusinglogo'] = 'Not using a logo';
-$string['fnpeople'] = 'People';
-$string['forcelanguage'] = 'Language';
-$string['forceno'] = 'Allow user to choose';
-$string['people'] = 'Participants';
-$string['showannouncements'] = 'Show Announcements';
-$string['showclasschat'] = 'Chat Room';
-$string['showclassforum'] = 'Class Forum';
-$string['showcourseinfo'] = 'Course Info';
-$string['showgallery'] = 'Gallery FN';
-$string['showglossary'] = 'Glossary';
-$string['showhelpdoc'] = 'Help';
-$string['showmygrades'] = 'My Grades';
-$string['showmyjournal'] = 'My Journal';
-$string['showreports'] = 'Activity Reports';
+
 $string['showsection0'] = 'Show Section 0';
 $string['showonlysection0'] = 'Show <i>Only</i> Section 0';
-$string['showonlysection0_help'] = 'This setting alows you to shwo only section 0';
+
 $string['mainheading'] = 'Main heading';
-$string['mycourseblockdisplay'] = '&quot;My Course Block&quot; display options';
 $string['topicheading'] = 'Topic heading';
-$string['topicheading_help'] = 'Set the topic heading for example week or section';
-$string['setnumberoftabs_help'] = 'Set the number of maximum tab that will be shown before the next tab';
-$string['uploadlogo'] = 'Logo file';
-$string['uselogo'] = 'Use logo';
-$string['usemandatory'] = 'Use Mandatory Activities';
-$string['usesitegroups'] = 'Use site groups';
-$string['usesitegroupreg'] = 'Use Site Group Registration';
-$string['usinglogo'] = 'Using $a';
+$string['default_tab_text'] = 'Current week/section as determined by start date';
+$string['default_tab_notattempted_text'] = 'Week/topic that contains the earliest "not attempted" activity ';
+$string['default_tab_specifyweek_text'] = 'Specify default week/section ';
+$string['label_deafulttab_text'] = 'Default tab selected';
+
+
+
+

@@ -1,4 +1,5 @@
 <?php
+
 // Edit course settings
 
 require_once('../../../config.php');
@@ -26,12 +27,11 @@ if ($id) { // editing course
     if (!$course = $DB->get_record('course', array('id' => $id))) {
         print_error('Course ID was incorrect');
     }
-    require_login($course);   
-    $category = $DB->get_record('course_categories', array('id'=>$course->category), '*', MUST_EXIST);
+    require_login($course);
+    $category = $DB->get_record('course_categories', array('id' => $course->category), '*', MUST_EXIST);
     $coursecontext = get_context_instance(CONTEXT_COURSE, $course->id);
     require_capability('moodle/course:update', $coursecontext);
-    
-}else{
+} else {
     require_login();
     print_error('Course id must be specified');
 }
@@ -43,54 +43,83 @@ $course = clone($cobject->course);
 unset($cobject);
 
 /// first create the form
-$editform = new course_fntabs_edit_form(NULL, array('course'=>$course));
+$editform = new course_fntabs_edit_form(NULL, array('course' => $course));
+$data = new stdClass();
+$data->courseid = $course->id;
+$mainheading = $DB->get_field('course_config_fn', 'value', array('courseid' =>$data->courseid, 'variable' => 'mainheading'));
+$data->mainheading = ($mainheading) ? $mainheading: get_string('defaultmainheading', 'format_fntabs');
+
+$topicheading = $DB->get_field('course_config_fn', 'value', array('courseid' =>$data->courseid, 'variable' => 'topicheading'));
+$data->topicheading = ($topicheading) ? $topicheading: get_string('defaulttopicheading', 'format_fntabs');
+
+$maxtabs = $DB->get_field('course_config_fn', 'value', array('courseid' =>$data->courseid, 'variable' => 'maxtabs'));
+$data->maxtabs = ($maxtabs) ? $maxtabs: 12; 
+
+$defaulttab = $DB->get_field('course_config_fn', 'value', array('courseid' =>$data->courseid, 'variable' => 'defaulttab'));
+$completion = new completion_info($course);
+if((!$completion->is_enabled()) && $defaulttab =='option2'){
+    $data->defaulttab = 'option1';
+}else{
+    $data->defaulttab = ($defaulttab) ? $defaulttab: 'option1';
+}
+
+
+$topictoshow = $DB->get_field('course_config_fn', 'value', array('courseid' =>$data->courseid, 'variable' => 'topictoshow'));
+$data->topictoshow = ($defaulttab == 'option3') ? $topictoshow: 1;
+$showsection0 = $DB->get_field('course_config_fn', 'value', array('courseid' =>$data->courseid, 'variable' => 'showsection0'));
+$data->showsection0 = ($showsection0 ) ? $showsection0 : 0;
+
+$showonlysection0 = $DB->get_field('course_config_fn', 'value', array('courseid' => $data->courseid, 'variable' => 'showonlysection0'));
+$data->showonlysection0 = ($showonlysection0) ? $showonlysection0 : 0;
+$data->defaulttabwhenset = time();
+print_object($data);
+$editform->set_data($data);
 
 if ($editform->is_cancelled()) {
     if (empty($course)) {
         redirect($CFG->wwwroot);
     } else {
-        redirect($CFG->wwwroot . '/course/view.php?id=' . $course->id);        
+        redirect($CFG->wwwroot . '/course/view.php?id=' . $course->id);
     }
 } else if ($data = $editform->get_data()) {
     // process data if submitted   
-
-    /// Handle the extra settings:
-    print_object($data);
+    /// Handle the extra settings:    
     $variable = 'showsection0';
     update_course_fn_setting($variable, $data->$variable);
 
     $variable = 'showonlysection0';
     update_course_fn_setting($variable, $data->$variable);
-    
+
     $variable = 'mainheading';
     update_course_fn_setting($variable, $data->$variable);
 
     $variable = 'topicheading';
     update_course_fn_setting($variable, $data->$variable);
-    
+
     $variable = 'maxtabs';
     update_course_fn_setting($variable, $data->$variable);
-    redirect($CFG->wwwroot . "/course/view.php?id=$course->id".'&selected_week=1000');
+    
+    $variable = 'defaulttab';
+    update_course_fn_setting($variable, $data->$variable);
+    
+    $variable = 'topictoshow';
+    update_course_fn_setting($variable, $data->$variable);
+    
+    $variable = 'defaulttabwhenset';
+    update_course_fn_setting($variable, $data->$variable);
+    unset($SESSION->G8_selected_week[$course->id]);
+    redirect($CFG->wwwroot . "/course/view.php?id=$course->id" );
 }
 
 /// Print the form
 $site = get_site();
-
 $streditcoursesettings = get_string("editcoursesettings");
-$straddnewcourse = get_string("addnewcourse");
-$stradministration = get_string("administration");
-$strcategories = get_string("categories");
-$navlinks = array();
-
-if (!empty($course)) {    
+if (!empty($course)) {
     $PAGE->navbar->add($streditcoursesettings);
-    $title = $streditcoursesettings;    
-    $fullname = $course->fullname;    
+    $title = $streditcoursesettings;
+    $fullname = $course->fullname;
 } else {
-    $PAGE->navbar->add($stradministration, new moodle_url('/admin/index.php'));
-    $PAGE->navbar->add($strcategories, new moodle_url('/course/index.php'));
-    $PAGE->navbar->add($straddnewcourse);
-    $title = "$site->shortname: $straddnewcourse";
+    $title = "";
     $fullname = $site->fullname;
 }
 
@@ -112,6 +141,7 @@ function update_course_fn_setting($variable, $data) {
     $rec->courseid = $course->id;
     $rec->variable = $variable;
     $rec->value = $data;
+    
     if ($DB->get_field('course_config_fn', 'id', array('courseid' => $course->id, 'variable' => $variable))) {
         $id = $DB->get_field('course_config_fn', 'id', array('courseid' => $course->id, 'variable' => $variable));
         $rec->id = $id;
