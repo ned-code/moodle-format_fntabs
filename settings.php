@@ -72,7 +72,6 @@ $data->showsection0 = ($showsection0 ) ? $showsection0 : 0;
 $showonlysection0 = $DB->get_field('course_config_fn', 'value', array('courseid' => $data->courseid, 'variable' => 'showonlysection0'));
 $data->showonlysection0 = ($showonlysection0) ? $showonlysection0 : 0;
 $data->defaulttabwhenset = time();
-print_object($data);
 $editform->set_data($data);
 
 if ($editform->is_cancelled()) {
