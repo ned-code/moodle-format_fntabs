@@ -145,7 +145,7 @@ unset($sections[0]);
 if (!empty($course->showsection0) && ($thissection->summary or $thissection->sequence or $PAGE->user_is_editing())) {
 
     // Note, 'right side' is BEFORE content.        
-    echo '<li id="section-0" class="section main clearfix" >';
+    echo '<li id="section-0" class="section main clearfix" style="border:none !important;" >';
     //  echo '<td colspan="3" align="center" width="100%" id="fnsection0" class="content">';
     if (empty($course->sec0title)) {
         $course->sec0title = '';
@@ -153,7 +153,11 @@ if (!empty($course->showsection0) && ($thissection->summary or $thissection->seq
 
     if ($PAGE->user_is_editing()) {
         if (empty($_GET['edittitle']) or ($_GET['edittitle'] != 'sec0')) {
-            echo "<b>$course->sec0title</b>";
+            if ($course->sec0title) {
+                echo $OUTPUT->heading($course->sec0title, 2, 'fnoutlineheadingblock1', 'sectionzerotextalignment');
+            } else {
+                echo $OUTPUT->heading(get_string('sectionzerodefaultheading', 'format_fntabs'), 2, 'fnoutlineheadingblock1');
+            }
             $path = $CFG->wwwroot . '/course';
             if (empty($THEME->custompix)) {
                 $pixpath = $path . '/../pix';
@@ -161,7 +165,7 @@ if (!empty($course->showsection0) && ($thissection->summary or $thissection->seq
                 $pixpath = $path . '/../theme/' . $CFG->theme . '/pix';
             }
 
-            echo ' <a title="' . get_string('edit') . '" href="' . $CFG->wwwroot . '/course/view.php?id=' .
+            echo ' <a title="' . get_string('edit_title_for_section0', 'format_fntabs') . '" href="' . $CFG->wwwroot . '/course/view.php?id=' .
             $course->id . '&amp;edittitle=sec0"><img src="' . $pixpath . '/t/edit.gif" /></a>';
         } else if ($_GET['edittitle'] == 'sec0') {
             echo '<form name="editsec0title" method="post" ' .
@@ -172,10 +176,18 @@ if (!empty($course->showsection0) && ($thissection->summary or $thissection->seq
             'value="ok" title="Save">' .
             '</form>';
         } else {
-            echo "<b>$course->sec0title</b>";
+            if ($course->sec0title) {
+                echo $OUTPUT->heading($course->sec0title, 2, 'fnoutlineheadingblock1');
+            } else {
+                echo $OUTPUT->heading(get_string('sectionzerodefaultheading', 'format_fntabs'), 2, 'fnoutlineheadingblock1');
+            }
         }
     } else {
-        echo "<b>$course->sec0title</b>";
+        if ($course->sec0title) {
+            echo $OUTPUT->heading($course->sec0title, 2, 'fnoutlineheadingblock1');
+        } else {
+            echo $OUTPUT->heading(get_string('sectionzerodefaultheading', 'format_fntabs'), 2, 'fnoutlineheadingblock1', 'sectionzerotextalignment');
+        }
     }
     //echo '</td></tr>';
 
@@ -320,8 +332,15 @@ if (empty($course->showonlysection0)) {
         } else {
             $headerextraclass = 'fnoutlineheadingblockone';
         }
-        // echo $completioninfo->display_help_icon();
-        echo $OUTPUT->heading($strmainheading, 2, 'fnoutlineheadingblock ' . $headerextraclass . '');
+
+
+        if (($PAGE->user_is_editing()) || !$completion->is_enabled()) {
+            echo $OUTPUT->heading($strmainheading, 2, 'fnoutlineheadingblock1');
+        } elseif ($completion->is_enabled() && !$isteacher) {
+            echo $OUTPUT->heading($strmainheading, 2, 'fnoutlineheadingblock ' . $headerextraclass . '');
+        } else {
+            echo $OUTPUT->heading($strmainheading, 2, 'fnoutlineheadingblock1');
+        }
 
         if ($selected_week > 0 && !$PAGE->user_is_editing()) {
             echo '<table class="topicsoutline" border="0" cellpadding="0" cellspacing="0" width="100%">
@@ -428,7 +447,7 @@ if (empty($course->showonlysection0)) {
                 echo "<tr>";
             }
 
-            if (!has_capability('moodle/course:viewhiddensections', $context) and !$thissection->visible) {   // Hidden for students
+            if (!has_capability('moodle/course:viewhiddensections', $context) && !$thissection->visible) {   // Hidden for students
                 echo "<td valign=top align=center $colormain width=\"100%\">";
                 echo get_string("notavailable");
                 echo "</td>";

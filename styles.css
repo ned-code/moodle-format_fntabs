@@ -3,28 +3,28 @@
  **/
 
 .courseedit {
-  background-color:#B3EAFF;
+    background-color:#B3EAFF;
 }
 .courseedit-format {
-  background-color:#9dbb61;
+    background-color:#9dbb61;
 }
 .courseedit-fn {
-  background-color:#C5EFFF;
+    background-color:#C5EFFF;
 }
 .courseedit-fn-format {
-  background-color:#73C1E1;
+    background-color:#73C1E1;
 }
 .courseedit-fn-main {
-  background-color:#9dbb61;
+    background-color:#9dbb61;
 }
 .courseedit-fn-section {
-  border-width: 2px;
-  border-style: solid;
-  border-color: #73C1E1;
-  background-color:#C5EFFF;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #73C1E1;
+    background-color:#C5EFFF;
 }
 .courseedit-fn-sidebar {
-  background-color:#73C1E1;
+    background-color:#73C1E1;
 }
 .fntopicsoutlinecontent {
     border-style: solid;
@@ -40,7 +40,7 @@
     border-right: 0px;
     border-color: #AAAAAA;
     background-color: #D3D3D3;
-	padding:10px !important;
+    padding:10px !important;
 }
 .fntopicsoutlinecontenthighlight {
     border-style: solid;
@@ -54,9 +54,9 @@
     border-spacing: 1px 0;
 }
 .fnweeklynav .tab-heading {
-	width:50px;
-	font-size:16px;
-	color:#FFF;
+    width:50px;
+    font-size:16px;
+    color:#FFF;
 }
 .fnweeklynavnorm {
     text-align: center;
@@ -66,14 +66,14 @@
     color: blue;
 }
 .fnweeklynavnorm a {
-	display:block;
-	height:20px;
-	padding-top:5px;
+    display:block;
+    height:20px;
+    padding-top:5px;
     text-decoration: none;
 }
 .fnweeklynavnorm a:hover {
     background-color:#FFFFFF;
-	text-decoration:none;
+    text-decoration:none;
 }
 .fnweeklynavnorm a:active {
     text-decoration: none;
@@ -87,17 +87,17 @@
     color: black;
 }
 .fnweeklynavselected .content-section {
-	padding:5px;
+    padding:5px;
 }
 .fnweeklynavdisabledselected1 {
     background-color:#F5E49C;
 }
 .fnweeklynavdisabledselected1 .content-section {
-	padding:5px;
+    padding:5px;
 }
 .topicsoutline {
     font-weight: normal;
-	 margin:0;
+    margin:0;
 }
 .topicsoutline table {
     margin:0;
@@ -134,13 +134,13 @@
     color: #bdbbbb;
 }
 .markingcontainer td.generalbox3 {
-	background-color: #73C1E1;
+    background-color: #73C1E1;
 }
 .markingcontainer td.generalbox4 {
-	background-color: #FFFFFF;
+    background-color: #FFFFFF;
 }
 .markingcontainer td.generalbox4content {
-	border: solid red 1px;
+    border: solid red 1px;
 }
 .markingpastbox {
     border-width: 1px;
@@ -179,10 +179,10 @@ div.fnintro {
     display: none;
 }
 .fnintro.hidden .hide-show img.hide-show-image {
-  background: url('../../pix/t/switch_plus.gif') no-repeat bottom;
+    background: url('../../pix/t/switch_plus.gif') no-repeat bottom;
 }
 .fnintro .hide-show {
-  float:right;
+    float:right;
 }
 fieldset#fnassntypefs,
 fieldset#fnassntype2fs  {
@@ -242,30 +242,30 @@ div.studentpic {
     background-color: white;
 }
 tr.evenrow {
-  background-color: #B3EAFF;
+    background-color: #B3EAFF;
 }
 tr.oddrow {
-  background-color: #FFFFFF;
+    background-color: #FFFFFF;
 }
 .headergeneral {
-  background-color: #9dbb61;
+    background-color: #9dbb61;
 }
 .fnweeklycontent {
-  background-color: #FFFFFF;
+    background-color: #FFFFFF;
 }
 .fnsectionouter {
     background-color: #9dbb61;
-	padding:0;
+    padding:0;
 }
 .number-select {
-	padding:0.5em;
+    padding:0.5em;
 }
 .fntopicsoutlineside {
     background-color: #9dbb61;
 }
 .fntopicsoutlineinner {
     background-color: #FFFFFF;
-	padding:10px !important;
+    padding:10px !important;
 }
 .fntopicsoutlinesidehidden {
     background-color: #AAAAAA;
@@ -383,10 +383,10 @@ tr.oddrow {
     border-color:#888888;
 }
 .weekcompletedstatus {
-   border:4px solid green;
+    border:4px solid green;
 }
 .weekincompletedstatus {
-   border:4px solid red;
+    border:4px solid red;
 }
 .course-content ul.weeks {margin:0;}
 .course-content ul.weeks li.section {list-style: none;margin:5px 0 0 0;padding:0;}
@@ -398,41 +398,41 @@ tr.oddrow {
 
 /***overright ***/
 #page-course-view-fntabs li.activity span.autocompletion, #page-course-view-fntabs li.activity form.togglecompletion {
-	display: inline;
+    display: inline;
     padding: 0;
     position: absolute;
     left:-20px;
     top: 0;
     z-index: 10;
-	width:18px;
+    width:18px;
 }
 #page-course-view-fntabs .section li.activity {
-	margin-bottom:3px;
+    margin-bottom:3px;
 }
 #page-course-view-fntabs .weeks .section, #page-course-view-fntabs .topics .section {
-	background:none;
-	margin-left:2.5em;
+    background:none;
+    margin-left:2.5em;
 }
 #page-course-view-fntabs .green-tab {
-	border-top:5px solid green;
-	padding-top:0;
+    border-top:5px solid green;
+    padding-top:0;
 }
 #page-course-view-fntabs .red-tab {
-	border-top:5px solid red;
-	padding-top:0;
+    border-top:5px solid red;
+    padding-top:0;
 }
 
 table {
-	font-size:100% !important;
+    font-size:100% !important;
 }
 /*#page-course-view-fntabs #page-content .region-content {
-	overflow:visible !important;
+        overflow:visible !important;
 }
 #page-course-view-fntabs #page-content #region-main {
-	overflow:visible !important;
+        overflow:visible !important;
 }
 #page-course-view-fntabs #page-content {
-	overflow:visible !important;
+        overflow:visible !important;
 }*/
 
 #page-course-view-fntabs .weeks .fntopicsoutlineinner .section-boxs {
@@ -442,11 +442,11 @@ table {
     width: 100%;
 }
 #page-course-view-fntabs .weeks .fntopicsoutlineinner ul.section {
-	margin-top:1em;
-        display:inline-block;
+    margin-top:1em;
+    display:inline-block;
 }
 #page-course-view-fntabs .weeks .fntopicsoutlineinner ul.section li {
-        text-align: left;
+    text-align: left;
 }
 #page-course-view-fntabs .weeks .fntopicsoutlineinner ul.section table td{
     padding: 5px;
@@ -481,23 +481,52 @@ table {
     margin-top: 20px;
     margin-bottom: 28px;
 }
+.fnoutlineheadingblock1 {
+    text-align: center;
+    padding:5px 0 10px 0;
+    border: 1px solid #DDDDDD;
+    background-color: #E1E1DF;
+    background-image: url("image.php?theme=standard&image=hgradient&component=theme");
+    background-repeat: repeat-x;
+}
 .fnoutlineheadingblockone {
     text-align: center;
     margin-bottom: 86px;
     margin-top: 12px;
-	
+
 }
 h2.fnoutlineheadingblock {
-    font-size: 1.1em;
+    font-size: 1.0em;
+}
+h2.fnoutlineheadingblock1 {
+    font-size: 1.0em;
 }
 .tab-greaterthan5 {
     width:60px;
 }
 .tab-lessthan5 {
     width:86px;
-	max-width:86px;
+    max-width:86px;
 }
 .mod-indent-1 {
     margin-left: 0px !important;
+}
+
+.mform .fitem fieldset.fgroup label, .mform .fradio label, .mform .fcheckbox label, .mform fieldset.fdate_selector label{
+    padding-left: 5px;
+
+}
+#page-course-format-fntabs-settings #fgroup_id_radioar span {
+    display: inline-block;
+    line-height: normal;
+    width: 80%;
+    line-height: 30px;
+    overflow: hidden;
+}
+#page-course-format-fntabs-settings #fitem_id_topictoshow {
+    width:50px;
+    position: relative;
+    margin:-31px 0 0 43%;
+
 }
 

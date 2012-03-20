@@ -90,7 +90,7 @@ class course_format_fn extends course_format {
             $maximumtabs = $fnmaxtab;
         } else {
             $maximumtabs = 12;
-        }        
+        }
         if ($this->course->numsections == $maximumtabs) {
             $tablow = 1;
             $tabhigh = $maximumtabs;
@@ -140,8 +140,7 @@ class course_format_fn extends course_format {
     }
 
     function print_weekly_activities_bar($week=0, $tabrange=0) {
-        global $THEME, $FULLME, $CFG, $course, $DB, $USER;
-
+        global $FULLME, $CFG, $course, $DB, $USER;
         $fnmaxtab = $DB->get_field('course_config_fn', 'value', array('courseid' => $this->course->id, 'variable' => 'maxtabs'));
         if ($fnmaxtab) {
             $maximumtabs = $fnmaxtab;
@@ -193,10 +192,15 @@ class course_format_fn extends course_format {
 
         $tdselectedclass = array();
 
+        $currentweek = ($timenow > $course->startdate) ?
+                (int) ((($timenow - $course->startdate) / $weekofseconds) + 1) : 0;
+
+        $currentweek = min($currentweek, $course->numsections);
+
+
         for ($i = $tablow; $i <= $tabhigh; $i++) {
-
-
-            if (empty($this->sections[$i]->visible) || ($timenow < $weekdate)) {
+//            if (empty($this->sections[$i]->visible) || ($timenow < $weekdate)) {
+            if ($i > $currentweek) {
                 if ($i == $week) {
                     $css = 'fnweeklynavdisabledselected';
                 } else {

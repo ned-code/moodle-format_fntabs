@@ -61,7 +61,7 @@ class course_fntabs_edit_form extends moodleform {
         }
 
         $radioarray[] = &MoodleQuickForm::createElement('radio', 'defaulttab', '', get_string('default_tab_specifyweek_text', 'format_fntabs'), 'option3');
-        $mform->addGroup($radioarray, 'radioar', get_string('label_deafulttab_text', 'format_fntabs'), array('<br /><br /> '), false);
+        $mform->addGroup($radioarray, 'radioar', get_string('label_deafulttab_text', 'format_fntabs'), array('<br />'), false);
         $mform->setDefault('defaulttab', 'option1');
 
 

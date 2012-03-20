@@ -193,6 +193,8 @@ $string['default_tab_text'] = 'Current week/section as determined by start date'
 $string['default_tab_notattempted_text'] = 'Week/topic that contains the earliest "not attempted" activity ';
 $string['default_tab_specifyweek_text'] = 'Specify default week/section ';
 $string['label_deafulttab_text'] = 'Default tab selected';
+$string['edit_title_for_section0'] = 'Edit Section 0 title';
+$string['sectionzerodefaultheading'] = 'Section Zero';
 
 
 
