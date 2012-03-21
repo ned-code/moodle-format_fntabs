@@ -61,6 +61,8 @@ if ($editing) {
     $strweekshow = get_string('showweekfromothers');
     $strmoveup = get_string('moveup');
     $strmovedown = get_string('movedown');
+    $strmarkedthistopic = get_string("markedthistopic");
+    $strmarkthistopic = get_string("markthistopic");
 }
 
 ////////////////////////// deafult base on thrid option
@@ -114,12 +116,14 @@ if ($selected_week > 999) {
 }
 
 $cobject->context = get_context_instance(CONTEXT_COURSE, $course->id);
+$isteacher = has_capability('moodle/grade:viewall', $cobject->context);
 if (($marker >= 0) && has_capability('moodle/course:setcurrentsection', $cobject->context) && confirm_sesskey()) {
     $course->marker = $marker;
     if (!$DB->set_field("course", "marker", $marker, array("id" => $course->id))) {
         print_error("Could not mark that topic for this course");
     }
 }
+
 
 // Add the selected_week to the course object (so it can be used elsewhere).
 $course->selected_week = $selected_week;
@@ -423,15 +427,15 @@ if (empty($course->showonlysection0)) {
         $showsection = (has_capability('moodle/course:viewhiddensections', $context) || ($thissection->visible && ($timenow > $weekdate)));
 
         if ($showsection) {
-
             $currenttopic = ($course->marker == $section);
+
             //            if (!$cobjectsection->visible || ($timenow < $weekdate) || ($selected_week > $currentweek)) {
             if (!$thissection->visible || ($selected_week > $currentweek)) {
                 $colorsides = "class=\"fntopicsoutlinesidehidden\"";
-                $colormain = "class=\"fntopicsoutlinecontenthidden\"";
+                $colormain = "class=\"fntopicsoutlinecontenthidden fntopicsoutlinecontent\"";
             } else if ($currenttopic) {
                 $colorsides = "class=\"fntopicsoutlinesidehighlight\"";
-                $colormain = "class=\"fntopicsoutlinecontenthighlight\"";
+                $colormain = "class=\"fntopicsoutlinecontenthighlight fntopicsoutlinecontent fntopicsoutlineinner\"";
             } else {
                 $colorsides = "class=\"fntopicsoutlineside\"";
                 $colormain = "class=\"fntopicsoutlinecontent fntopicsoutlineinner\"";
@@ -469,15 +473,14 @@ if (empty($course->showonlysection0)) {
                 $summaryformatoptions->noclean = true;
                 $summaryformatoptions->overflowdiv = true;
                 echo format_text($summarytext, $thissection->summaryformat, $summaryformatoptions);
-                //echo format_text($thissection->summary, FORMAT_HTML);
-                echo '</div>';
 
                 if ($PAGE->user_is_editing() && has_capability('moodle/course:update', get_context_instance(CONTEXT_COURSE, $course->id))) {
 
                     echo ' <a title="' . $streditsummary . '" href="editsection.php?id=' . $thissection->id . '">' .
-                    '<img src="' . $OUTPUT->pix_url('t/edit') . '" class="icon edit" alt="' . $streditsummary . '" /></a>';
-                    echo '<br clear="all">';
+                    '<img src="' . $OUTPUT->pix_url('t/edit') . '" class="iconsmall edit" alt="' . $streditsummary . '" /></a><br /><br />';
                 }
+                //echo format_text($thissection->summary, FORMAT_HTML);
+                echo '</div>';
 
                 echo '<div class="section-boxs">';
                 $cobject->print_section_fn($course, $thissection, $mods, $modnamesused);
@@ -499,28 +502,23 @@ if (empty($course->showonlysection0)) {
 
 
             if ($PAGE->user_is_editing() && has_capability('moodle/course:update', get_context_instance(CONTEXT_COURSE, $course->id))) {
-
                 if ($course->marker == $section) {  // Show the "light globe" on/off
-                    echo '<a href="view.php?id=' . $course->id . '&amp;week=0#section-' . $section . '" title="' . $strshowallweeks . '">' .
-                    '<img src="' . $OUTPUT->pix_url('i/all') . '" class="icon wkall" alt="' . $strshowallweeks . '" /></a><br />';
+                    echo '<a href="view.php?id=' . $course->id . '&amp;marker=0&amp;sesskey=' . sesskey() . '#section-' . $section . '" title="' . $strmarkedthistopic . '">' . '<img src="' . $OUTPUT->pix_url('i/marked') . '" alt="' . $strmarkedthistopic . '" class="icon"/></a><br />';
                 } else {
-                    $strshowonlyweek = get_string("showonlyweek", "", $section);
-                    echo '<a href="view.php?id=' . $course->id . '&amp;week=' . $section . '" title="' . $strshowonlyweek . '">' .
-                    '<img src="' . $OUTPUT->pix_url('i/one') . '" class="icon wkone" alt="' . $strshowonlyweek . '" /></a><br />';
+                    echo '<a href="view.php?id=' . $course->id . '&amp;marker=' . $section . '&amp;sesskey=' . sesskey() . '#section-' . $section . '" title="' . $strmarkthistopic . '">' . '<img src="' . $OUTPUT->pix_url('i/marker') . '" alt="' . $strmarkthistopic . '" class="icon"/></a><br />';
                 }
-
-                if ($thissection->visible) {      // Show the hide/show eye                          
-                    echo '<a href="view.php?id=' . $course->id . '&amp;hide=' . $section . '&amp;sesskey=' . sesskey() . '#section-' . $section . '" title="' . $strweekhide . '">' .
-                    '<img src="' . $OUTPUT->pix_url('i/hide') . '" class="icon hide" alt="' . $strweekhide . '" /></a><br />';
+                
+                if ($thissection->visible) {        // Show the hide/show eye
+                    echo '<a href="view.php?id='.$course->id.'&amp;hide='.$section.'&amp;sesskey='.sesskey().'#section-'.$section.'" title="'.$strweekhide.'">'.
+                         '<img src="'.$OUTPUT->pix_url('i/hide') . '" class="icon hide" alt="'.$strweekhide.'" /></a><br />';
                 } else {
-                    echo '<a href="view.php?id=' . $course->id . '&amp;show=' . $section . '&amp;sesskey=' . sesskey() . '#section-' . $section . '" title="' . $strweekshow . '">' .
-                    '<img src="' . $OUTPUT->pix_url('i/show') . '" class="icon hide" alt="' . $strweekshow . '" /></a><br />';
+                    echo '<a href="view.php?id='.$course->id.'&amp;show='.$section.'&amp;sesskey='.sesskey().'#section-'.$section.'" title="'.$strweekshow.'">'.
+                         '<img src="'.$OUTPUT->pix_url('i/show') . '" class="icon hide" alt="'.$strweekshow.'" /></a><br />';
                 }
 
                 if ($section > 1) {                       // Add a arrow to move section up
                     echo '<a href="view.php?id=' . $course->id . '&amp;random=' . rand(1, 10000) . '&amp;section=' . $section . '&amp;move=-1&amp;sesskey=' . sesskey() . '#section-' . ($section - 1) . '" title="' . $strmoveup . '">' .
                     '<img src="' . $OUTPUT->pix_url('t/up') . '" class="icon up" alt="' . $strmoveup . '" /></a><br />';
-                    echo "<br />";
                 }
 
                 if ($section < $course->numsections) {    // Add a arrow to move section down
