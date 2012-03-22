@@ -65,38 +65,6 @@ if ($editing) {
     $strmarkthistopic = get_string("markthistopic");
 }
 
-////////////////////////// deafult base on thrid option
-//$completion = new completion_info($course);
-//$show_option = $DB->get_field('course_config_fn', 'value', array('courseid' => $course->id, 'variable' => 'defaulttab'));
-//$default_tab_when_setindb = $DB->get_field('course_config_fn', 'value', array('courseid' => $course->id, 'variable' => 'defaulttabwhenset'));
-//if ($show_option == 'option3') {
-//    if (isset($SESSION->G8_selected_week_whenset[$course->id])) {
-//        if (($SESSION->G8_selected_week_whenset[$course->id]) < $default_tab_when_setindb) {
-//            unset($SESSION->G8_selected_week[$course->id]);
-//        }
-//    }
-//
-//    if (isset($_SERVER['HTTP_REFERER'])) {
-//        $matchingurl = explode('?', $_SERVER['HTTP_REFERER']);
-//        $urlneeded = $matchingurl[0];
-//        $urlneeded = $urlneeded . '?id=' . $course->id;
-//        if ($urlneeded != $CFG->wwwroot . '/course/view.php?id=' . $course->id) {
-//            unset($SESSION->G8_selected_week[$course->id]);
-//        }
-//    }
-//} elseif (($show_option == 'option2') && $completion->is_enabled()) {
-//    
-//    
-//   
-//}
-//
-//if ($selected_week == -1 && !(isset($SESSION->G8_selected_week[$course->id]) && !empty($SESSION->G8_selected_week[$course->id]))) {
-//    if (( $show_option == 'option3')) {
-//        $selected_week = $DB->get_field('course_config_fn', 'value', array('courseid' => $course->id, 'variable' => 'topictoshow'));
-//    }
-//}
-//print_object($selected_week);
-///////////////////////// end here code for
 $tabrange = 0;
 if ($selected_week > 999) {
     $tabrange = $selected_week;
@@ -211,8 +179,7 @@ if (!empty($course->showsection0) && ($thissection->summary or $thissection->seq
     $summarytext = file_rewrite_pluginfile_urls($thissection->summary, 'pluginfile.php', $coursecontext->id, 'course', 'section', $thissection->id);
     $summaryformatoptions = new stdClass;
     $summaryformatoptions->noclean = true;
-    $summaryformatoptions->overflowdiv = true;
-    // echo format_text($summarytext, $thissection->summaryformat, $summaryformatoptions);
+    $summaryformatoptions->overflowdiv = true; 
     echo format_text($summarytext, FORMAT_HTML, $summaryformatoptions);
 
     if ($PAGE->user_is_editing() && has_capability('moodle/course:update', get_context_instance(CONTEXT_COURSE, $course->id))) {
@@ -425,14 +392,14 @@ if (empty($course->showonlysection0)) {
         }
 
         $showsection = (has_capability('moodle/course:viewhiddensections', $context) || ($thissection->visible && ($timenow > $weekdate)));
-
+            $weekdate += ( $weekofseconds);
         if ($showsection) {
             $currenttopic = ($course->marker == $section);
 
             //            if (!$cobjectsection->visible || ($timenow < $weekdate) || ($selected_week > $currentweek)) {
             if (!$thissection->visible || ($selected_week > $currentweek)) {
-                $colorsides = "class=\"fntopicsoutlinesidehidden\"";
-                $colormain = "class=\"fntopicsoutlinecontenthidden fntopicsoutlinecontent\"";
+                $colorsides = "class=\"fntopicsoutlinesidehidden \"";
+                $colormain = "class=\"fntopicsoutlinecontenthidden fntopicsoutlinecontent fntopicsoutlineinner\"";
             } else if ($currenttopic) {
                 $colorsides = "class=\"fntopicsoutlinesidehighlight\"";
                 $colormain = "class=\"fntopicsoutlinecontenthighlight fntopicsoutlinecontent fntopicsoutlineinner\"";
@@ -541,7 +508,7 @@ if (empty($course->showonlysection0)) {
                 echo "<tr><td colspan=3><img src=\"../pix/spacer.gif\" width=1 height=1></td></tr>";
             }
 
-            $weekdate += ( $weekofseconds);
+           // $weekdate += ( $weekofseconds);
         }
 
         echo '</table>';

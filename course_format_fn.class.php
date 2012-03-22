@@ -199,8 +199,8 @@ class course_format_fn extends course_format {
 
 
         for ($i = $tablow; $i <= $tabhigh; $i++) {
-//            if (empty($this->sections[$i]->visible) || ($timenow < $weekdate)) {
-            if ($i > $currentweek) {
+            //if (empty($this->sections[$i]->visible) || ($timenow < $weekdate)) {
+            if (empty($this->sections[$i]->visible) || $i > $currentweek) {
                 if ($i == $week) {
                     $css = 'fnweeklynavdisabledselected';
                 } else {
@@ -262,7 +262,7 @@ class course_format_fn extends course_format {
                 }
                 $actbar .= '</a>' . '</td>';
             }
-            $weekdate += ( $weekofseconds);
+           // $weekdate += ( $weekofseconds);
             $actbar .= '<td align="center" height="25" style="width: 2px;">' .
                     '<img src="' . $CFG->wwwroot . '/pix/spacer.gif" height="1" width="1" alt="" /></td>';
         }
