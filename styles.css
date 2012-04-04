@@ -337,7 +337,7 @@ tr.oddrow {
 }
 #page-course-view-fntabs .weeks .section, #page-course-view-fntabs .topics .section {
     background:none;
-    margin-left:2.5em;
+/*    margin-left:2.5em;*/
 }
 #page-course-view-fntabs .green-tab {
     border-top:5px solid green;
