@@ -185,7 +185,7 @@ if (!empty($course->showsection0) && ($thissection->summary or $thissection->seq
     if ($PAGE->user_is_editing() && has_capability('moodle/course:update', get_context_instance(CONTEXT_COURSE, $course->id))) {
         echo '<p><a title="' . $streditsummary . '" ' .
         ' href="editsection.php?id=' . $thissection->id . '"><img src="' . $OUTPUT->pix_url('t/edit') . '" ' .
-        ' class="icon edit" alt="' . $streditsummary . '" /></a></p>';
+        ' class="iconsmall edit" alt="' . $streditsummary . '" /></a></p>';
     }
 
     echo '</div>';
@@ -477,20 +477,20 @@ if (empty($course->showonlysection0)) {
                 
                 if ($thissection->visible) {        // Show the hide/show eye
                     echo '<a href="view.php?id='.$course->id.'&amp;hide='.$section.'&amp;sesskey='.sesskey().'#section-'.$section.'" title="'.$strweekhide.'">'.
-                         '<img src="'.$OUTPUT->pix_url('i/hide') . '" class="icon hide" alt="'.$strweekhide.'" /></a><br />';
+                         '<img src="'.$OUTPUT->pix_url('i/hide') . '" class="iconsmall hide" alt="'.$strweekhide.'" /></a><br />';
                 } else {
                     echo '<a href="view.php?id='.$course->id.'&amp;show='.$section.'&amp;sesskey='.sesskey().'#section-'.$section.'" title="'.$strweekshow.'">'.
-                         '<img src="'.$OUTPUT->pix_url('i/show') . '" class="icon hide" alt="'.$strweekshow.'" /></a><br />';
+                         '<img src="'.$OUTPUT->pix_url('i/show') . '" class="iconsmall hide" alt="'.$strweekshow.'" /></a><br />';
                 }
 
                 if ($section > 1) {                       // Add a arrow to move section up
                     echo '<a href="view.php?id=' . $course->id . '&amp;random=' . rand(1, 10000) . '&amp;section=' . $section . '&amp;move=-1&amp;sesskey=' . sesskey() . '#section-' . ($section - 1) . '" title="' . $strmoveup . '">' .
-                    '<img src="' . $OUTPUT->pix_url('t/up') . '" class="icon up" alt="' . $strmoveup . '" /></a><br />';
+                    '<img src="' . $OUTPUT->pix_url('t/up') . '" class="iconsmall up" alt="' . $strmoveup . '" /></a><br />';
                 }
 
                 if ($section < $course->numsections) {    // Add a arrow to move section down
                     echo '<a href="view.php?id=' . $course->id . '&amp;random=' . rand(1, 10000) . '&amp;section=' . $section . '&amp;move=1&amp;sesskey=' . sesskey() . '#section-' . ($section + 1) . '" title="' . $strmovedown . '">' .
-                    '<img src="' . $OUTPUT->pix_url('t/down') . '" class="icon down" alt="' . $strmovedown . '" /></a><br />';
+                    '<img src="' . $OUTPUT->pix_url('t/down') . '" class="iconsmall down" alt="' . $strmovedown . '" /></a><br />';
                 }
             }
 
@@ -504,7 +504,6 @@ if (empty($course->showonlysection0)) {
                 echo '<tr><td colspan="3" ' . $colorsides . ' align="center">';
                 echo '&nbsp;';
                 echo '</td></tr>';
-
                 echo "<tr><td colspan=3><img src=\"../pix/spacer.gif\" width=1 height=1></td></tr>";
             }
 
