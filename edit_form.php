@@ -26,7 +26,7 @@ class course_fntabs_edit_form extends moodleform {
 
         //get showsection0 heading from database         
 
-        $mform->addElement('header', 'FN Course Tabs', 'Tabs');
+        $mform->addElement('header', 'fncoursetabs', 'Tabs');
 
         //For mainheading for the course
         $label = get_string('mainheading', 'format_fntabs');
@@ -92,7 +92,7 @@ class course_fntabs_edit_form extends moodleform {
         $mform->setDefault('topictoshow', $topiclist[1]);
         ///default tab end
         //header for FN other setting 
-        $mform->addElement('header', 'Section 0', 'Section 0');
+        $mform->addElement('header', 'Section0', 'Section 0');
         //For shwosection 0 or not
         $choices['0'] = get_string("hide");
         $choices['1'] = get_string("show");

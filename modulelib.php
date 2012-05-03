@@ -33,18 +33,17 @@ function assignment_is_completed($mod, $userid) {
         case "upload":          
             if($assignment->var4){ //if var4 enable then assignment can be saved                
                 if(!empty($submission->timemodified)
-                        && (empty($submission->data2))
-                        && (empty($submission->timemarked))){                  
+                        && ($submission->data2=="")){                  
                     return 'saved';
                     
                 }
                 else if(!empty($submission->timemodified)
-                        && ($submission->data2='submitted')
+                        && ($submission->data2=='submitted')
                         && empty($submission->timemarked)){                
                     return 'submitted';                    
                 }
                 else if(!empty($submission->timemodified)
-                        && ($submission->data2='submitted')
+                        && ($submission->data2=='submitted')
                         && ($submission->grade==-1)){
                     return 'submitted';
                     
@@ -54,16 +53,19 @@ function assignment_is_completed($mod, $userid) {
                 return 'submitted';                
             }            
             break;
+            
         case "uploadsingle":            
             if(empty($submission->timemarked)){           
                  return 'submitted';                
             }            
             break;
+            
         case "online":
             if(empty($submission->timemarked)){       
                  return 'submitted';                
             }             
             break;
+            
         case "offline":           
             if(empty($submission->timemarked)){     
                  return 'submitted';                

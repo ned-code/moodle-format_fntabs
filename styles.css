@@ -384,11 +384,12 @@ table {
 /*** Tool Tips ***/
 .fnweeklynav .tooltip {color:#000000; outline:none; text-decoration:none; position:relative; cursor:pointer;}
 .fnweeklynav .tooltip span {margin-left:-999em;	position:absolute;}
-.fnweeklynav .tooltip:hover span {position:absolute; left:-3.2em; top:-12em; z-index:999; margin-left:0; width:170px;}
+.fnweeklynav .tooltip:hover span {position:absolute; left:-3.2em; top:-8.8em; z-index:999; margin-left:0; width:330px; height:100px;}
 .fnweeklynav .tooltip:hover img.arrows {border:0; margin:0px; position:absolute; left:60px; bottom:-19px;}
 .fnweeklynav .tooltip:hover div.head {text-align:center; background:#DCDCDC; padding:0.1em 0; color:#18a3e6; font-weight:bold; font-size:16px; margin:0;}
-.fnweeklynav .tooltip:hover ul {margin:0; padding:0.3em 0.8em 0.3em 0.8em; list-style-type:none;}
-.fnweeklynav .tooltip:hover li {margin:0 0 1px 0; padding:0; font-size:14px; text-align:left; list-style-type:none;}
+.fnweeklynav .tooltip:hover ul {margin:0; padding:0.5em 0.8em 0.5em 0.8em; list-style-type:none;}
+.fnweeklynav .tooltip:hover li {margin:0 0 2px 0; padding:0; width:150px; float:left; font-size:14px; text-align:left; list-style-type:none;}
+.fnweeklynav .tooltip:hover li img { vertical-align:middle;}
 
 .fnweeklynav .custom {padding:0em}
 * html a:hover { background: transparent; }
@@ -417,8 +418,8 @@ table {
 }
 .fnoutlineheadingblockone {
     text-align: center;
-    margin-bottom: 86px;
-    margin-top: 12px;
+    margin-bottom:48px;
+    margin-top:10px;
 
 }
 h2.fnoutlineheadingblock {
@@ -452,7 +453,20 @@ h2.fnoutlineheadingblock1 {
 #page-course-format-fntabs-settings #fitem_id_topictoshow {
     width:50px;
     position: relative;
-    margin:-31px 0 0 43%;
+    margin:-31px 0 0 365px;
 
 }
 
+#page-course-format-fntabs-settings #fgroup_id_buttonar {
+    text-align: center;
+}
+#page-course-format-fntabs-settings #Section0 .fitemtitle{
+    width:17% !important;
+    padding-right:5px;
+}
+#page-course-format-fntabs-settings .fgroup {
+	border:none  !important;
+}
+.headingwrap{
+    margin-top:5px;
+}

@@ -252,10 +252,11 @@ class course_format_fn extends course_format {
                             <div class="head">Week ' . $i . '</div>
                             <ul>
                                 <li class="complete"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/completed.gif" /> ' . $compl . ' Complete</li>
-                                <li class="in-complete"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/incomplete.gif" /> ' . $incompl . ' Incomplete</li>
-                                <li class="saved"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/saved.gif" /> ' . $svd . ' Saved</li>
-                                <li class="not-attp"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/completion-auto-n.gif" /> ' . $notattemptd . ' Not Attempted</li>
-                                <li class="grade-wait"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/unmarked.gif" /> ' . $waitforgrade . ' Waiting for Grade</li>
+								<li class="not-attp"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/completion-auto-n.gif" /> ' . $notattemptd . ' Not Attempted</li>
+								<li class="in-complete"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/incomplete.gif" /> ' . $incompl . ' Incomplete</li>
+								<li class="grade-wait"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/unmarked.gif" /> ' . $waitforgrade . ' Waiting for Grade</li>
+								<li class="saved"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/saved.gif" /> ' . $svd . ' Saved</li>
+								
                             </ul>
                             <img class="arrows" src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/t-arrow.gif" alt="Information" height="20" width="24" />
                         </span>';
@@ -620,8 +621,8 @@ class course_format_fn extends course_format {
                                 $completionicon = 'manual-y';
                                 break;
                         }
-                    } else { // Automatic
-                        if (($mod->modname == 'assignment') && isset($mod->completiongradeitemnumber)) {
+                    } else { // Automatic                      
+                        if (($mod->modname == 'assignment') && isset($mod->completiongradeitemnumber)) {                           
                             $act_compl = assignment_is_completed($mod, $USER->id);
                             $completiondata1 = $completioninfo->get_data($mod, true);
                             if ($act_compl == 'submitted') {
