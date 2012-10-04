@@ -197,5 +197,7 @@ $string['edit_title_for_section0'] = 'Edit Section 0 title';
 $string['sectionzerodefaultheading'] = 'Section Zero';
 
 
-
+$string['showallweeks']='Show all weeks';
+$string['hideweekfromothers']='Hide week';
+$string['showweekfromothers']='Show week';
 

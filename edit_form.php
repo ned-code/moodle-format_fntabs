@@ -53,14 +53,14 @@ class course_fntabs_edit_form extends moodleform {
         //////work to be done for default tab
         $radioarray = array();
         $attributes = array();
-        $radioarray[] = &MoodleQuickForm::createElement('radio', 'defaulttab', '', get_string('default_tab_text', 'format_fntabs'), 'option1', array('checked' => true, 'class' => 'padding_before_radio', 'style' => 'padding-left:10px;'));
+        $radioarray[] = $mform->createElement('radio', 'defaulttab', '', get_string('default_tab_text', 'format_fntabs'), 'option1', array('checked' => true, 'class' => 'padding_before_radio', 'style' => 'padding-left:10px;'));
         // add second option if the course completion is enabled
         $completion = new completion_info($course);
         if ($completion->is_enabled()) {
-            $radioarray[] = &MoodleQuickForm::createElement('radio', 'defaulttab', '', get_string('default_tab_notattempted_text', 'format_fntabs'), 'option2');
+            $radioarray[] = $mform->createElement('radio', 'defaulttab', '', get_string('default_tab_notattempted_text', 'format_fntabs'), 'option2');
         }
 
-        $radioarray[] = &MoodleQuickForm::createElement('radio', 'defaulttab', '', get_string('default_tab_specifyweek_text', 'format_fntabs'), 'option3');
+        $radioarray[] = $mform->createElement('radio', 'defaulttab', '', get_string('default_tab_specifyweek_text', 'format_fntabs'), 'option3');
         $mform->addGroup($radioarray, 'radioar', get_string('label_deafulttab_text', 'format_fntabs'), array('<br />'), false);
         $mform->setDefault('defaulttab', 'option1');
 

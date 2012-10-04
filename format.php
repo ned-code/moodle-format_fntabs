@@ -50,15 +50,15 @@ $selected_week = optional_param('selected_week', -1, PARAM_INT);
 $streditsummary = get_string('editsummary');
 $stradd = get_string('add');
 $stractivities = get_string('activities');
-$strshowallweeks = get_string('showallweeks');
+$strshowallweeks = get_string('showallweeks', 'format_fntabs');
 $strweek = get_string('week');
 $strgroups = get_string('groups');
 $strgroupmy = get_string('groupmy');
 $editing = $PAGE->user_is_editing();
 
 if ($editing) {
-    $strweekhide = get_string('hideweekfromothers');
-    $strweekshow = get_string('showweekfromothers');
+    $strweekhide = get_string('hideweekfromothers', 'format_fntabs');
+    $strweekshow = get_string('showweekfromothers', 'format_fntabs');
     $strmoveup = get_string('moveup');
     $strmovedown = get_string('movedown');
     $strmarkedthistopic = get_string("markedthistopic");

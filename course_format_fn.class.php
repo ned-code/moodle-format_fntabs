@@ -335,8 +335,6 @@ class course_format_fn extends course_format {
             $initialised = true;
         }
 
-        $tl = textlib_get_instance();
-
         $modinfo = get_fast_modinfo($course);
 
         $completioninfo = new completion_info($course);
@@ -461,7 +459,7 @@ class course_format_fn extends course_format {
                 // Avoid unnecessary duplication: if e.g. a forum name already
                 // includes the word forum (or Forum, etc) then it is unhelpful
                 // to include that in the accessible description that is added.
-                if (false !== strpos($tl->strtolower($instancename), $tl->strtolower($altname))) {
+                if (false !== strpos(textlib::strtolower($instancename), textlib::strtolower($altname))) {
                     $altname = '';
                 }
                 // File type after name, for alphabetic lists (screen reader).
