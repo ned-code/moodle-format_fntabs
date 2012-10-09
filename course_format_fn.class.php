@@ -620,7 +620,7 @@ class course_format_fn extends course_format {
                                 break;
                         }
                     } else { // Automatic                      
-                        if (($mod->modname == 'assignment') && isset($mod->completiongradeitemnumber)) {                           
+                        if (($mod->modname == 'assignment' || $mod->modname == 'assign') && isset($mod->completiongradeitemnumber)) {                           
                             $act_compl = assignment_is_completed($mod, $USER->id);
                             $completiondata1 = $completioninfo->get_data($mod, true);
                             if ($act_compl == 'submitted') {
