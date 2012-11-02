@@ -141,12 +141,45 @@ class course_format_fn extends course_format {
 
     function print_weekly_activities_bar($week=0, $tabrange=0) {
         global $FULLME, $CFG, $course, $DB, $USER;
-        $fnmaxtab = $DB->get_field('course_config_fn', 'value', array('courseid' => $this->course->id, 'variable' => 'maxtabs'));
+
+        $selectedcolour   = $DB->get_field('course_config_fn', 'value', array('courseid' => $this->course->id, 'variable' => 'selectedcolour'));
+        $activelinkcolour = $DB->get_field('course_config_fn', 'value', array('courseid' => $this->course->id, 'variable' => 'activelinkcolour'));
+        $activecolour     = $DB->get_field('course_config_fn', 'value', array('courseid' => $this->course->id, 'variable' => 'activecolour'));
+
+        $inactivelinkcolour = $DB->get_field('course_config_fn', 'value', array('courseid' => $this->course->id, 'variable' => 'inactivelinkcolour'));
+        $inactivecolour     = $DB->get_field('course_config_fn', 'value', array('courseid' => $this->course->id, 'variable' => 'inactivecolour'));
+
+        $selectedcolour = $selectedcolour ? $selectedcolour : 'FFFF33';
+        $activelinkcolour   = $activelinkcolour ? $activelinkcolour : '000000';
+        $inactivelinkcolour   = $inactivelinkcolour ? $inactivelinkcolour : '000000';
+        $activecolour   = $activecolour ? $activecolour : 'DBE6C4';
+        $inactivecolour = $inactivecolour ? $inactivecolour : 'BDBBBB';
+
+        $fnmaxtab       = $DB->get_field('course_config_fn', 'value', array('courseid' => $this->course->id, 'variable' => 'maxtabs'));
+
         if ($fnmaxtab) {
             $maximumtabs = $fnmaxtab;
         } else {
             $maximumtabs = 12;
         }
+
+        echo "
+        <style>
+        .fnweeklynavselected {
+            background-color: #$selectedcolour;
+        }
+        .fnweeklynavnorm,
+        .fnweeklynavnorm a:active {
+            background-color: #$activecolour;
+        }
+        .fnweeklynavdisabled {
+            color: #$inactivelinkcolour;
+            background-color: #$inactivecolour;
+        }
+        .fnweeklynav .tooltip {
+            color: #$activelinkcolour;
+        }
+        </style>";
 
 
         $completioninfo = new completion_info($course);

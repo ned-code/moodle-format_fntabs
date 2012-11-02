@@ -91,6 +91,43 @@ class course_fntabs_edit_form extends moodleform {
         $mform->addElement('select', 'topictoshow', '', $topiclist, array('class' => 'ddl_padding'));
         $mform->setDefault('topictoshow', $topiclist[1]);
         ///default tab end
+
+
+        $mform->addElement('header', 'fncoursecolours', 'Colors');
+
+        $mform->addElement('html', '<table style="width:100%"><tr><td>');
+
+        $mform->addElement('text', 'bgcolour', get_string('bgcolour', 'format_fntabs'), 'maxlength="6" size="6"');
+        $mform->setType('bgcolour', PARAM_ALPHANUM);
+
+        $mform->addElement('text', 'activecolour', get_string('activeweek', 'format_fntabs'), 'maxlength="6" size="6"');
+        $mform->setType('activecolour', PARAM_ALPHANUM);
+
+        $mform->addElement('text', 'selectedcolour', get_string('selectedweek', 'format_fntabs'), 'maxlength="6" size="6"');
+        $mform->setType('selectedcolour', PARAM_ALPHANUM);
+
+        $mform->addElement('text', 'inactivecolour', get_string('inactiveweek', 'format_fntabs'), 'maxlength="6" size="6"');
+        $mform->setType('inactivecolour', PARAM_ALPHANUM);
+
+        $mform->addElement('text', 'inactivebgcolour', get_string('inactivebgcolour', 'format_fntabs'), 'maxlength="6" size="6"');
+        $mform->setType('inactivebgcolour', PARAM_ALPHANUM);
+
+        $mform->addElement('text', 'activelinkcolour', get_string('activelinkcolour', 'format_fntabs'), 'maxlength="6" size="6"');
+        $mform->setType('activelinkcolour', PARAM_ALPHANUM);
+
+        $mform->addElement('text', 'inactivelinkcolour', get_string('inactivelinkcolour', 'format_fntabs'), 'maxlength="6" size="6"');
+        $mform->setType('inactivelinkcolour', PARAM_ALPHANUM);
+
+        $mform->addElement('text', 'highlightcolour', get_string('highlightcolour', 'format_fntabs'), 'maxlength="6" size="6"');
+        $mform->setType('highlightcolour', PARAM_ALPHANUM);
+
+
+        $mform->addElement('html', '</td><td>');
+
+        $mform->addElement('html', '<img src="pix/fntabs_colourkey.png" />');
+
+        $mform->addElement('html', '</td></tr></table>');
+
         //header for FN other setting 
         $mform->addElement('header', 'Section0', 'Section 0');
         //For shwosection 0 or not

@@ -63,6 +63,22 @@ if((!$completion->is_enabled()) && $defaulttab =='option2'){
     $data->defaulttab = ($defaulttab) ? $defaulttab: 'option1';
 }
 
+$bgcolour = $DB->get_field('course_config_fn', 'value', array('courseid' =>$data->courseid, 'variable' => 'bgcolour'));
+$data->bgcolour = ($bgcolour) ? $bgcolour: '9DBB61';
+$activecolour = $DB->get_field('course_config_fn', 'value', array('courseid' =>$data->courseid, 'variable' => 'activecolour'));
+$data->activecolour = ($activecolour) ? $activecolour: 'DBE6C4';
+$selectedcolour = $DB->get_field('course_config_fn', 'value', array('courseid' =>$data->courseid, 'variable' => 'selectedcolour'));
+$data->selectedcolour = ($selectedcolour) ? $selectedcolour: 'FFFF33';
+$inactivebgcolour = $DB->get_field('course_config_fn', 'value', array('courseid' =>$data->courseid, 'variable' => 'inactivebgcolour'));
+$data->inactivebgcolour = ($inactivebgcolour) ? $inactivebgcolour: 'F5E49C';
+$inactivecolour = $DB->get_field('course_config_fn', 'value', array('courseid' =>$data->courseid, 'variable' => 'inactivecolour'));
+$data->inactivecolour = ($inactivecolour) ? $inactivecolour: 'BDBBBB';
+$activelinkcolour = $DB->get_field('course_config_fn', 'value', array('courseid' =>$data->courseid, 'variable' => 'activelinkcolour'));
+$data->activelinkcolour = ($activelinkcolour) ? $activelinkcolour: '000000';
+$inactivelinkcolour = $DB->get_field('course_config_fn', 'value', array('courseid' =>$data->courseid, 'variable' => 'inactivelinkcolour'));
+$data->inactivelinkcolour = ($inactivelinkcolour) ? $inactivelinkcolour: '000000';
+$highlightcolour = $DB->get_field('course_config_fn', 'value', array('courseid' =>$data->courseid, 'variable' => 'highlightcolour'));
+$data->highlightcolour = ($highlightcolour) ? $highlightcolour: '73C1E1';
 
 $topictoshow = $DB->get_field('course_config_fn', 'value', array('courseid' =>$data->courseid, 'variable' => 'topictoshow'));
 $data->topictoshow = ($defaulttab == 'option3') ? $topictoshow: 1;
@@ -106,6 +122,31 @@ if ($editform->is_cancelled()) {
     
     $variable = 'defaulttabwhenset';
     update_course_fn_setting($variable, $data->$variable);
+
+    $variable = 'bgcolour';
+    update_course_fn_setting($variable, $data->$variable);
+
+    $variable = 'activelinkcolour';
+    update_course_fn_setting($variable, $data->$variable);
+
+    $variable = 'inactivelinkcolour';
+    update_course_fn_setting($variable, $data->$variable);
+
+    $variable = 'highlightcolour';
+    update_course_fn_setting($variable, $data->$variable);
+
+    $variable = 'inactivebgcolour';
+    update_course_fn_setting($variable, $data->$variable);
+
+    $variable = 'selectedcolour';
+    update_course_fn_setting($variable, $data->$variable);
+
+    $variable = 'activecolour';
+    update_course_fn_setting($variable, $data->$variable);
+
+    $variable = 'inactivecolour';
+    update_course_fn_setting($variable, $data->$variable);
+
     unset($SESSION->G8_selected_week[$course->id]);
     redirect($CFG->wwwroot . "/course/view.php?id=$course->id" );
 }

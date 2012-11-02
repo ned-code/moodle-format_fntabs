@@ -5,33 +5,19 @@
 .courseedit {
     background-color:#B3EAFF;
 }
-.courseedit-format {
-    background-color:#9dbb61;
-}
 .courseedit-fn {
     background-color:#C5EFFF;
-}
-.courseedit-fn-format {
-    background-color:#73C1E1;
-}
-.courseedit-fn-main {
-    background-color:#9dbb61;
 }
 .courseedit-fn-section {
     border-width: 2px;
     border-style: solid;
-    border-color: #73C1E1;
     background-color:#C5EFFF;
-}
-.courseedit-fn-sidebar {
-    background-color:#73C1E1;
 }
 .fntopicsoutlinecontent {
     border-style: solid;
     border-width: 1px;
     border-left: 0px;
     border-right: 0px;
-    border-color: #9dbb61;
 }
 .fntopicsoutlinecontenthidden {
     border-style: solid;
@@ -47,7 +33,6 @@
     border-width: 1px;
     border-left: 0px;
     border-right: 0px;
-    border-color: #73C1E1;
 }
 .fnweeklynav {
     border-collapse: separate;
@@ -60,9 +45,6 @@
 }
 .fnweeklynavnorm {
     text-align: center;
-    border-right: solid 1px #9dbb61;
-    border-right: solid 1px #9dbb61;
-    background-color: #dbe6c4;
     color: blue;
 }
 .fnweeklynavnorm a {
@@ -77,20 +59,14 @@
 }
 .fnweeklynavnorm a:active {
     text-decoration: none;
-    background-color: #dbe6c4;
 }
 .fnweeklynavselected {  
     font-weight: bold;
     text-align: center;
-    border-right: solid 1px #9dbb61;
-    background-color: #FFFF33;
     color: black;
 }
 .fnweeklynavselected .content-section {
     padding:5px;
-}
-.fnweeklynavdisabledselected1 {
-    background-color:#F5E49C;
 }
 .fnweeklynavdisabledselected1 .content-section {
     padding:5px;
@@ -109,16 +85,10 @@
 
 .fnweeklynavdisabledselected {
     text-align: center;
-    background-color: #f5e49c;
     color: #bdbbbb;
 }
 .fnweeklynavdisabled {
     text-align: center;
-    background-color: #dcdcdc;
-    color: #bdbbbb;
-}
-.markingcontainer td.generalbox3 {
-    background-color: #73C1E1;
 }
 .markingcontainer td.generalbox4 {
     background-color: #FFFFFF;
@@ -136,7 +106,6 @@
 .fnmarkingblock tbody td {
     border-style: solid;
     border-width: 1px;
-    border-color: #73C1E1;
 }
 table.fnmarkingblock tbody {
     background-color: #B3EAFF;
@@ -144,7 +113,6 @@ table.fnmarkingblock tbody {
 .fncoursegroup {
     border-width: 1px;
     border-style: solid;
-    border-color: #73C1E1;
 }
 .gradeactcol {
     text-align: left;
@@ -231,21 +199,14 @@ tr.evenrow {
 tr.oddrow {
     background-color: #FFFFFF;
 }
-.headergeneral {
-    background-color: #9dbb61;
-}
 .fnweeklycontent {
     background-color: #FFFFFF;
 }
 .fnsectionouter {
-    background-color: #9dbb61;
     padding:0;
 }
 .number-select {
     padding:0.5em;
-}
-.fntopicsoutlineside {
-    background-color: #9dbb61;
 }
 .fntopicsoutlineinner {
     background-color: #FFFFFF;
@@ -253,9 +214,6 @@ tr.oddrow {
 }
 .fntopicsoutlinesidehidden {
     background-color: #AAAAAA;
-}
-.fntopicsoutlinesidehighlight {
-    background-color: #73C1E1;
 }
 .markingpastcomment {
     background-color: #C0C0C0;
@@ -281,7 +239,6 @@ tr.oddrow {
 
 .fnmarkedfilearea {
     border: solid green 2px;
-    background-color: #9dbb61;
 }
 #mod-resource-view .generalboxcontent {
     background-color: #FFFFFF;
@@ -382,7 +339,7 @@ table {
 }
 
 /*** Tool Tips ***/
-.fnweeklynav .tooltip {color:#000000; outline:none; text-decoration:none; position:relative; cursor:pointer;}
+.fnweeklynav .tooltip {outline:none; text-decoration:none; position:relative; cursor:pointer;}
 .fnweeklynav .tooltip span {margin-left:-999em;	position:absolute;}
 .fnweeklynav .tooltip:hover span {position:absolute; left:-3.2em; top:-8.8em; z-index:999; margin-left:0; width:330px; height:100px;}
 .fnweeklynav .tooltip:hover img.arrows {border:0; margin:0px; position:absolute; left:60px; bottom:-19px;}
@@ -441,8 +398,16 @@ h2.fnoutlineheadingblock1 {
 
 .mform .fitem fieldset.fgroup label, .mform .fradio label, .mform .fcheckbox label, .mform fieldset.fdate_selector label{
     padding-left: 5px;
-
 }
+
+.mform #fncoursecolours .fitem .fitemtitle {
+    width: 150px;
+}
+
+.mform #fncoursecolours .fitem .felement {
+    margin-left: 155px;
+}
+
 #page-course-format-fntabs-settings #fgroup_id_radioar span {
     display: inline-block;
     line-height: normal;

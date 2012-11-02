@@ -313,6 +313,55 @@ if (empty($course->showonlysection0)) {
             echo $OUTPUT->heading($strmainheading, 2, 'fnoutlineheadingblock1');
         }
 
+        $bgcolour         = $DB->get_field('course_config_fn', 'value', array('courseid' => $course->id, 'variable' => 'bgcolour'));
+        $highlightcolour  = $DB->get_field('course_config_fn', 'value', array('courseid' => $course->id, 'variable' => 'highlightcolour'));
+        $inactivebgcolour = $DB->get_field('course_config_fn', 'value', array('courseid' => $course->id, 'variable' => 'inactivebgcolour'));
+
+        $bgcolour         = $bgcolour ? $bgcolour : '9DBB61';
+        $highlightcolour  = $highlightcolour ? $highlightcolour : '73C1E1';
+        $inactivebgcolour = $inactivebgcolour ? $inactivebgcolour : 'F5E49C';
+
+        echo "
+        <style>
+        .fnsectionouter,
+        .courseedit-format,
+        .courseedit-fn-main,
+        headergeneral,
+        fnmarkedfilearea {
+            background-color:#$bgcolour;
+        }
+        .fntopicsoutlinecontent {
+            border-color:#$bgcolour;
+        }
+        .fnweeklynavnorm {
+            border-right: solid 1px #$bgcolour;
+            border-right: solid 1px #$bgcolour;
+        }
+        .fnweeklynavselected {
+            border-right: solid 1px #$bgcolour;
+        }
+        .fntopicsoutlineside {
+            background-color:#$bgcolour;
+        }
+        .fntopicsoutlinesidehighlight,
+        .courseedit-fn-format,
+        .courseedit-fn-sidebar,
+        .markingcontainer td.generalbox3 {
+            background-color: #$highlightcolour;
+        }
+        .fntopicsoutlinecontenthighlight,
+        .courseedit-fn-section,
+        .fnmarkingblock thead,
+        .fnmarkingblock tbody td,
+        .fncoursegroup {
+            border-color: #$highlightcolour;
+        }
+        .fnweeklynavdisabledselected,
+        .fnweeklynavdisabledselected1 {
+            background-color: #$inactivebgcolour;
+        }
+        </style>";
+
         if ($selected_week > 0 && !$PAGE->user_is_editing()) {
             echo '<table class="topicsoutline" border="0" cellpadding="0" cellspacing="0" width="100%">
                 <tr><td valign=top class="fntopicsoutlinecontent fnsectionouter" width="100%">

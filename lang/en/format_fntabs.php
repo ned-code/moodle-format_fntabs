@@ -23,8 +23,25 @@
  */
 $string['pluginname'] = 'FN- Tabs Format';
 $string['namefntabs'] = 'FN Week';
+
+$string['bgcolour'] = 'Background -A';
+$string['activeweek'] = 'Active section - B';
+$string['selectedweek'] = 'Selected section - C';
+$string['inactiveweek'] = 'Selected & inactive - D';
+$string['inactivebgcolour'] = 'Inactive section - E';
+$string['activelinkcolour'] = 'Active links -';
+$string['inactivelinkcolour'] = 'Inactive links -';
+$string['highlightcolour'] = 'Highlighted section -';
+
+
 $string['missingmainheading'] = 'Main heading can not be null';
 $string['missingtopicheading'] = 'Topic heading can not be null';
+$string['missingbgcolour'] = 'Background colour can not be null';
+$string['missinghighlightcolour'] = 'Highlight colour can not be null';
+$string['missinginactivebgcolour'] = 'Inactive background colour can not be null';
+$string['missingselectedcolour'] = 'Selected week\'s colour can not be null';
+$string['missingactivecolour'] = 'Active week\'s colour can not be null';
+$string['missinginactivecolour'] = 'Inactive week\'s colour can not be null';
 
 
 $string['defaultmainheading'] = 'Weekly Activities';

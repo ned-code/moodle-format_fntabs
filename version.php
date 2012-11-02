@@ -26,7 +26,7 @@
  * @license    
  */
 
-$plugin->version = 2011112501;
+$plugin->version = 2012101100;
 $plugin->maturity = MATURITY_ALPHA;
 $plugin->requires = 2011070100; // 2.1
 $plugin->component = 'format_fntabs';
