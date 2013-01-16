@@ -35,7 +35,7 @@ require_once($CFG->dirroot . '/course/format/' . $course->format . '/lib.php');
 require_once($CFG->dirroot . '/course/format/' . $course->format . '/modulelib.php');
 
 global $DB, $OUTPUT, $THEME, $PAGE;
-
+                              
 $cobject = new course_format_fn($course);
 $course = $cobject->course;
 
@@ -66,6 +66,8 @@ if ($editing) {
 }
 
 $tabrange = 0;
+
+
 if ($selected_week > 999) {
     $tabrange = $selected_week;
     $selected_week = $SESSION->G8_selected_week[$course->id];
@@ -84,9 +86,13 @@ if ($selected_week > 999) {
 }
 
 $cobject->context = get_context_instance(CONTEXT_COURSE, $course->id);
+
 $isteacher = has_capability('moodle/grade:viewall', $cobject->context);
+
 if (($marker >= 0) && has_capability('moodle/course:setcurrentsection', $cobject->context) && confirm_sesskey()) {
+    
     $course->marker = $marker;
+    
     if (!$DB->set_field("course", "marker", $marker, array("id" => $course->id))) {
         print_error("Could not mark that topic for this course");
     }
@@ -119,18 +125,23 @@ if (!empty($course->showsection0) && ($thissection->summary or $thissection->seq
     // Note, 'right side' is BEFORE content.        
     echo '<li id="section-0" class="section main clearfix" style="border:none !important;" >';
     //  echo '<td colspan="3" align="center" width="100%" id="fnsection0" class="content">';
+    
     if (empty($course->sec0title)) {
         $course->sec0title = '';
     }
 
     if ($PAGE->user_is_editing()) {
+        
         if (empty($_GET['edittitle']) or ($_GET['edittitle'] != 'sec0')) {
+           
             if ($course->sec0title) {
                 echo $OUTPUT->heading($course->sec0title, 2, 'fnoutlineheadingblock1', 'sectionzerotextalignment');
             } else {
                 echo $OUTPUT->heading(get_string('sectionzerodefaultheading', 'format_fntabs'), 2, 'fnoutlineheadingblock1');
             }
+            
             $path = $CFG->wwwroot . '/course';
+            
             if (empty($THEME->custompix)) {
                 $pixpath = $path . '/../pix';
             } else {
@@ -139,6 +150,7 @@ if (!empty($course->showsection0) && ($thissection->summary or $thissection->seq
 
             echo ' <a title="' . get_string('edit_title_for_section0', 'format_fntabs') . '" href="' . $CFG->wwwroot . '/course/view.php?id=' .
             $course->id . '&amp;edittitle=sec0"><img src="' . $pixpath . '/t/edit.gif" /></a>';
+        
         } else if ($_GET['edittitle'] == 'sec0') {
             echo '<form name="editsec0title" method="post" ' .
             'action="' . $CFG->wwwroot . '/course/format/fntabs/mod.php">' .
@@ -148,6 +160,7 @@ if (!empty($course->showsection0) && ($thissection->summary or $thissection->seq
             'value="ok" title="Save">' .
             '</form>';
         } else {
+            
             if ($course->sec0title) {
                 echo $OUTPUT->heading($course->sec0title, 2, 'fnoutlineheadingblock1');
             } else {
@@ -155,6 +168,7 @@ if (!empty($course->showsection0) && ($thissection->summary or $thissection->seq
             }
         }
     } else {
+        
         if ($course->sec0title) {
             echo $OUTPUT->heading($course->sec0title, 2, 'fnoutlineheadingblock1');
         } else {
@@ -203,6 +217,13 @@ if (!empty($course->showsection0) && ($thissection->summary or $thissection->seq
 /// Now all the normal modules by week
 /// Everything below uses "section" terminology - each "section" is a week.
 
+$courseformatoptions = course_get_format($course)->get_format_options();
+$course->numsections = $courseformatoptions['numsections']; 
+//$course->hiddensections = $courseformatoptions['hiddensections']; 
+//$course->coursedisplay = $courseformatoptions['coursedisplay']; 
+
+
+
 if (empty($course->showonlysection0)) {
     /// Now all the weekly sections
 
@@ -212,6 +233,7 @@ if (empty($course->showonlysection0)) {
     $section = 1;
     $sectionmenu = array();
     $weekofseconds = 604800;
+    $course->enddate = $course->startdate + ($weekofseconds * $course->numsections);
     $course->enddate = $course->startdate + ($weekofseconds * $course->numsections);
     $completion = new completion_info($course);
 
@@ -223,7 +245,8 @@ if (empty($course->showonlysection0)) {
             (int) ((($timenow - $course->startdate) / $weekofseconds) + 1) : 0;
 
     $currentweek = min($currentweek, $course->numsections);
-    $allSections = get_all_sections($course->id);
+    //$allSections = get_all_sections($course->id);
+    $allSections = get_fast_modinfo($course->id)->get_section_info_all();
     $modinfo = get_fast_modinfo($COURSE);
     $strftimedateshort = " " . get_string("strftimedateshort");
     /// If the selected_week variable is 0, all weeks are selected.
@@ -431,6 +454,7 @@ if (empty($course->showonlysection0)) {
             $thissection = $sections[$section];
         } else {
             unset($thissection);
+            $thissection = new object();
             $thissection->course = $course->id;   // Create a new week structure
             $thissection->section = $section;
             $thissection->name = null;

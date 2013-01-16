@@ -25,6 +25,12 @@ class course_format {
         if (empty($this->course) && is_object($course)) {
             $this->course = clone($course);
         }
+        
+        $courseformatoptions = course_get_format($course)->get_format_options();
+        $this->course->numsections = $courseformatoptions['numsections']; 
+        //$course->hiddensections = $courseformatoptions['hiddensections']; 
+        //$course->coursedisplay = $courseformatoptions['coursedisplay'];
+         
         /// Method should load any other course data into the course property.
         $this->get_course();
     }
