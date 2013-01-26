@@ -550,10 +550,10 @@ if (empty($course->showonlysection0)) {
                 
                 if ($thissection->visible) {        // Show the hide/show eye
                     echo '<a href="view.php?id='.$course->id.'&amp;hide='.$section.'&amp;sesskey='.sesskey().'#section-'.$section.'" title="'.$strweekhide.'">'.
-                         '<img src="'.$OUTPUT->pix_url('i/hide') . '" class="iconsmall hide" alt="'.$strweekhide.'" /></a><br />';
+                         '<img src="'.$OUTPUT->pix_url('i/hide') . '" class="iconsmall iconhide" alt="'.$strweekhide.'" /></a><br />';
                 } else {
                     echo '<a href="view.php?id='.$course->id.'&amp;show='.$section.'&amp;sesskey='.sesskey().'#section-'.$section.'" title="'.$strweekshow.'">'.
-                         '<img src="'.$OUTPUT->pix_url('i/show') . '" class="iconsmall hide" alt="'.$strweekshow.'" /></a><br />';
+                         '<img src="'.$OUTPUT->pix_url('i/show') . '" class="iconsmall iconhide" alt="'.$strweekshow.'" /></a><br />';
                 }
 
                 if ($section > 1) {                       // Add a arrow to move section up
