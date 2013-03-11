@@ -35,6 +35,17 @@ require_once($CFG->dirroot . '/course/format/' . $course->format . '/lib.php');
 require_once($CFG->dirroot . '/course/format/' . $course->format . '/modulelib.php');
 
 global $DB, $OUTPUT, $THEME, $PAGE;
+
+//Check sesubmission plugin
+if ($assignCheck = $DB->get_record_sql("SELECT * FROM {$CFG->prefix}assign LIMIT 0, 1")){
+    if(isset($assignCheck->resubmission)){
+        $resubmission = true;
+    }else{
+        $resubmission = false;
+    }
+}else{
+    $resubmission = false;
+}
                               
 $cobject = new course_format_fn($course);
 $course = $cobject->course;
@@ -204,7 +215,7 @@ if (!empty($course->showsection0) && ($thissection->summary or $thissection->seq
 
     echo '</div>';
 
-    $cobject->print_section_fn($course, $thissection, $mods, $modnamesused);
+    $cobject->print_section_fn($course, $thissection, $mods, $modnamesused, $resubmission);
 
     if ($PAGE->user_is_editing()) {
         $cobject->print_section_add_menus($course, $section, $modnames);
@@ -276,7 +287,7 @@ if (empty($course->showonlysection0)) {
 
                 if ($k <= $COURSE->numsections) {
                     if (!empty($sect)) {
-                        $activityinfoarr = get_activities_status($course, $sect);
+                        $activityinfoarr = get_activities_status($course, $sect, $resubmission);
                         if (($activityinfoarr['saved'] > 0)
                                 || ($activityinfoarr['notattempted'] > 0)
                                 || ($activityinfoarr['waitngforgrade'] > 0)) {
@@ -397,8 +408,8 @@ if (empty($course->showonlysection0)) {
                     <!-- Tabs -->
                     <tr>
                         <td width="100%" align="center">';
-                echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);
-
+                echo $cobject->print_weekly_activities_bar($selected_week, $tabrange, $resubmission);
+                                                           
                 echo '
                         </td>
                     </tr>
@@ -523,7 +534,7 @@ if (empty($course->showonlysection0)) {
                 echo '</div>';
 
                 echo '<div class="section-boxs">';
-                $cobject->print_section_fn($course, $thissection, $mods, $modnamesused);
+                $cobject->print_section_fn($course, $thissection, $mods, $modnamesused, false, "100%", false, $resubmission);//PRINT SECTION
                 echo '</div>';
 
                 if ($PAGE->user_is_editing()) {

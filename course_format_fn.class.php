@@ -139,7 +139,7 @@ class course_format_fn extends course_format {
         return array($tablow, $tabhigh, $week);
     }
 
-    function print_weekly_activities_bar($week=0, $tabrange=0) {
+    function print_weekly_activities_bar($week=0, $tabrange=0, $resubmission=false) {
         global $FULLME, $CFG, $course, $DB, $USER;
 
         $selectedcolour   = $DB->get_field('course_config_fn', 'value', array('courseid' => $this->course->id, 'variable' => 'selectedcolour'));
@@ -266,7 +266,7 @@ class course_format_fn extends course_format {
                         $w = $i;
                         $sectionid = $i;
                         $section = $DB->get_record("course_sections", array("section" => $sectionid, "course" => $course->id));
-                        $activitiesstatusarray = get_activities_status($course, $section);
+                        $activitiesstatusarray = get_activities_status($course, $section, $resubmission);
                         $compl = $activitiesstatusarray['complete'];
                         $incompl = $activitiesstatusarray['incomplete'];
                         $svd = $activitiesstatusarray['saved'];
@@ -341,7 +341,7 @@ class course_format_fn extends course_format {
     /**
      * Prints a section full of activity modules
      */
-    function print_section_fn($course, $section, $mods, $modnamesused, $absolute=false, $width="100%", $hidecompletion=false) {
+    function print_section_fn($course, $section, $mods, $modnamesused, $absolute=false, $width="100%", $hidecompletion=false, $resubmission=false) {
         global $CFG, $USER, $DB, $PAGE, $OUTPUT;
 
         static $initialised;
@@ -654,11 +654,11 @@ class course_format_fn extends course_format {
                         }
                     } else { // Automatic                      
                         if (($mod->modname == 'assignment' || $mod->modname == 'assign') && isset($mod->completiongradeitemnumber)) {                           
-                            //$act_compl = is_saved_or_submitted($mod, $USER->id);
-                            $act_compl = is_saved_or_submitted($mod, $USER->id);
-                            $completiondata1 = $completioninfo->get_data($mod, true);
+                            $act_compl = is_saved_or_submitted($mod, $USER->id, $resubmission);
                             if ($act_compl == 'submitted') {
-                                $completiondata->completionstate = COMPLETION_WAITFORGRADE_FN;
+                               // $completiondata->completionstate = COMPLETION_WAITFORGRADE_FN;
+                            } else if ($act_compl == 'waitinggrade') {
+                               $completiondata->completionstate = COMPLETION_WAITFORGRADE_FN;
                             } else if ($act_compl == 'saved') {
                                 $completiondata->completionstate = COMPLETION_SAVED_FN;
                             }

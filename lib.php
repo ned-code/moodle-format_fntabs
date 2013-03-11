@@ -9,7 +9,7 @@ require_once ($CFG->dirroot . '/course/lib.php');
 define('FN_EXTRASECTION', 9999);     // A non-existant section to hold hidden modules.
 /// Format Specific Functions:
 
-function FN_update_course($form, $oldformat = false) {
+function FN_update_course($form, $oldformat = false, $resubmission=false) {
     global $CFG, $DB, $OUTPUT;
     $config_vars = array('showsection0', 'sec0title', 'mainheading', 'topicheading', 'maxtabs');
 
@@ -62,7 +62,7 @@ function FN_update_course($form, $oldformat = false) {
  * 
  */
 
-function FN_get_course(&$course) {
+function FN_get_course(&$course, $resubmission=false) {
     global $DB;
     /// Add course specific variable to the passed in parameter.
     if ($config_vars = $DB->get_records('course_config_fn', array('courseid' => $course->id))) {
@@ -78,7 +78,7 @@ function FN_get_course(&$course) {
  * 
  */
 
-function get_week_info($tabrange, $week) {
+function get_week_info($tabrange, $week, $resubmission=false) {
     global $SESSION;
 
     $fnmaxtab = $DB->get_field('course_config_fn', 'value', array('courseid' => $this->course->id, 'variable' => 'maxtabs'));
@@ -138,7 +138,7 @@ function get_week_info($tabrange, $week) {
     return array($tablow, $tabhigh, $week);
 }
 
-function get_course_section_mods($courseid, $sectionid) {
+function get_course_section_mods($courseid, $sectionid, $resubmission=false) {
     global $DB;
 
     if (empty($courseid)) {
@@ -161,7 +161,7 @@ function get_course_section_mods($courseid, $sectionid) {
  * @return assignment object from assignment table
  * @todo Finish documenting this function
  */
-function get_assignment_object_from_instance($module) {
+function get_assignment_object_from_instance($module, $resubmission=false) {
     global $DB;
 
     if (!($assignment = $DB->get_record('assignment', array('id' => $module->instance)))) {
@@ -179,9 +179,10 @@ function get_assignment_object_from_instance($module) {
  * @return assignment object from assignment table
  * @todo Finish documenting this function
  */
-function is_saved_or_submitted($mod, $userid) {
+function is_saved_or_submitted($mod, $userid, $resubmission=false) {
     global $CFG, $DB, $USER, $SESSION;
     require_once ($CFG->dirroot . '/mod/assignment/lib.php');
+   
 
     if(isset($SESSION->completioncache)){
         unset($SESSION->completioncache);
@@ -244,27 +245,65 @@ function is_saved_or_submitted($mod, $userid) {
     } else if ($mod->modname == 'assign') {
         if  (!($assignment = $DB->get_record('assign', array('id' => $mod->instance)))) {
             return false; // Doesn't exist
-        }
-        if (!$submission = $DB->get_record('assign_submission', array('assignment'=>$assignment->id, 'userid'=>$USER->id))) {
-            return false;
-        }
-
-        //$submissionisgraded = $DB->record_exists('assign_grades', array('assignment'=>$assignment->id, 'userid'=>$USER->id));
-        if (!$submissionisgraded = $DB->get_record('assign_grades', array('assignment'=>$assignment->id, 'userid'=>$USER->id))) {
-            $graded = false;
-        }else if ($submissionisgraded->grade <> ''){
-            $graded = true;  
+        }               
+        if ($resubmission){
+            if (!$submission = $DB->get_records('assign_submission', array('assignment'=>$assignment->id, 'userid'=>$USER->id), 'submissionnum DESC', '*', 0, 1)) {
+                return false;
+            }else{
+                $submission = reset($submission);            
+            }            
         }else{
-            $graded = false;
-        }        
+            if (!$submission = $DB->get_record('assign_submission', array('assignment'=>$assignment->id, 'userid'=>$USER->id))) {
+                return false;
+            }            
+            
+        }
+            
 
+        if ($resubmission){
+            if ($submissionisgraded = $DB->get_records('assign_grades', array('assignment'=>$assignment->id, 'userid'=>$USER->id, 'submissionnum' => $submission->submissionnum), 'submissionnum DESC', '*', 0, 1)) {
+                $submissionisgraded = reset($submissionisgraded);
+                if ($submissionisgraded->grade > -1){
+                    $graded = true;  
+                }else{
+                    $graded = false;
+                }                
+            }else{
+                $graded = false;
+            } 
+        }else{
+            if (!$submissionisgraded = $DB->get_record('assign_grades', array('assignment'=>$assignment->id, 'userid'=>$USER->id))) {
+                $graded = false;
+            }else if ($submissionisgraded->grade <> ''){
+                $graded = true;  
+            }else{
+                $graded = false;
+            }
+        }        
+        
         if ($submission->status == 'draft') {
-            return 'saved';
-        } else if ($submission->status == 'submitted' && !$graded) {
-            return 'submitted';
+            if($graded){
+                return 'submitted';
+            }else{
+                return 'saved';
+            }            
+        }
+        if ($submission->status == 'resub') {
+            if($graded){
+                return 'submitted';
+            }else{
+                return 'waitinggrade';
+            }            
+        } 
+        if ($submission->status == 'submitted') {
+            if($graded){
+                return 'submitted';
+            }else{
+                return 'waitinggrade';
+            }  
         }
     } else {
-        return false;
+        return ;
     }
 }
 
@@ -276,7 +315,7 @@ function is_saved_or_submitted($mod, $userid) {
  * @return saved or submitted
  * @todo Finish documenting this function
  */
-function get_activities_status($course, $section) {
+function get_activities_status($course, $section, $resubmission=false) {
 
     global $CFG, $USER;
     require_once($CFG->libdir . '/completionlib.php');
@@ -298,40 +337,50 @@ function get_activities_status($course, $section) {
                 if ($completion->is_enabled($course = null, $module)) {
                     $data = $completion->get_data($module, false, $USER->id, null);
                     $completionstate = $data->completionstate;
+                    //grab assignment status
+                    $assignement_status = is_saved_or_submitted($module, $USER->id, $resubmission);                    
                     if ($completionstate == 0) {  // if completion=0 then it may be saved or submitted                         
                         if (($module->module == '1')
                                 && ($module->modname == 'assignment' || $module->modname == 'assign')
                                 && ($module->completion == '2')
-                                && is_saved_or_submitted($module, $USER->id)) {
-                            //grab assignment status
-                            $assignement_status = is_saved_or_submitted($module, $USER->id);
+                                && is_saved_or_submitted($module, $USER->id, $resubmission)) {
 
                             if (isset($assignement_status)) {
                                 if ($assignement_status == 'saved') {
                                     $saved++;
                                 } else if ($assignement_status == 'submitted') {
+                                    $incomplete++;
+                                } else if ($assignement_status == 'waitinggrade') {
                                     $waitingforgrade++;
                                 }
                             }
                         } else {
                             $notattempted++;
                         }
-                    } elseif ($completionstate == 1 || $completionstate == 2) {
-                        $complete++;
+                    } elseif ($completionstate == 1 || $completionstate == 2) {                        
+                        if (isset($assignement_status)) {
+                            if ($assignement_status == 'saved') {
+                                $saved++;
+                            } else if ($assignement_status == 'submitted') {
+                                $complete++;
+                            } else if ($assignement_status == 'waitinggrade') {
+                                $waitingforgrade++;
+                            }
+                        }                        
                     } elseif ($completionstate == 3) {
                         if (($module->module == 1)
                                 && ($module->modname == 'assignment' || $module->modname == 'assign')
                                 && ($module->completion == 2)
-                                && is_saved_or_submitted($module, $USER->id)) {
-                            //grab assignment status
-                            $assignement_status = is_saved_or_submitted($module, $USER->id);
+                                && is_saved_or_submitted($module, $USER->id, $resubmission)) {
                             if (isset($assignement_status)) {
                                 if ($assignement_status == 'saved') {
                                     $saved++;
                                 } else if ($assignement_status == 'submitted') {
+                                    $incomplete++;
+                                } else if ($assignement_status == 'waitinggrade') {
                                     $waitingforgrade++;
                                 }
-                            }
+                            }  
                         } else {
                             $incomplete++;
                         }
