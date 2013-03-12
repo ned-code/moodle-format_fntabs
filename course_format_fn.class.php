@@ -281,17 +281,30 @@ class course_format_fn extends course_format {
                 $tdselectedclass[$i] = 'fnweeklynavnorm';
                 $actbar .= '<td class="fnweeklynavnorm ' . $f . ' ' . $extraclassfortab . '" id=fnweeklynav' . $i . ' width="" height="25"><a class="tooltip" href="' . $url . '&selected_week=' . $i . '">&nbsp;' . $i . '&nbsp;';
                 if (!$isteacher && !is_siteadmin() && !is_primary_admin($USER->id) && !$iseditingteacher && $CFG->enablecompletion && $completioninfo->is_enabled()) {
+                    /*
                     $actbar .= '<span class="custom info">
                             <div class="head">Week ' . $i . '</div>
                             <ul>
                                 <li class="complete"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/completed.gif" /> ' . $compl . ' Complete</li>
-								<li class="not-attp"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/completion-auto-n.gif" /> ' . $notattemptd . ' Not Attempted</li>
-								<li class="in-complete"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/incomplete.gif" /> ' . $incompl . ' Incomplete</li>
-								<li class="grade-wait"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/unmarked.gif" /> ' . $waitforgrade . ' Waiting for Grade</li>
-								<li class="saved"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/saved.gif" /> ' . $svd . ' Draft</li>
-								
+                                <li class="not-attp"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/completion-auto-n.gif" /> ' . $notattemptd . ' Not Attempted</li>
+                                <li class="in-complete"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/incomplete.gif" /> ' . $incompl . ' Incomplete</li>
+                                <li class="grade-wait"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/unmarked.gif" /> ' . $waitforgrade . ' Waiting for Grade</li>
+                                <li class="saved"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/saved.gif" /> ' . $svd . ' Draft</li>
+                                
                             </ul>
                             <img class="arrows" src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/t-arrow.gif" alt="Information" height="20" width="24" />
+                        </span>'; */
+                        
+                    $actbar .= '<span class="custom info">
+                            <ul>
+                                <li class="complete"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/completed.gif" /> ' . $compl . '</li>
+								<li class="not-attp"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/completion-auto-n.gif" /> ' . $notattemptd . '</li>
+								<li class="in-complete"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/incomplete.gif" /> ' . $incompl . '</li>
+								<li class="grade-wait"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/unmarked.gif" /> ' . $waitforgrade . '</li>
+								<li class="saved"><img src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/saved.gif" /> ' . $svd . '</li>
+								
+                            </ul>
+                            <img class="arrows" src="' . $CFG->wwwroot . '/course/format/' . $this->course->format . '/pix/t-arrow-grey.gif" alt="Information" height="20" width="24" />
                         </span>';
                 }
                 $actbar .= '</a>' . '</td>';

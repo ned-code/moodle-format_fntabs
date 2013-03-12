@@ -341,11 +341,11 @@ table {
 /*** Tool Tips ***/
 .fnweeklynav .tooltip {outline:none; text-decoration:none; position:relative; cursor:pointer;}
 .fnweeklynav .tooltip span {margin-left:-999em;	position:absolute;}
-.fnweeklynav .tooltip:hover span {position:absolute; left:-3.2em; top:-8.8em; z-index:999; margin-left:0; width:330px; height:100px;}
+.fnweeklynav .tooltip:hover span {position:absolute; left:-3.2em; top:-4.5em; z-index:999; margin-left:0; width:305px; height:38px; background:#DCDCDC; padding:1px}
 .fnweeklynav .tooltip:hover img.arrows {border:0; margin:0px; position:absolute; left:60px; bottom:-19px;}
 .fnweeklynav .tooltip:hover div.head {text-align:center; background:#DCDCDC; padding:0.1em 0; color:#18a3e6; font-weight:bold; font-size:16px; margin:0;}
-.fnweeklynav .tooltip:hover ul {margin:0; padding:0.5em 0.8em 0.5em 0.8em; list-style-type:none;}
-.fnweeklynav .tooltip:hover li {margin:0 0 2px 0; padding:0; width:150px; float:left; font-size:14px; text-align:left; list-style-type:none;}
+.fnweeklynav .tooltip:hover ul {margin:0; padding:2px; list-style-type:none;}
+.fnweeklynav .tooltip:hover li {margin:2px; padding:3px 3px 6px 3px; width:50px; float:left; font-size:14px; text-align:left; list-style-type:none; background:white;}
 .fnweeklynav .tooltip:hover li img { vertical-align:middle;}
 
 .fnweeklynav .custom {padding:0em}
