@@ -437,7 +437,7 @@ if (empty($course->showonlysection0)) {
             echo '<table class="topicsoutline" border="0" cellpadding="8" cellspacing="0" width="100%">';
             echo '<tr>';
             echo '<td valign="top" class="fntopicsoutlinecontent fnsectionouter" width="100%" align="center"><div class="number-select">';
-            echo $cobject->print_weekly_activities_bar($selected_week, $tabrange);
+            echo $cobject->print_weekly_activities_bar($selected_week, $tabrange, $resubmission);
             echo '</div></td>';
             echo '</tr>';
             echo '</table>';

@@ -279,7 +279,8 @@ class course_format_fn extends course_format {
                     $f = '';
                 }
                 $tdselectedclass[$i] = 'fnweeklynavnorm';
-                $actbar .= '<td class="fnweeklynavnorm ' . $f . ' ' . $extraclassfortab . '" id=fnweeklynav' . $i . ' width="" height="25"><a class="tooltip" href="' . $url . '&selected_week=' . $i . '">&nbsp;' . $i . '&nbsp;';
+                $tooltipclass = ($i >= ($tabhigh / 2)) ? '-right' : '';
+                $actbar .= '<td class="fnweeklynavnorm ' . $f . ' ' . $extraclassfortab . '" id=fnweeklynav' . $i . ' width="" height="25"><a class="tooltip'.$tooltipclass.'" href="' . $url . '&selected_week=' . $i . '">&nbsp;' . $i . '&nbsp;';
                 if (!$isteacher && !is_siteadmin() && !is_primary_admin($USER->id) && !$iseditingteacher && $CFG->enablecompletion && $completioninfo->is_enabled()) {
                     /*
                     $actbar .= '<span class="custom info">
