@@ -357,16 +357,24 @@ function get_activities_status($course, $section, $resubmission=false) {
                         } else {
                             $notattempted++;
                         }
-                    } elseif ($completionstate == 1 || $completionstate == 2) {                        
-                        if (isset($assignement_status)) {
-                            if ($assignement_status == 'saved') {
-                                $saved++;
-                            } else if ($assignement_status == 'submitted') {
-                                $complete++;
-                            } else if ($assignement_status == 'waitinggrade') {
-                                $waitingforgrade++;
-                            }
-                        }                        
+                    } elseif ($completionstate == 1 || $completionstate == 2) {
+                      if (($module->module == 1)
+                                && ($module->modname == 'assignment' || $module->modname == 'assign')
+                                && ($module->completion == 2)
+                                && is_saved_or_submitted($module, $USER->id, $resubmission)) {
+                            if (isset($assignement_status)) {
+                                if ($assignement_status == 'saved') {
+                                    $saved++;
+                                } else if ($assignement_status == 'submitted') {
+                                    $incomplete++;
+                                } else if ($assignement_status == 'waitinggrade') {
+                                    $waitingforgrade++;
+                                }
+                            }  
+                        } else {
+                            $complete++;
+                        }                    
+                                 
                     } elseif ($completionstate == 3) {
                         if (($module->module == 1)
                                 && ($module->modname == 'assignment' || $module->modname == 'assign')
