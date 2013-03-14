@@ -15,19 +15,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+
 /**
- * Collapsed Topics Information
+ * Keeps track of the version number
  *
  * @package    course/format
  * @subpackage fntabs
- * @copyright  Moodlefn
- * @author     Fernando Oliveria
- *  * @link      
- * @license    
+ * @author     Fernando Oliveira - MoodleFN {@link http://moodlefn.knet.ca}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+
 $plugin->version = 2013031401;
-$plugin->maturity = MATURITY_RC;
 $plugin->requires = 2012062500; // 2.3 
+$plugin->maturity = MATURITY_RC;
 $plugin->component = 'format_fntabs';
 $plugin->release = '2.4';
