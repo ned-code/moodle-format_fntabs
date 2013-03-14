@@ -27,7 +27,7 @@
  */
 
 $plugin->version = 2013031401;
-$plugin->maturity = MATURITY_ALPHA;
-$plugin->requires = 2012120300.00; // 2.4 (Build: 20121203)
+$plugin->maturity = MATURITY_RC;
+$plugin->requires = 2012062500; // 2.3 
 $plugin->component = 'format_fntabs';
-$plugin->release = '2.1';
+$plugin->release = '2.4';
