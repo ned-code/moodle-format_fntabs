@@ -338,21 +338,23 @@ function get_activities_status($course, $section, $resubmission=false) {
                     $data = $completion->get_data($module, false, $USER->id, null);
                     $completionstate = $data->completionstate;
                     //grab assignment status
-                    $assignement_status = is_saved_or_submitted($module, $USER->id, $resubmission);                    
+                    $assignement_status = is_saved_or_submitted($module, $USER->id, $resubmission); 
                     if ($completionstate == 0) {  // if completion=0 then it may be saved or submitted                         
                         if (($module->module == '1')
                                 && ($module->modname == 'assignment' || $module->modname == 'assign')
                                 && ($module->completion == '2')
-                                && is_saved_or_submitted($module, $USER->id, $resubmission)) {
+                                && $assignement_status) {
 
                             if (isset($assignement_status)) {
                                 if ($assignement_status == 'saved') {
                                     $saved++;
                                 } else if ($assignement_status == 'submitted') {
-                                    $incomplete++;
+                                    $notattempted++;
                                 } else if ($assignement_status == 'waitinggrade') {
                                     $waitingforgrade++;
                                 }
+                            }else{
+                                $notattempted++;
                             }
                         } else {
                             $notattempted++;
@@ -361,16 +363,18 @@ function get_activities_status($course, $section, $resubmission=false) {
                       if (($module->module == 1)
                                 && ($module->modname == 'assignment' || $module->modname == 'assign')
                                 && ($module->completion == 2)
-                                && is_saved_or_submitted($module, $USER->id, $resubmission)) {
+                                && $assignement_status) {
                             if (isset($assignement_status)) {
                                 if ($assignement_status == 'saved') {
                                     $saved++;
                                 } else if ($assignement_status == 'submitted') {
-                                    $incomplete++;
+                                    $complete++;
                                 } else if ($assignement_status == 'waitinggrade') {
                                     $waitingforgrade++;
                                 }
-                            }  
+                            }else{
+                                $complete++;
+                            }
                         } else {
                             $complete++;
                         }                    
@@ -379,7 +383,7 @@ function get_activities_status($course, $section, $resubmission=false) {
                         if (($module->module == 1)
                                 && ($module->modname == 'assignment' || $module->modname == 'assign')
                                 && ($module->completion == 2)
-                                && is_saved_or_submitted($module, $USER->id, $resubmission)) {
+                                && $assignement_status) {
                             if (isset($assignement_status)) {
                                 if ($assignement_status == 'saved') {
                                     $saved++;
@@ -388,6 +392,8 @@ function get_activities_status($course, $section, $resubmission=false) {
                                 } else if ($assignement_status == 'waitinggrade') {
                                     $waitingforgrade++;
                                 }
+                            }else{
+                                $incomplete++;
                             }  
                         } else {
                             $incomplete++;

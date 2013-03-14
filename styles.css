@@ -372,8 +372,8 @@ table {
     background-color: #E1E1DF;
     background-image: url("image.php?theme=standard&image=hgradient&component=theme");
     background-repeat: repeat-x;
-    margin-top: 20px;
-    margin-bottom: 28px;
+    /*margin-top: 20px;
+    margin-bottom: 28px;*/
 }
 .fnoutlineheadingblock1 {
     text-align: center;
@@ -385,8 +385,8 @@ table {
 }
 .fnoutlineheadingblockone {
     text-align: center;
-    margin-bottom:48px;
-    margin-top:10px;
+    /*margin-bottom:48px;
+    margin-top:10px;*/
 
 }
 h2.fnoutlineheadingblock {
