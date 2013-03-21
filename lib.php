@@ -274,7 +274,7 @@ function is_saved_or_submitted($mod, $userid, $resubmission=false) {
         }else{
             if (!$submissionisgraded = $DB->get_record('assign_grades', array('assignment'=>$assignment->id, 'userid'=>$USER->id))) {
                 $graded = false;
-            }else if ($submissionisgraded->grade <> ''){
+            }else if ($submissionisgraded->grade <> -1){
                 $graded = true;  
             }else{
                 $graded = false;
