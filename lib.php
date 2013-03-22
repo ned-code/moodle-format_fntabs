@@ -264,7 +264,11 @@ function is_saved_or_submitted($mod, $userid, $resubmission=false) {
             if ($submissionisgraded = $DB->get_records('assign_grades', array('assignment'=>$assignment->id, 'userid'=>$USER->id, 'submissionnum' => $submission->submissionnum), 'submissionnum DESC', '*', 0, 1)) {
                 $submissionisgraded = reset($submissionisgraded);
                 if ($submissionisgraded->grade > -1){
-                    $graded = true;  
+                  if ($submission->timemodified > $submissionisgraded->timemodified) {
+                        $graded = false;  
+                    }else{
+                        $graded = true;  
+                    }
                 }else{
                     $graded = false;
                 }                
@@ -275,7 +279,11 @@ function is_saved_or_submitted($mod, $userid, $resubmission=false) {
             if (!$submissionisgraded = $DB->get_record('assign_grades', array('assignment'=>$assignment->id, 'userid'=>$USER->id))) {
                 $graded = false;
             }else if ($submissionisgraded->grade <> -1){
-                $graded = true;  
+                if ($submission->timemodified > $submissionisgraded->timemodified) {
+                    $graded = false;  
+                }else{
+                    $graded = true;  
+                }  
             }else{
                 $graded = false;
             }
