@@ -245,7 +245,7 @@ if (empty($course->showonlysection0)) {
     $sectionmenu = array();
     $weekofseconds = 604800;
     $course->enddate = $course->startdate + ($weekofseconds * $course->numsections);
-    $course->enddate = $course->startdate + ($weekofseconds * $course->numsections);
+    
     $completion = new completion_info($course);
 
     $show_option = $DB->get_field('course_config_fn', 'value', array('courseid' => $course->id, 'variable' => 'defaulttab'));
