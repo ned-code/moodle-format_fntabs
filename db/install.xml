@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="course/format/fntabs/db" VERSION="20111110" COMMENT="XMLDB file for Moodle course/format/fntabs"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="course_config_fn" COMMENT="Extra configuration for fntabs course format" NEXT="fn_coursemodule_extra">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="courseid"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="variable"/>
+        <FIELD NAME="variable" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="courseid" NEXT="value"/>
+        <FIELD NAME="value" TYPE="text" LENGTH="small" NOTNULL="true" SEQUENCE="false" PREVIOUS="variable"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for course_config_fn"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="courseid" UNIQUE="false" FIELDS="courseid"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="fn_coursemodule_extra" COMMENT="Extra configuration options  for fntabs course format" PREVIOUS="course_config_fn">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="courseid"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="cmid"/>
+        <FIELD NAME="cmid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="courseid" NEXT="hideingradebook"/>
+        <FIELD NAME="hideingradebook" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="cmid" NEXT="mandatory"/>
+        <FIELD NAME="mandatory" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="hideingradebook"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for fn_coursemodule_extra"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="courseid" UNIQUE="false" FIELDS="courseid" NEXT="cmid"/>
+        <INDEX NAME="cmid" UNIQUE="false" FIELDS="cmid" PREVIOUS="courseid"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>

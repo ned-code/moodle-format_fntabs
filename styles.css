@@ -1,0 +1,455 @@
+/**
+ ** From FN Blue - They can be overriden by any theme.
+ **/
+
+.courseedit {
+    background-color:#B3EAFF;
+}
+.courseedit-fn {
+    background-color:#C5EFFF;
+}
+.courseedit-fn-section {
+    border-width: 2px;
+    border-style: solid;
+    background-color:#C5EFFF;
+}
+.fntopicsoutlinecontent {
+    border-style: solid;
+    border-width: 1px;
+    border-left: 0px;
+    border-right: 0px;
+}
+.fntopicsoutlinecontenthidden {
+    border-style: solid;
+    border-width: 1px;
+    border-left: 0px;
+    border-right: 0px;
+    border-color: #AAAAAA;
+    background-color: #D3D3D3;
+    padding:10px !important;
+}
+.fntopicsoutlinecontenthighlight {
+    border-style: solid;
+    border-width: 1px;
+    border-left: 0px;
+    border-right: 0px;
+}
+.fnweeklynav {
+    border-collapse: separate;
+    border-spacing: 1px 0;
+}
+.fnweeklynav .tab-heading {
+    width:50px;
+    font-size:16px;
+    color:#FFF;
+}
+.fnweeklynavnorm {
+    text-align: center;
+    color: blue;
+}
+.fnweeklynavnorm a {
+    display:block;
+    height:20px;
+    padding-top:5px;
+    text-decoration: none;
+}
+.fnweeklynavnorm a:hover {
+    background-color:#FFFFFF;
+    text-decoration:none;
+}
+.fnweeklynavnorm a:active {
+    text-decoration: none;
+}
+.fnweeklynavselected {  
+    font-weight: bold;
+    text-align: center;
+    color: black;
+}
+.fnweeklynavselected .content-section {
+    padding:5px;
+}
+.fnweeklynavdisabledselected1 .content-section {
+    padding:5px;
+}
+.topicsoutline {
+    font-weight: normal;
+    margin:0;
+}
+.topicsoutline table {
+    margin:0;
+}
+.topicsoutline table td {
+    padding:0;
+}
+
+
+.fnweeklynavdisabledselected {
+    text-align: center;
+    color: #bdbbbb;
+}
+.fnweeklynavdisabled {
+    text-align: center;
+}
+.markingcontainer td.generalbox4 {
+    background-color: #FFFFFF;
+}
+.markingcontainer td.generalbox4content {
+    border: solid red 1px;
+}
+.markingpastbox {
+    border-width: 1px;
+    border-style: solid;
+    background-color: #D2D2D2;
+    border-color: Gray;
+}
+.fnmarkingblock thead,
+.fnmarkingblock tbody td {
+    border-style: solid;
+    border-width: 1px;
+}
+table.fnmarkingblock tbody {
+    background-color: #B3EAFF;
+}
+.fncoursegroup {
+    border-width: 1px;
+    border-style: solid;
+}
+.gradeactcol {
+    text-align: left;
+    writing-mode: tb-rl;
+}
+div.fnintro {
+    width: 100%;
+}
+.fnintro .hide-show img.hide-show-image {
+    background: url('../../pix/t/switch_minus.gif') no-repeat bottom;
+    height:11px;
+    width:11px;
+    margin-top:0.25em;
+}
+.fnintro.hidden .asscontent {
+    display: none;
+}
+.fnintro.hidden .hide-show img.hide-show-image {
+    background: url('../../pix/t/switch_plus.gif') no-repeat bottom;
+}
+.fnintro .hide-show {
+    float:right;
+}
+fieldset#fnassntypefs,
+fieldset#fnassntype2fs  {
+    border: solid 1px;
+    float: none;
+    width: auto;
+    background-color: #E5F8FF;
+    padding: 10px;
+}
+fieldset#fnassntypefs div.htmlarea {
+    width: auto;
+}
+fieldset.fnassnsubtype {
+    margin: 6px 20px 6px 100px;
+    background-color: #C5EFFF;
+}
+.fnassnsubtype.hideit {
+    display: none;
+}
+div.fnassnsubtype {
+    background-color: transparent;
+}
+.fnasssettings.hideit {
+    display: none;
+}
+.fnfile.hideit {
+    display: none;
+}
+.marked {
+    border-bottom: 1px solid Gray;
+}
+.block_gallery_pix .content img {
+    border: solid black 1px;
+}
+.block_gallery_pix .content h4 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.neutral {
+    background-color: #FFFFFF;
+}
+.passed {
+    background-color: #CEFECE;
+}
+.failed {
+    background-color: #FFCDCF;
+}
+div.teacherpic {
+    background-color: green;
+    padding: 2px;
+}
+div.studentpic {
+    background-color: blue;
+    padding: 2px;
+}
+.coursebox {
+    background-color: white;
+}
+tr.evenrow {
+    background-color: #B3EAFF;
+}
+tr.oddrow {
+    background-color: #FFFFFF;
+}
+.fnweeklycontent {
+    background-color: #FFFFFF;
+}
+.fnsectionouter {
+    padding:0;
+}
+.number-select {
+    padding:0.5em;
+}
+.fntopicsoutlineinner {
+    background-color: #FFFFFF;
+    padding:10px !important;
+}
+.fntopicsoutlinesidehidden {
+    background-color: #AAAAAA;
+}
+.markingpastcomment {
+    background-color: #C0C0C0;
+}
+.markingpastheader {
+    background-color: #A4A4A4;
+}
+.fnmarkingnewsub {
+    background-color: #FFFF66;
+    border: solid green 2px;
+}
+.fnmarkingoldsub {
+    border: solid green 2px;
+}
+.fnmarkingnewfsub {
+    background-color: #FFFF66;
+    border: solid gray 1px;
+}
+.fnmarkingoldfsub {
+    background-color: #B3EAFF;
+    border: solid gray 1px;
+}
+
+.fnmarkedfilearea {
+    border: solid green 2px;
+}
+#mod-resource-view .generalboxcontent {
+    background-color: #FFFFFF;
+}
+#mod-assignment-view .generalboxcontent {
+    background-color: #FFFFFF;
+}
+.treeMenuDefault {
+    font-size: 90%;
+    font-style: normal;
+}
+.treeMenuBold {
+    font-size: 90%;
+    font-weight: bold;
+}
+
+
+
+#fn_tab_previous {
+    text-align: right;
+    padding-right: 0.5em;
+}
+#fn_tab_next {
+    padding-left: 0.5em;
+}
+
+.weekcompletedstatus {
+    border:4px solid green;
+}
+.weekincompletedstatus {
+    border:4px solid red;
+}
+.course-content ul.weeks {margin:0;}
+.course-content ul.weeks li.section {list-style: none;margin:5px 0 0 0;padding:0;}
+.course-content ul.weeks li.section .content {margin:0 40px;}
+.course-content ul.weeks li.section .left {width:40px;float:left;text-align:center;}
+.course-content ul.weeks li.section .right {width:40px;float:right;text-align:center;}
+.jumpmenu {text-align:center;}
+
+
+/***overright ***/
+#page-course-view-fntabs li.activity span.autocompletion, #page-course-view-fntabs li.activity form.togglecompletion {
+    display: inline;
+    padding: 0;
+    position: absolute;
+    left:-20px;
+    top: 0;
+    z-index: 10;
+    width:18px;
+}
+#page-course-view-fntabs .section li.activity {
+    margin-bottom:3px;
+}
+#page-course-view-fntabs .weeks .section, #page-course-view-fntabs .topics .section {
+    background:none;
+/*    margin-left:2.5em;*/
+}
+#page-course-view-fntabs .green-tab {
+    border-top:5px solid green;
+    padding-top:0;
+}
+#page-course-view-fntabs .red-tab {
+    border-top:5px solid red;
+    padding-top:0;
+}
+
+table {
+    font-size:100% !important;
+}
+/*#page-course-view-fntabs #page-content .region-content {
+        overflow:visible !important;
+}
+#page-course-view-fntabs #page-content #region-main {
+        overflow:visible !important;
+}
+#page-course-view-fntabs #page-content {
+        overflow:visible !important;
+}*/
+
+#page-course-view-fntabs .weeks .fntopicsoutlineinner .section-boxs {
+    text-align: center;
+    overflow: hidden;
+    margin: 0 auto;
+    width: 100%;
+}
+#page-course-view-fntabs .weeks .fntopicsoutlineinner ul.section {
+    margin-top:1em;
+    display:inline-block;
+}
+#page-course-view-fntabs .weeks .fntopicsoutlineinner ul.section li {
+    text-align: left;
+}
+#page-course-view-fntabs .weeks .fntopicsoutlineinner ul.section table td{
+    padding: 5px;
+}
+#page-course-view-fntabs .weeks .fntopicsoutlineinner ul.section table td p{
+    margin:0px;
+}
+
+/*** Tool Tips ***/
+.fnweeklynav .tooltip {outline:none; text-decoration:none; position:relative; cursor:pointer;}
+.fnweeklynav .tooltip span {margin-left:-999em;	position:absolute;}
+.fnweeklynav .tooltip:hover span {position:absolute; left:-4.4em; top:-4.5em; z-index:999; margin-left:0; width:255px; height:38px; background:#DCDCDC; padding:1px}
+.fnweeklynav .tooltip:hover img.arrows {border:0; margin:0px; position:absolute; left:70px; bottom:-19px;}
+.fnweeklynav .tooltip:hover div.head {text-align:center; background:#DCDCDC; padding:0.1em 0; color:#18a3e6; font-weight:bold; font-size:16px; margin:0;}
+.fnweeklynav .tooltip:hover ul {margin:0; padding:2px; list-style-type:none;}
+.fnweeklynav .tooltip:hover li {margin:2px; padding:3px 3px 6px 3px; width:40px; float:left; font-size:14px; text-align:left; list-style-type:none; background:white;}
+.fnweeklynav .tooltip:hover li img { vertical-align:middle;}
+
+.fnweeklynav .tooltip-right {outline:none; text-decoration:none; position:relative; cursor:pointer;}
+.fnweeklynav .tooltip-right span {margin-left:-999em;	position:absolute;}
+.fnweeklynav .tooltip-right:hover span {position:absolute; right:-3.9em; top:-4.5em; z-index:999; margin-left:0; width:255px; height:38px; background:#DCDCDC; padding:1px}
+.fnweeklynav .tooltip-right:hover img.arrows {border:0; margin:0px; position:absolute; right:63px; bottom:-19px;}
+.fnweeklynav .tooltip-right:hover div.head {text-align:center; background:#DCDCDC; padding:0.1em 0; color:#18a3e6; font-weight:bold; font-size:16px; margin:0;}
+.fnweeklynav .tooltip-right:hover ul {margin:0; padding:2px; list-style-type:none;}
+.fnweeklynav .tooltip-right:hover li {margin:2px; padding:3px 3px 6px 3px; width:40px; float:left; font-size:14px; text-align:left; list-style-type:none; background:white;}
+.fnweeklynav .tooltip-right:hover li img { vertical-align:middle;}
+
+
+.fnweeklynav .custom {padding:0em}
+* html a:hover { background: transparent; }
+.fnweeklynav .info { background: #fff; border:3px solid #2BB0D7;}
+
+
+
+
+.fnoutlineheadingblock {
+    text-align: center;
+    padding:5px 0 10px 0;
+    border: 1px solid #DDDDDD;
+    background-color: #E1E1DF;
+    background-image: url("image.php?theme=standard&image=hgradient&component=theme");
+    background-repeat: repeat-x;
+    /*margin-top: 20px;
+    margin-bottom: 28px;*/
+}
+.fnoutlineheadingblock1 {
+    text-align: center;
+    padding:5px 0 10px 0;
+    border: 1px solid #DDDDDD;
+    background-color: #E1E1DF;
+    background-image: url("image.php?theme=standard&image=hgradient&component=theme");
+    background-repeat: repeat-x;
+}
+.fnoutlineheadingblockone {
+    text-align: center;
+    /*margin-bottom:48px;
+    margin-top:10px;*/
+
+}
+h2.fnoutlineheadingblock {
+    font-size: 1.0em;
+}
+h2.fnoutlineheadingblock1 {
+    font-size: 1.0em;
+}
+.tab-greaterthan5 {
+    width:60px;
+}
+.tab-lessthan5 {
+    width:86px;
+    max-width:86px;
+}
+.mod-indent-1 {
+    margin-left: 0px !important;
+}
+
+.mform .fitem fieldset.fgroup label, .mform .fradio label, .mform .fcheckbox label, .mform fieldset.fdate_selector label{
+    padding-left: 5px;
+}
+
+.mform #fncoursecolours .fitem .fitemtitle {
+    width: 150px;
+}
+
+.mform #fncoursecolours .fitem .felement {
+    margin-left: 155px;
+}
+
+#page-course-format-fntabs-settings #fgroup_id_radioar span {
+    display: inline-block;
+    line-height: normal;
+    width: 80%;
+    line-height: 30px;
+    overflow: hidden;
+}
+#page-course-format-fntabs-settings #fitem_id_topictoshow {
+    width:50px;
+    position: relative;
+    margin:-31px 0 0 365px;
+
+}
+
+#page-course-format-fntabs-settings #fgroup_id_buttonar {
+    text-align: center;
+}
+#page-course-format-fntabs-settings #Section0 .fitemtitle{
+    width:17% !important;
+    padding-right:5px;
+}
+#page-course-format-fntabs-settings .fgroup {
+	border:none  !important;
+}
+.headingwrap{
+    margin-top:5px;
+}
+.fn_tabs_settings .fitem .fitemtitle {
+    width: 40% !important;
+}
+
+.fn_tabs_settings .fitem .felement {
+    margin-left: 41% !important;
+    width: 55% !important;
+}
