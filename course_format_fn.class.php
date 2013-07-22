@@ -406,7 +406,7 @@ class course_format_fn extends course_format {
                 /**
                  * @var cm_info
                  */
-                $mod = $mods[$modnumber];
+                $mod = $mods[$modnumber];  
 
                 if ($ismoving and $mod->id == $USER->activitycopy) {
                     // do not display moving mod

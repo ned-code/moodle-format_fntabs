@@ -284,7 +284,7 @@ tr.oddrow {
     display: inline;
     padding: 0;
     position: absolute;
-    left:-20px;
+    left:-25px;
     top: 0;
     z-index: 10;
     width:18px;
