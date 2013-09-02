@@ -2,9 +2,13 @@ MoodleFN - Tabs Course Format
 ============================================
 
 Name: Tabs Course Format
+
 Type: Course Format
+
 Git Repository: https://github.com/fernandooliveira/moodle-block_mymenu
+
 Support and Feedback: www.moodlefn.knet.ca
+
 Location in Moodle repository database: https://moodle.org/plugins/view.php?plugin=block_fn_my_menu 
 
 ============================================
