@@ -9,9 +9,7 @@ Git Repository: https://github.com/fernandooliveira/moodle-block_mymenu
 
 Support and Feedback: www.moodlefn.knet.ca
 
-Location in Moodle repository database: https://moodle.org/plugins/view.php?plugin=block_fn_my_menu 
-
-============================================
+Location in Moodle repository database: 
 
 - Version 2.4: https://moodle.org/plugins/pluginversion.php?id=3848 (requires separate block)
 
