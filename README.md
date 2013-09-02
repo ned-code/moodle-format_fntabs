@@ -5,7 +5,7 @@ Name: Tabs Course Format
 
 Type: Course Format
 
-Git Repository: https://github.com/fernandooliveira/moodle-block_mymenu
+Git Repository: https://github.com/fernandooliveira/moodle-format_fntabs
 
 Support and Feedback: www.moodlefn.knet.ca
 
