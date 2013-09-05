@@ -31,3 +31,4 @@ $plugin->requires = 2013051400; // 2.5
 $plugin->maturity = MATURITY_RC;
 $plugin->component = 'format_fntabs';
 $plugin->release = '2.4';
+// plugin dependency for block_fn_tabs was removed for Moodle 2.5
