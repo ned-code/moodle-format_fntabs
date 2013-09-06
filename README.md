@@ -1,4 +1,4 @@
-MoodleFN - Tabs Course Format
+MoodleFN - Tabs Course Format (2.5)
 ============================================
 
 See this PDF document for more information about this plugin: http://moodlefn.com/docs/ 
