@@ -1,4 +1,4 @@
-MoodleFN - Tabs Course Format (with Activity Tracking)
+MoodleFN - Tabs Course Format (2.4)
 ============================================
 
 See this PDF document for more information about this plugin:
