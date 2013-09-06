@@ -11,7 +11,7 @@ Support and Feedback: www.moodlefn.knet.ca
 
 Location in Moodle repository database: 
 
-- Version 2.4: https://moodle.org/plugins/pluginversion.php?id=3848 (requires separate block)
+- Version 2.4: https://moodle.org/plugins/pluginversion.php?id=3912 (requires separate block)
 
 - Version 2.5: https://moodle.org/plugins/pluginversion.php?id=3843
 
