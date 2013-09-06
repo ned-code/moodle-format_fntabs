@@ -1,4 +1,3 @@
-
 MoodleFN - Tabs Course Format (with Activity Tracking)
 ============================================
 
