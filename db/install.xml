@@ -1,37 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="course/format/fntabs/db" VERSION="20111110" COMMENT="XMLDB file for Moodle course/format/fntabs"
+<XMLDB PATH="course/format/fntabs/db" VERSION="20160607" COMMENT="XMLDB file for Moodle course/format/fntabs"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
-    <TABLE NAME="course_config_fn" COMMENT="Extra configuration for fntabs course format" NEXT="fn_coursemodule_extra">
+    <TABLE NAME="format_fntabs_color" COMMENT="format_fntabs_color table retrofitted from MySQL">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="courseid"/>
-        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="variable"/>
-        <FIELD NAME="variable" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" PREVIOUS="courseid" NEXT="value"/>
-        <FIELD NAME="value" TYPE="text" LENGTH="small" NOTNULL="true" SEQUENCE="false" PREVIOUS="variable"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="false" DEFAULT="" SEQUENCE="false"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="18" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="bgcolour" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="activecolour" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="selectedcolour" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="inactivecolour" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="inactivebgcolour" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="activelinkcolour" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="selectedlinkcolour" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="inactivelinkcolour" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="predefined" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="11" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="11" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for course_config_fn"/>
+        <KEY NAME="id" TYPE="primary" FIELDS="id"/>
       </KEYS>
       <INDEXES>
-        <INDEX NAME="courseid" UNIQUE="false" FIELDS="courseid"/>
+        <INDEX NAME="mdl_formnedtabsconf_cou_ix" UNIQUE="false" FIELDS="courseid"/>
       </INDEXES>
     </TABLE>
-    <TABLE NAME="fn_coursemodule_extra" COMMENT="Extra configuration options  for fntabs course format" PREVIOUS="course_config_fn">
+    <TABLE NAME="format_fntabs_cm" COMMENT="format_fntabs_cm table retrofitted from MySQL">
       <FIELDS>
-        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="courseid"/>
-        <FIELD NAME="courseid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="id" NEXT="cmid"/>
-        <FIELD NAME="cmid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="courseid" NEXT="hideingradebook"/>
-        <FIELD NAME="hideingradebook" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="cmid" NEXT="mandatory"/>
-        <FIELD NAME="mandatory" TYPE="int" LENGTH="2" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" PREVIOUS="hideingradebook"/>
+        <FIELD NAME="id" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="cmid" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="hideingradebook" TYPE="int" LENGTH="2" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="mandatory" TYPE="int" LENGTH="2" NOTNULL="true" SEQUENCE="false"/>
       </FIELDS>
       <KEYS>
-        <KEY NAME="primary" TYPE="primary" FIELDS="id" COMMENT="Primary key for fn_coursemodule_extra"/>
+        <KEY NAME="id" TYPE="primary" FIELDS="id"/>
       </KEYS>
       <INDEXES>
-        <INDEX NAME="courseid" UNIQUE="false" FIELDS="courseid" NEXT="cmid"/>
-        <INDEX NAME="cmid" UNIQUE="false" FIELDS="cmid" PREVIOUS="courseid"/>
+        <INDEX NAME="mdl_formnedtabscm_cou_ix" UNIQUE="false" FIELDS="courseid"/>
+        <INDEX NAME="mdl_formnedtabscm_cmi_ix" UNIQUE="false" FIELDS="cmid"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="format_fntabs_config" COMMENT="format_fntabs_config table retrofitted from MySQL">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="true"/>
+        <FIELD NAME="courseid" TYPE="int" LENGTH="18" NOTNULL="true" SEQUENCE="false"/>
+        <FIELD NAME="variable" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false"/>
+        <FIELD NAME="value" TYPE="text" NOTNULL="true" SEQUENCE="false"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="id" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="mdl_formnedtabsconf_cou_ix" UNIQUE="false" FIELDS="courseid"/>
       </INDEXES>
     </TABLE>
   </TABLES>

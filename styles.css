@@ -1,7 +1,7 @@
-/**
- ** From FN Blue - They can be overriden by any theme.
- **/
-
+.course-content ul.fntabs li.section {
+    list-style: outside none none;
+    padding: 0;
+}
 .courseedit {
     background-color:#B3EAFF;
 }
@@ -54,16 +54,37 @@
     text-decoration: none;
 }
 .fnweeklynavnorm a:hover {
-    background-color:#FFFFFF;
     text-decoration:none;
 }
 .fnweeklynavnorm a:active {
     text-decoration: none;
 }
-.fnweeklynavselected {  
+.fnweeklynavselected {
     font-weight: bold;
     text-align: center;
     color: black;
+}
+td.fnweeklynavselected {
+    border-radius: 0;
+}
+.tabs td.fnweeklynavselected {
+    border-radius: 5px 5px 0 0;
+}
+.format-fntabs div.fnweeklynavselected {
+    border-radius: 5px 5px 0 0;
+}
+.format-fntabs.editing .fnweeklynavselected {
+    width: -moz-calc(100% - 30px);
+    width: -webkit-calc(100% - 30px);
+    width: calc(100% - 30px);
+}
+.format-fntabs  .section .side.right {
+    position: absolute;
+    right: 6px;
+    top: 10px;
+}
+.format-fntabs .course-content ul li.section.main {
+    border-bottom: 0;
 }
 .fnweeklynavselected .content-section {
     padding:5px;
@@ -81,7 +102,6 @@
 .topicsoutline table td {
     padding:0;
 }
-
 
 .fnweeklynavdisabledselected {
     text-align: center;
@@ -294,7 +314,6 @@ tr.oddrow {
 }
 #page-course-view-fntabs .weeks .section, #page-course-view-fntabs .topics .section {
     background:none;
-/*    margin-left:2.5em;*/
 }
 #page-course-view-fntabs .green-tab {
     border-top:5px solid green;
@@ -304,20 +323,9 @@ tr.oddrow {
     border-top:5px solid red;
     padding-top:0;
 }
-
 #page-course-view-fntabs table {
     font-size:100% !important;
 }
-/*#page-course-view-fntabs #page-content .region-content {
-        overflow:visible !important;
-}
-#page-course-view-fntabs #page-content #region-main {
-        overflow:visible !important;
-}
-#page-course-view-fntabs #page-content {
-        overflow:visible !important;
-}*/
-
 #page-course-view-fntabs .weeks .fntopicsoutlineinner .section-boxs {
     text-align: center;
     overflow: hidden;
@@ -340,7 +348,7 @@ tr.oddrow {
 
 /*** Tool Tips ***/
 .fnweeklynav .tooltip {outline:none; text-decoration:none; position:relative; cursor:pointer;}
-.fnweeklynav .tooltip span {margin-left:-999em;	position:absolute;}
+.fnweeklynav .tooltip span {margin-left:-999em; position:absolute;}
 .fnweeklynav .tooltip:hover span {position:absolute; left:-4.4em; top:-4.5em; z-index:999; margin-left:0; width:255px; height:38px; background:#DCDCDC; padding:1px}
 .fnweeklynav .tooltip:hover img.arrows {border:0; margin:0px; position:absolute; left:70px; bottom:-19px;}
 .fnweeklynav .tooltip:hover div.head {text-align:center; background:#DCDCDC; padding:0.1em 0; color:#18a3e6; font-weight:bold; font-size:16px; margin:0;}
@@ -349,7 +357,7 @@ tr.oddrow {
 .fnweeklynav .tooltip:hover li img { vertical-align:middle;}
 
 .fnweeklynav .tooltip-right {outline:none; text-decoration:none; position:relative; cursor:pointer;}
-.fnweeklynav .tooltip-right span {margin-left:-999em;	position:absolute;}
+.fnweeklynav .tooltip-right span {margin-left:-999em; position:absolute;}
 .fnweeklynav .tooltip-right:hover span {position:absolute; right:-3.9em; top:-4.5em; z-index:999; margin-left:0; width:255px; height:38px; background:#DCDCDC; padding:1px}
 .fnweeklynav .tooltip-right:hover img.arrows {border:0; margin:0px; position:absolute; right:63px; bottom:-19px;}
 .fnweeklynav .tooltip-right:hover div.head {text-align:center; background:#DCDCDC; padding:0.1em 0; color:#18a3e6; font-weight:bold; font-size:16px; margin:0;}
@@ -372,8 +380,6 @@ tr.oddrow {
     background-color: #E1E1DF;
     background-image: url("image.php?theme=standard&image=hgradient&component=theme");
     background-repeat: repeat-x;
-    /*margin-top: 20px;
-    margin-bottom: 28px;*/
 }
 .fnoutlineheadingblock1 {
     text-align: center;
@@ -385,9 +391,6 @@ tr.oddrow {
 }
 .fnoutlineheadingblockone {
     text-align: center;
-    /*margin-bottom:48px;
-    margin-top:10px;*/
-
 }
 h2.fnoutlineheadingblock {
     font-size: 1.0em;
@@ -398,9 +401,19 @@ h2.fnoutlineheadingblock1 {
 .tab-greaterthan5 {
     width:60px;
 }
-.tab-lessthan5 {
+.course-content ul.fntabs li.section .tab-lessthan5 {
     width:86px;
     max-width:86px;
+    border-radius: 5px 5px 0 0;
+}
+.course-content ul.fntabs li.section .tab-lessthan5 a {
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+    display: inline;
+}
+.course-content ul.fntabs li.section tr.tabs td.fnweeklynavselected {
+    border-radius: 5px 5px 0 0;
 }
 .mod-indent-1 {
     margin-left: 0px !important;
@@ -440,7 +453,7 @@ h2.fnoutlineheadingblock1 {
     padding-right:5px;
 }
 #page-course-format-fntabs-settings .fgroup {
-	border:none  !important;
+    border:none  !important;
 }
 .headingwrap{
     margin-top:5px;
@@ -452,4 +465,94 @@ h2.fnoutlineheadingblock1 {
 .fn_tabs_settings .fitem .felement {
     margin-left: 41% !important;
     width: 55% !important;
+}
+.section.img-text {
+    width: 100%;
+}
+.course-content ul.fntabs li.section .mod-indent-outer {
+    display: block !important;
+}
+.course-content ul.fntabs li.section .activity .actionsleft {
+    position: absolute;
+    left: 30px;
+    top: 0;
+}
+.course-content ul.fntabs li.section .activity .actionslefttrackingbackground {
+    position: absolute;
+    left: 30px;
+    top: 10px;
+}
+.course-content ul.fntabs li.section .activity .activityinstance.completion-notset {
+    margin: 0;
+    font-size: 110%;
+    padding: 5px 15px 1px 15px;
+}
+.course-content ul.fntabs li.section .activity .activityinstance.completion-manual-n,
+.course-content ul.fntabs li.section .activity .activityinstance.completion-auto-n,
+.course-content ul.fntabs li.section .activity .activityinstance.completion-auto-pass,
+.course-content ul.fntabs li.section .activity .activityinstance.completion-auto-y,
+.course-content ul.fntabs li.section .activity .activityinstance.completion-manual-y,
+.course-content ul.fntabs li.section .activity .activityinstance.completion-auto-fail,
+.course-content ul.fntabs li.section .activity .activityinstance.completion-submitted,
+.course-content ul.fntabs li.section .activity .activityinstance.completion-saved {
+    margin: 0;
+    font-size: 110%;
+    padding: 5px 15px 1px 15px;
+    border-radius: 10px;
+}
+.course-content ul.fntabs li.section .activity .activityinstance.completion-manual-n,
+.course-content ul.fntabs li.section .activity .activityinstance.completion-auto-n {
+    background-color: #ffffff;
+    border: 1px solid #AEE5E3;
+}
+.course-content ul.fntabs li.section .activity .activityinstance.completion-auto-pass,
+.course-content ul.fntabs li.section .activity .activityinstance.completion-auto-y,
+.course-content ul.fntabs li.section .activity .activityinstance.completion-manual-y{
+    background-color: #D0EFCF;
+    border: 1px solid #D0EFCF;
+}
+.course-content ul.fntabs {
+    text-align: left;
+}
+.fntopicsoutlinecontent.fnsectionouter.orphaned {
+    background-color: #757575;
+}
+.course-content .fntopicsoutlinecontent.fnsectionouter:first-of-type {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+.course-content .fntopicsoutlinecontent.fnsectionouter:nth-child(3) {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+}
+.course-content .fntopicsoutlinecontent.fnsectionouter {
+    padding: 7px;
+    margin-bottom: 10px;
+    position: relative;
+}
+.course-content ul.fntabs li.section .activity .activityinstance.completion-auto-fail {
+    background-color: #FDE8E9;
+    border: 1px solid #FDE8E9;
+}
+.course-content ul.fntabs li.section .activity .activityinstance.completion-submitted {
+    background-color: #FFFEE1;
+    border: 1px solid #FFFEE1;
+}
+.course-content ul.fntabs li.section .activity .activityinstance.completion-saved {
+    background-color: #ffffff;
+    border: 1px solid #AEE5E3;
+}
+
+.section .activity .actions {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.course-content ul.fntabs ul.fntabs {
+    margin: 0;
+}
+.course-content ul.fntabs li.section a.tooltip {
+    font-size: 14px;
 }

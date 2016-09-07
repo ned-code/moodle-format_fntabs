@@ -20,6 +20,20 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$plugin->version = 2016090600;
-$plugin->requires = 2013051400;
-$plugin->component = 'format_fntabs';
+function xmldb_format_fntabs_upgrade($version) {
+    global $DB;
+
+    if ($version < 2016090600) {
+        if ($schema = $DB->get_record('format_fntabs_color', array('name' => 'Green Meadow', 'predefined' => 1))) {
+            $schema->name = 'Embassy Green';
+            $DB->update_record('format_fntabs_color', $schema);
+        }
+
+        if ($schema = $DB->get_record('format_fntabs_color', array('name' => 'Grey on White', 'predefined' => 1))) {
+            $schema->name = 'Blues on Whyte';
+            $schema->selectedcolour = '7CAAFE';
+            $DB->update_record('format_fntabs_color', $schema);
+        }
+    }
+    return true;
+}
