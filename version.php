@@ -19,9 +19,10 @@
 /**
  * @package    course/format
  * @subpackage NED
- * @copyright  Michael Gardener <mgardener@cissq.com>
+ * @copyright  NED {@link http://ned.ca}
  * @author     NED {@link http://ned.ca}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @developer  Michael Gardener <mgardener@cissq.com>
  */
 
 $plugin->version = 2013032201;
