@@ -17,18 +17,15 @@
 
 
 /**
- * Keeps track of the version number
- *
  * @package    course/format
- * @subpackage fntabs
- * @author     Fernando Oliveira - MoodleFN {@link http://moodlefn.knet.ca}
+ * @subpackage NED
+ * @copyright  Michael Gardener <mgardener@cissq.com>
+ * @author     NED {@link http://ned.ca}
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 $plugin->version = 2013032201;
 $plugin->requires = 2013051400; // 2.5
-$plugin->maturity = MATURITY_RC;
+$plugin->maturity = MATURITY_STABLE;
 $plugin->component = 'format_fntabs';
-$plugin->release = '2.5';
-// plugin dependency for block_fn_tabs was removed for Moodle 2.5
+$plugin->release = '3.1.1';
