@@ -256,4 +256,4 @@ $string['successful'] = 'Successful';
 $string['deleteconfirmmsg'] = 'Record will be deleted permanently. Do you want to continue?';
 $string['close'] = 'Close';
 $string['showorphaned'] = 'Show orphaned section in edit mode';
-$string['blockinfo'] = 'Block info';
+$string['blockinfo'] = 'Format info';

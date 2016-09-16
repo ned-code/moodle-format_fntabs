@@ -428,6 +428,9 @@ if (empty($course->showonlysection0)) {
                 } else {
                     echo html_writer::start_div('fntopicsoutlinecontent fnsectionouter');
                 }
+                if ($selectedweek == 0) {
+                    echo html_writer::div($section, 'fnsectionnumber');
+                }
                 echo html_writer::start_div('fnweeklynavselected');
                 echo html_writer::start_div('content-section');
                 echo html_writer::start_div('fntopicsoutlinecontent fntopicsoutlineinner');

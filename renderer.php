@@ -1032,7 +1032,7 @@ class format_fntabs_renderer extends format_section_renderer_base {
         $url = preg_replace('/(^.*)(&section\=\d+)(.*)/', '$1$3', $url);
 
         $actbar = '';
-        $actbar .= '<table cellpadding="0" cellspacing="0" class="fntabwrapper"><tr><td>';
+        $actbar .= '<table align="center" cellpadding="0" cellspacing="0" class="fntabwrapper"><tr><td>';
         $actbar .= '<table cellpadding="0" cellspacing="0"  class="fnweeklynav"><tr class="tabs">';
         $width = (int) (100 / ($tabhigh - $tablow + 3));
         $actbar .= '<td width="4" align="center" height="25"></td>';

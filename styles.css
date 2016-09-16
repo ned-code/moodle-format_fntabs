@@ -556,3 +556,10 @@ h2.fnoutlineheadingblock1 {
 .course-content ul.fntabs li.section a.tooltip {
     font-size: 14px;
 }
+.fnsectionnumber {
+    color: white;
+    font-weight: bold;
+    margin-bottom: 4px;
+    text-align: center;
+    font-size: 1.2em;
+}

@@ -46,6 +46,9 @@ class course_fntabs_edit_form extends moodleform {
 
         $mform->addElement('header', 'fncoursetabs', 'Tabs');
 
+        $mform->addElement('static', 'blockinfo', get_string('blockinfo', 'format_fntabs'),
+            '<a target="_blank" href="http://ned.ca/tabs">http://ned.ca/tabs</a>');
+
         $showhideoptions = array(
             '1' => get_string('show', 'format_fntabs'),
             '0' => get_string('hide', 'format_fntabs')
@@ -124,10 +127,6 @@ class course_fntabs_edit_form extends moodleform {
 
         $mform->addElement('select', 'topictoshow', '', $topiclist, array('class' => 'ddl_padding'));
         $mform->setDefault('topictoshow', $topiclist[1]);
-
-
-        $mform->addElement('static', 'blockinfo', get_string('blockinfo', 'block_fn_myprogress'),
-            '<a target="_blank" href="http://ned.ca/tabs">http://ned.ca/tabs</a>');
 
         $mform->addElement('header', 'fncoursecolours', 'Colors');
 
