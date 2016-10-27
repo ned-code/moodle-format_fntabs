@@ -59,7 +59,7 @@
 .fnweeklynavnorm a:active {
     text-decoration: none;
 }
-.fnweeklynavselected {
+td.fnweeklynavselected {
     font-weight: bold;
     text-align: center;
     color: black;

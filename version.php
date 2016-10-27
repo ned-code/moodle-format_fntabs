@@ -20,6 +20,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$plugin->version = 2016091500;
+$plugin->version = 2016102600;
 $plugin->requires = 2013051400;
 $plugin->component = 'format_fntabs';
