@@ -542,6 +542,9 @@ h2.fnoutlineheadingblock1 {
     background-color: #ffffff;
     border: 1px solid #AEE5E3;
 }
+ul.fntabs li.section .activity .mod-indent-outer {
+    padding-left: 0 !important;
+}
 
 .section .activity .actions {
     position: absolute;

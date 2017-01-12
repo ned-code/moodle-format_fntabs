@@ -658,7 +658,7 @@ class format_fntabs_renderer extends format_section_renderer_base {
         $menu->set_alignment(action_menu::TR, action_menu::BR);
         $menu->set_menu_trigger(get_string('edit'));
         if (isset($CFG->modeditingmenu) && !$CFG->modeditingmenu || !empty($displayoptions['donotenhance'])) {
-            $menu->do_not_enhance();
+            unset($menu->attributes['data-enhance']);
 
             // Swap the left/right icons.
             // Normally we have have right, then left but this does not
