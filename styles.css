@@ -484,7 +484,7 @@ h2.fnoutlineheadingblock1 {
 }
 .course-content ul.fntabs li.section .activity .activityinstance.completion-notset {
     margin: 0;
-    padding: 5px 15px 1px 28px;
+    padding: 5px 15px 1px 10px;
 }
 .course-content ul.fntabs li.section .activity .activityinstance.completion-manual-n,
 .course-content ul.fntabs li.section .activity .activityinstance.completion-auto-n,
@@ -495,7 +495,7 @@ h2.fnoutlineheadingblock1 {
 .course-content ul.fntabs li.section .activity .activityinstance.completion-submitted,
 .course-content ul.fntabs li.section .activity .activityinstance.completion-saved {
     margin: 0;
-    padding: 5px 15px 1px 28px;
+    padding: 5px 15px 1px 10px;
     border-radius: 10px;
 }
 .course-content ul.fntabs li.section .activity .activityinstance.completion-manual-n,
@@ -543,9 +543,8 @@ h2.fnoutlineheadingblock1 {
     border: 1px solid #AEE5E3;
 }
 ul.fntabs li.section .activity .mod-indent-outer {
-    padding-left: 0 !important;
+    padding-left: 35px !important;
 }
-
 .section .activity .actions {
     position: absolute;
     right: 0;
