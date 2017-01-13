@@ -29,4 +29,4 @@ $plugin->version = 2017011300;
 $plugin->requires = 2013051400; // 2.5
 $plugin->maturity = MATURITY_STABLE;
 $plugin->component = 'format_fntabs';
-$plugin->release = '3.1.3';
+$plugin->release = '3.1.4';
