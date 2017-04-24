@@ -137,7 +137,7 @@ class course_fntabs_edit_form extends moodleform {
         $saveasarray[] = &$mform->createElement('button', 'managecolorschemas',
             get_string('managecolorschemas', 'format_fntabs')
         );
-        $mform->addGroup($saveasarray, 'saveasarr', get_string('loadcolorschema', 'format_fntabs'), array(' '), false);
+        $mform->addGroup($saveasarray, 'saveasarr', get_string('loadcolourschema', 'format_fntabs'), array(' '), false);
 
         $mform->addElement('header', 'sections', get_string('sections', 'format_fntabs'));
 
