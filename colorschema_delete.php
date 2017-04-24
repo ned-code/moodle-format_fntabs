@@ -48,7 +48,7 @@ $PAGE->navbar->add(get_string('pluginname', 'format_fntabs'));
 $PAGE->navbar->add(get_string('settings', 'format_fntabs'),
     new moodle_url('/course/format/fntabs/tabsettings.php', array('id' => $courseid))
 );
-$PAGE->navbar->add(get_string('colorschemas', 'format_fntabs'),
+$PAGE->navbar->add(get_string('colourschemas', 'format_fntabs'),
     new moodle_url('/course/format/fntabs/colorschema.php', array('courseid' => $courseid))
 );
 $PAGE->navbar->add($title);

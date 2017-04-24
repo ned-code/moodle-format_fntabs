@@ -128,14 +128,14 @@ class course_fntabs_edit_form extends moodleform {
         $mform->addElement('select', 'topictoshow', '', $topiclist, array('class' => 'ddl_padding'));
         $mform->setDefault('topictoshow', $topiclist[1]);
 
-        $mform->addElement('header', 'fncoursecolours', 'Colors');
+        $mform->addElement('header', 'fncoursecolours', get_string('colours', 'format_fntabs'));
 
         $colorschemaoptions = $DB->get_records_menu('format_fntabs_color');
 
         $saveasarray = array();
         $saveasarray[] = &$mform->createElement('select', 'colorschema', '', $colorschemaoptions);
         $saveasarray[] = &$mform->createElement('button', 'managecolorschemas',
-            get_string('managecolorschemas', 'format_fntabs')
+            get_string('managecolourschemas', 'format_fntabs')
         );
         $mform->addGroup($saveasarray, 'saveasarr', get_string('loadcolourschema', 'format_fntabs'), array(' '), false);
 

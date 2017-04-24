@@ -23,6 +23,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU Public License
  */
 
+$string['colours'] = 'Colors';
+
 $string['missingbgcolour'] = 'Background color can not be null';
 $string['missingselectedlinkcolour'] = 'Highlight color can not be null';
 $string['missinginactivebgcolour'] = 'Inactive background color can not be null';
@@ -32,6 +34,6 @@ $string['missinginactivecolour'] = 'Inactive week\'s color can not be null';
 
 $string['loadcolourschema'] = 'Load color schema';
 $string['deletecolourschema'] = 'Delete this color schema';
-$string['colorschema'] = 'Color schema';
-$string['colorschemas'] = 'Color schemas';
-$string['managecolorschemas'] = 'Manage color schemas';
+$string['colourschema'] = 'Color schema';
+$string['colourschemas'] = 'Color schemas';
+$string['managecolourschemas'] = 'Manage color schemas';
