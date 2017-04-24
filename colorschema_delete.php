@@ -71,7 +71,7 @@ if ($process) {
     echo $OUTPUT->header();
     echo html_writer::tag('h1', $title, array('class' => 'page-title'));
     echo $OUTPUT->confirm('<div><strong>'.
-        get_string('colorschema', 'format_fntabs').': </strong>'.$colorschema->name.
+        get_string('colourschema', 'format_fntabs').': </strong>'.$colorschema->name.
         '<br><br>'.
         '</div>'.
         get_string('deleteconfirmmsg', 'format_fntabs').'<br><br>',

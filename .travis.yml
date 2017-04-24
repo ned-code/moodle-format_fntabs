@@ -19,6 +19,7 @@ matrix:
 env:
  global:
   - MOODLE_BRANCH=MOODLE_32_STABLE
+  - IGNORE_NAMES=ft_colourpopup.php, ft_colourpopup.js
  matrix:
   - DB=pgsql
   - DB=mysqli

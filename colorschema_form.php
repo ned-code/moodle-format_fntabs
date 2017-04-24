@@ -30,53 +30,53 @@ class colorschema_form extends moodleform {
         global $DB, $CFG, $OUTPUT;
 
         $mform = $this->_form;
-        $mform->addElement('header', '', get_string('colorschema', 'format_fntabs'), '');
+        $mform->addElement('header', '', get_string('colourschema', 'format_fntabs'), '');
 
         $mform->addElement('html', '<table style="width:100%"><tr><td>');
 
-        MoodleQuickForm::registerElementType('tccolourpopup',
-            "$CFG->dirroot/course/format/fntabs/js/tc_colourpopup.php", 'MoodleQuickForm_tccolourpopup');
+        MoodleQuickForm::registerElementType('ftcolourpopup',
+            "$CFG->dirroot/course/format/fntabs/js/ft_colourpopup.php", 'MoodleQuickForm_ftcolourpopup');
 
         $mform->addElement('text', 'name', get_string('name', 'format_fntabs'));
         $mform->setType('name', PARAM_RAW);
         $mform->addRule('name', null, 'required', null, 'client');
 
-        $mform->addElement('tccolourpopup', 'bgcolour',
+        $mform->addElement('ftcolourpopup', 'bgcolour',
             get_string('bgcolour', 'format_fntabs'), 'maxlength="6" size="6"');
         $mform->setType('bgcolour', PARAM_ALPHANUM);
         $mform->addRule('bgcolour', null, 'required', null, 'client');
 
-        $mform->addElement('tccolourpopup', 'activecolour',
+        $mform->addElement('ftcolourpopup', 'activecolour',
             get_string('activeweek', 'format_fntabs'), 'maxlength="6" size="6"');
         $mform->setType('activecolour', PARAM_ALPHANUM);
         $mform->addRule('activecolour', null, 'required', null, 'client');
 
-        $mform->addElement('tccolourpopup', 'selectedcolour',
+        $mform->addElement('ftcolourpopup', 'selectedcolour',
             get_string('selectedweek', 'format_fntabs'), 'maxlength="6" size="6"');
         $mform->setType('selectedcolour', PARAM_ALPHANUM);
         $mform->addRule('selectedcolour', null, 'required', null, 'client');
 
-        $mform->addElement('tccolourpopup', 'inactivecolour',
+        $mform->addElement('ftcolourpopup', 'inactivecolour',
             get_string('inactiveweek', 'format_fntabs'), 'maxlength="6" size="6"');
         $mform->setType('inactivecolour', PARAM_ALPHANUM);
         $mform->addRule('inactivecolour', null, 'required', null, 'client');
 
-        $mform->addElement('tccolourpopup', 'inactivebgcolour',
+        $mform->addElement('ftcolourpopup', 'inactivebgcolour',
             get_string('inactivebgcolour', 'format_fntabs'), 'maxlength="6" size="6"');
         $mform->setType('inactivebgcolour', PARAM_ALPHANUM);
         $mform->addRule('inactivebgcolour', null, 'required', null, 'client');
 
-        $mform->addElement('tccolourpopup', 'activelinkcolour',
+        $mform->addElement('ftcolourpopup', 'activelinkcolour',
             get_string('activelinkcolour', 'format_fntabs'), 'maxlength="6" size="6"');
         $mform->setType('activelinkcolour', PARAM_ALPHANUM);
         $mform->addRule('activelinkcolour', null, 'required', null, 'client');
 
-        $mform->addElement('tccolourpopup', 'selectedlinkcolour',
+        $mform->addElement('ftcolourpopup', 'selectedlinkcolour',
             get_string('selectedlinkcolour', 'format_fntabs'), 'maxlength="6" size="6"');
         $mform->setType('selectedlinkcolour', PARAM_ALPHANUM);
         $mform->addRule('selectedlinkcolour', null, 'required', null, 'client');
 
-        $mform->addElement('tccolourpopup', 'inactivelinkcolour',
+        $mform->addElement('ftcolourpopup', 'inactivelinkcolour',
             get_string('inactivelinkcolour', 'format_fntabs'), 'maxlength="6" size="6"');
         $mform->setType('inactivelinkcolour', PARAM_ALPHANUM);
         $mform->addRule('inactivelinkcolour', null, 'required', null, 'client');

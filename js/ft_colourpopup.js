@@ -21,7 +21,7 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU Public License
  */
 
- M.util.init_tccolour_popup = function(Y, id, previewconf) {
+ M.util.init_ftcolour_popup = function(Y, id, previewconf) {
     Y.use('node', 'event-mouseenter', function(){
         /**
          * The colour popup object
