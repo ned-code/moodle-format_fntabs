@@ -941,32 +941,15 @@ class format_fntabs_renderer extends format_section_renderer_base {
     public function print_weekly_activities_bar($course, $week=0, $tabrange=0) {
         global $FULLME, $CFG, $course, $DB, $USER, $PAGE, $OUTPUT;
 
-        $selectedcolour = $DB->get_field('format_fntabs_config', 'value',
-            array('courseid' => $course->id, 'variable' => 'selectedcolour')
-        );
-        $activelinkcolour = $DB->get_field('format_fntabs_config', 'value',
-            array('courseid' => $course->id, 'variable' => 'activelinkcolour')
-        );
-        $activecolour = $DB->get_field('format_fntabs_config', 'value',
-            array('courseid' => $course->id, 'variable' => 'activecolour')
-        );
-
-        $inactivelinkcolour = $DB->get_field('format_fntabs_config', 'value',
-            array('courseid' => $course->id, 'variable' => 'inactivelinkcolour')
-        );
-        $inactivecolour = $DB->get_field('format_fntabs_config', 'value',
-            array('courseid' => $course->id, 'variable' => 'inactivecolour')
-        );
+        $selectedcolour = format_fntabs_get_setting($course->id, 'selectedcolour');
+        $activelinkcolour = format_fntabs_get_setting($course->id, 'activelinkcolour');
+        $activecolour = format_fntabs_get_setting($course->id, 'activecolour');
+        $inactivelinkcolour = format_fntabs_get_setting($course->id, 'inactivelinkcolour');
+        $inactivecolour = format_fntabs_get_setting($course->id, 'inactivecolour');
 
         $tabcontent = format_fntabs_get_setting($course->id, 'tabcontent');
         $completiontracking = format_fntabs_get_setting($course->id, 'completiontracking');
         $tabwidth = format_fntabs_get_setting($course->id, 'tabwidth');
-
-        $selectedcolour     = $selectedcolour ? $selectedcolour : 'FFFF33';
-        $activelinkcolour   = $activelinkcolour ? $activelinkcolour : '000000';
-        $inactivelinkcolour = $inactivelinkcolour ? $inactivelinkcolour : '000000';
-        $activecolour       = $activecolour ? $activecolour : 'DBE6C4';
-        $inactivecolour     = $inactivecolour ? $inactivecolour : 'BDBBBB';
 
         $fnmaxtab = $DB->get_field('format_fntabs_config', 'value',
             array('courseid' => $course->id, 'variable' => 'maxtabs'));

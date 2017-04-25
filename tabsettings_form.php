@@ -133,7 +133,9 @@ class course_fntabs_edit_form extends moodleform {
         $colorschemaoptions = $DB->get_records_menu('format_fntabs_color');
 
         $saveasarray = array();
-        $saveasarray[] = &$mform->createElement('select', 'colorschema', '', $colorschemaoptions);
+        $colorschemaselect = &$mform->createElement('select', 'colorschema', '', $colorschemaoptions);
+        $colorschemaselect->setSelected($this->_customdata['colorschema']);
+        $saveasarray[] = $colorschemaselect;
         $saveasarray[] = &$mform->createElement('button', 'managecolorschemas',
             get_string('managecolourschemas', 'format_fntabs')
         );

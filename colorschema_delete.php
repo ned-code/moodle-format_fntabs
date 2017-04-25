@@ -63,6 +63,18 @@ if ($process) {
     require_sesskey();
     $DB->delete_records('format_fntabs_color', array('id' => $delete, 'predefined' => 0));
 
+    // Update existing courses with the schema to the first default.
+    $coursesschema = $DB->get_records_sql('
+        SELECT id FROM {format_fntabs_config}
+        WHERE '.$DB->sql_compare_text('variable', 8).' = "colorschema"
+        AND value = '.$delete
+    );
+    if ($coursesschema) {
+        foreach ($coursesschema as $courseschema) {
+            $DB->set_field('format_fntabs_config', 'value', 1, array('id' => $courseschema->id));
+        }
+    }
+
     redirect(new moodle_url('/course/format/fntabs/colorschema.php', array('courseid' => $courseid)),
         get_string('successful', 'format_fntabs'), 1
     );

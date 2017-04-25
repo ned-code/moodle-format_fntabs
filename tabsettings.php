@@ -84,7 +84,7 @@ if ((!$completion->is_enabled()) && $defaulttab == 'option2') {
     $data->defaulttab = ($defaulttab) ? $defaulttab : 'option1';
 }
 
-$data->colorschema = format_fntabs_get_setting($data->courseid, 'colorschema', true);
+$data->colorschema = format_fntabs_get_setting($data->courseid, 'colorschema');
 $data->topictoshow = format_fntabs_get_setting($data->courseid, 'topictoshow');
 $data->showsection0 = format_fntabs_get_setting($data->courseid, 'showsection0');
 $data->showonlysection0 = format_fntabs_get_setting($data->courseid, 'showonlysection0');
@@ -101,23 +101,9 @@ if ($editform->is_cancelled()) {
     if (empty($course)) {
         redirect($CFG->wwwroot);
     } else {
-        redirect($CFG->wwwroot . '/course/view.php?id=' . $course->id);
+        redirect($CFG->wwwroot.'/course/view.php?id='.$course->id);
     }
 } else if ($data = $editform->get_data()) {
-
-    if ($data->colorschema) {
-        $colorschemasettings = $DB->get_record('format_fntabs_color',
-            array('id' => $data->colorschema), '*', MUST_EXIST
-        );
-        $data->bgcolour = $colorschemasettings->bgcolour;
-        $data->activecolour = $colorschemasettings->activecolour;
-        $data->selectedcolour = $colorschemasettings->selectedcolour;
-        $data->inactivebgcolour = $colorschemasettings->inactivebgcolour;
-        $data->inactivecolour = $colorschemasettings->inactivecolour;
-        $data->activelinkcolour = $colorschemasettings->activelinkcolour;
-        $data->inactivelinkcolour = $colorschemasettings->inactivelinkcolour;
-        $data->selectedlinkcolour = $colorschemasettings->selectedlinkcolour;
-    }
 
     $variable = 'showsection0';
     format_fntabs_update_course_setting($variable, $data->$variable);
@@ -173,32 +159,8 @@ if ($editform->is_cancelled()) {
         }
     }
 
-    $variable = 'bgcolour';
-    format_fntabs_update_course_setting($variable, $data->$variable);
-
-    $variable = 'activelinkcolour';
-    format_fntabs_update_course_setting($variable, $data->$variable);
-
-    $variable = 'inactivelinkcolour';
-    format_fntabs_update_course_setting($variable, $data->$variable);
-
-    $variable = 'selectedlinkcolour';
-    format_fntabs_update_course_setting($variable, $data->$variable);
-
-    $variable = 'inactivebgcolour';
-    format_fntabs_update_course_setting($variable, $data->$variable);
-
-    $variable = 'selectedcolour';
-    format_fntabs_update_course_setting($variable, $data->$variable);
-
-    $variable = 'activecolour';
-    format_fntabs_update_course_setting($variable, $data->$variable);
-
-    $variable = 'inactivecolour';
-    format_fntabs_update_course_setting($variable, $data->$variable);
-
     unset($SESSION->G8_selected_week[$course->id]);
-    redirect($CFG->wwwroot . "/course/view.php?id=$course->id" );
+    redirect($CFG->wwwroot."/course/view.php?id=$course->id" );
 }
 
 // Print the form.
