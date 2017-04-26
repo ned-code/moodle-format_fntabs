@@ -51,7 +51,6 @@ $string['missingactivecolour'] = 'Active week\'s colour can not be null';
 $string['missinginactivecolour'] = 'Inactive week\'s colour can not be null';
 
 $string['defaultmainheading'] = 'Weekly Activities';
-$string['sectionname'] = 'Moodle FN Tab';
 $string['section0name'] = 'General';
 $string['activitycompletion'] = 'Activity completion';
 $string['badautocompletion'] = 'When you select automatic completion, you must also enable at least one requirement (below).';

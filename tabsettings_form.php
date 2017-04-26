@@ -29,15 +29,10 @@ require_once($CFG->dirroot . '/course/edit_form.php');
 class course_fntabs_edit_form extends moodleform {
 
     public function definition() {
-        global $CFG, $DB, $OUTPUT;
+        global $DB;
         $mform = &$this->_form;
 
         $course = $this->_customdata['course'];
-
-        if (!empty($course->id)) {
-            $coursecontext = context_course::instance($course->id);
-            $context = $coursecontext;
-        }
 
         $mform->addElement('hidden', 'id', $this->_customdata['course']->id);
         $mform->setType('id', PARAM_INT);
@@ -89,7 +84,6 @@ class course_fntabs_edit_form extends moodleform {
 
         // Work to be done for default tab.
         $radioarray = array();
-        $attributes = array();
         $radioarray[] = $mform->createElement('radio', 'defaulttab', '',
             get_string('default_tab_text', 'format_fntabs'), 'option1',
             array('checked' => true, 'class' => 'padding_before_radio', 'style' => 'padding-left:10px;')

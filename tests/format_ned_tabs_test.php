@@ -40,7 +40,7 @@ class format_fntabs_testcase extends advanced_testcase {
 
         $generator = $this->getDataGenerator();
 
-        $course = $generator->create_course(array('numsections' => 10, 'format' => 'topics'),
+        $course = $generator->create_course(array('numsections' => 10, 'format' => 'fntabs'),
             array('createsections' => true));
         $generator->create_module('assign', array('course' => $course, 'section' => 7));
 
@@ -70,7 +70,7 @@ class format_fntabs_testcase extends advanced_testcase {
         // Generate a course with 5 sections.
         $generator = $this->getDataGenerator();
         $numsections = 5;
-        $course = $generator->create_course(array('numsections' => $numsections, 'format' => 'topics'),
+        $course = $generator->create_course(array('numsections' => $numsections, 'format' => 'fntabs'),
             array('createsections' => true));
 
         // Get section names for course.
@@ -94,7 +94,7 @@ class format_fntabs_testcase extends advanced_testcase {
         // Generate a course with 5 sections.
         $generator = $this->getDataGenerator();
         $numsections = 5;
-        $course = $generator->create_course(array('numsections' => $numsections, 'format' => 'topics'),
+        $course = $generator->create_course(array('numsections' => $numsections, 'format' => 'fntabs'),
             array('createsections' => true));
 
         // Get section names for course.
@@ -126,7 +126,7 @@ class format_fntabs_testcase extends advanced_testcase {
         // Generate a course with 5 sections.
         $generator = $this->getDataGenerator();
         $numsections = 5;
-        $course = $generator->create_course(array('numsections' => $numsections, 'format' => 'topics'),
+        $course = $generator->create_course(array('numsections' => $numsections, 'format' => 'fntabs'),
             array('createsections' => true));
 
         // Get section names for course.

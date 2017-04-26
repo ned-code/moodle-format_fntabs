@@ -27,7 +27,7 @@ require_once($CFG->libdir.'/formslib.php');
 class colorschema_form extends moodleform {
     public function definition() {
 
-        global $DB, $CFG, $OUTPUT;
+        global $CFG, $OUTPUT;
 
         $mform = $this->_form;
         $mform->addElement('header', '', get_string('colourschema', 'format_fntabs'), '');
