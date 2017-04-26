@@ -16,17 +16,17 @@
 .fntopicsoutlinecontent {
     border-left: 0;
     border-right: 0;
-    border-width: 1px;
     border-style: solid;
+    border-width: 1px;
 }
 .fntopicsoutlinecontenthidden {
+    background-color: #D3D3D3;
     border-color: #AAA;
     border-left: 0;
     border-right: 0;
     border-style: solid;
     border-width: 1px;
-    background-color: #D3D3D3;
-    padding:10px !important;
+    padding: 10px !important;
 }
 .fntopicsoutlinecontenthighlight {
     border-left: 0;
@@ -39,13 +39,13 @@
     border-spacing: 1px 0;
 }
 .fnweeklynav .tab-heading {
-    width: 50px;
-    font-size: 16px;
     color: #FFF;
+    font-size: 16px;
+    width: 50px;
 }
 .fnweeklynavnorm {
-    text-align: center;
     color: blue;
+    text-align: center;
 }
 .fnweeklynavnorm a {
     display: block;
@@ -60,9 +60,9 @@
     text-decoration: none;
 }
 td.fnweeklynavselected {
+    color: black;
     font-weight: bold;
     text-align: center;
-    color: black;
 }
 td.fnweeklynavselected {
     border-radius: 0;
@@ -104,8 +104,8 @@ td.fnweeklynavselected {
 }
 
 .fnweeklynavdisabledselected {
-    text-align: center;
     color: #bdbbbb;
+    text-align: center;
 }
 .fnweeklynavdisabled {
     text-align: center;
@@ -143,9 +143,9 @@ div.fnintro {
 }
 .fnintro .hide-show img.hide-show-image {
     background: url('[[pix:theme|switch_minus]]') no-repeat bottom;
-    height:11px;
-    width:11px;
+    height: 11px;
     margin-top:0.25em;
+    width: 11px;
 }
 .fnintro.hidden .asscontent {
     display: none;
@@ -343,10 +343,10 @@ tr.oddrow {
 
 /*** Tool Tips ***/
 .fnweeklynav .tooltip {
-    cursor:pointer;
-    outline:none;
-    position:relative;
-    text-decoration:none;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+    text-decoration: none;
 }
 .fnweeklynav .tooltip span {
     margin-left: -999em; 
@@ -399,8 +399,8 @@ tr.oddrow {
 }
 .fnweeklynav .tooltip-right {
     cursor: pointer;
-    position: relative; 
     outline: none; 
+    position: relative; 
     text-decoration: none; 
 }
 .fnweeklynav .tooltip-right span {
@@ -455,7 +455,7 @@ tr.oddrow {
 
 
 .fnweeklynav .custom {
-    padding:0em
+    padding: 0;
 }
 * html a:hover {
     background: transparent;
@@ -520,8 +520,8 @@ h2.fnoutlineheadingblock, h2.fnoutlineheadingblock1 {
     width: 80%;
 }
 #page-course-format-fntabs-settings #fitem_id_topictoshow {
-    position: relative;
     margin: -31px 0 0 365px;
+    position: relative;
     width: 50px;
 }
 
