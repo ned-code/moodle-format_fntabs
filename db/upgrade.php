@@ -67,35 +67,35 @@ function xmldb_format_fntabs_upgrade($version) {
         if (!$dbman->table_exists($table)) {
             $dbman->create_table($table);
 
-            $rec = new stdClass();
-            $rec->name = 'Embassy Green';
-            $rec->courseid = 1;
-            $rec->bgcolour = '9DBB61';
-            $rec->activecolour = 'DBE6C4';
-            $rec->selectedcolour = 'FFFF33';
-            $rec->inactivecolour = 'BDBBBB';
-            $rec->inactivebgcolour = 'F5E49C';
-            $rec->activelinkcolour = '000000';
-            $rec->selectedlinkcolour = '000000';
-            $rec->inactivelinkcolour = '000000';
-            $rec->predefined = 1;
-            $rec->timecreated = time();
-            $DB->insert_record('format_fntabs_color', $rec);
+            $recone = new stdClass();
+            $rectwo = new stdClass();
+            $recone->name = 'Embassy Green';
+            $rectwo->name = 'Blues on Whyte';
+            $recone->courseid = 1;
+            $rectwo->courseid = 1;
+            $recone->bgcolour = '9DBB61';
+            $rectwo->bgcolour = 'FFFFFF';
+            $recone->activecolour = 'DBE6C4';
+            $rectwo->activecolour = 'E1E1E1';
+            $recone->selectedcolour = 'FFFF33';
+            $rectwo->selectedcolour = '7CAAFE';
+            $recone->inactivecolour = 'BDBBBB';
+            $rectwo->inactivecolour = 'BDBBBB';
+            $recone->inactivebgcolour = 'F5E49C';
+            $rectwo->inactivebgcolour = 'F5E49C';
+            $recone->activelinkcolour = '000000';
+            $rectwo->activelinkcolour = '929292';
+            $recone->selectedlinkcolour = '000000';
+            $rectwo->selectedlinkcolour = 'FFFFFF';
+            $recone->inactivelinkcolour = '000000';
+            $rectwo->inactivelinkcolour = '929292';
+            $recone->predefined = 1;
+            $rectwo->predefined = 1;
+            $recone->timecreated = time();
+            $rectwo->timecreated = time();
 
-            $rec = new stdClass();
-            $rec->name = 'Blues on Whyte';
-            $rec->courseid = 1;
-            $rec->bgcolour = 'FFFFFF';
-            $rec->activecolour = 'E1E1E1';
-            $rec->selectedcolour = '7CAAFE';
-            $rec->inactivecolour = 'BDBBBB';
-            $rec->inactivebgcolour = 'F5E49C';
-            $rec->activelinkcolour = '929292';
-            $rec->selectedlinkcolour = 'FFFFFF';
-            $rec->inactivelinkcolour = '929292';
-            $rec->predefined = 1;
-            $rec->timecreated = time();
-            $DB->insert_record('format_fntabs_color', $rec);
+            $DB->insert_record('format_fntabs_color', $recone);
+            $DB->insert_record('format_fntabs_color', $rectwo);
         }
 
         // Define table format_fntabs_cm to be created.
