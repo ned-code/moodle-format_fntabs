@@ -30,8 +30,7 @@ $delete = optional_param('delete', 0, PARAM_INT);
 
 $PAGE->set_pagelayout('admin');
 $PAGE->set_url('/course/format/fntabs/tabsettings.php', array('id' => $id));
-$PAGE->requires->jquery();
-$PAGE->requires->js('/course/format/fntabs/js/tabsettings.js');
+$PAGE->requires->js_call_amd('format_fntabs/tabsettings', 'init', array());
 
 require_login();
 if ($id) {
