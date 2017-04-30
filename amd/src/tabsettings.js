@@ -20,7 +20,7 @@ define(['jquery', 'core/log'], function($, log) {
                 $('#id_managecolorschemas').click(function() {
                     var colorschema = $('#id_colorschema option:selected').val();
                     var courseid = $("[name='id']").val();
-                    location.href = M.cfg.wwwroot + '/course/format/fntabs/colorschema_edit.php?courseid='+courseid+'&edit='+colorschema;
+                    location.href = M.cfg.wwwroot + '/course/format/fntabs/colorschema_edit.php?courseid=' + courseid + '&edit=' + colorschema;
                 });
             });
             log.debug('NED FN Tabs AMD tabsettings init');
