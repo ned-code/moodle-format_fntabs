@@ -59,6 +59,10 @@
 .fnweeklynavnorm a:active {
     text-decoration: none;
 }
+.fnweeklynavnorm .tooltip {
+    text-align: inherit;
+}
+
 td.fnweeklynavselected {
     color: black;
     font-weight: bold;
