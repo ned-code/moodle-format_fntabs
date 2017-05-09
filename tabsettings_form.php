@@ -29,15 +29,10 @@ require_once($CFG->dirroot . '/course/edit_form.php');
 class course_fntabs_edit_form extends moodleform {
 
     public function definition() {
-        global $CFG, $DB, $OUTPUT;
+        global $DB;
         $mform = &$this->_form;
 
         $course = $this->_customdata['course'];
-
-        if (!empty($course->id)) {
-            $coursecontext = context_course::instance($course->id);
-            $context = $coursecontext;
-        }
 
         $mform->addElement('hidden', 'id', $this->_customdata['course']->id);
         $mform->setType('id', PARAM_INT);
@@ -89,7 +84,6 @@ class course_fntabs_edit_form extends moodleform {
 
         // Work to be done for default tab.
         $radioarray = array();
-        $attributes = array();
         $radioarray[] = $mform->createElement('radio', 'defaulttab', '',
             get_string('default_tab_text', 'format_fntabs'), 'option1',
             array('checked' => true, 'class' => 'padding_before_radio', 'style' => 'padding-left:10px;')
@@ -128,16 +122,18 @@ class course_fntabs_edit_form extends moodleform {
         $mform->addElement('select', 'topictoshow', '', $topiclist, array('class' => 'ddl_padding'));
         $mform->setDefault('topictoshow', $topiclist[1]);
 
-        $mform->addElement('header', 'fncoursecolours', 'Colors');
+        $mform->addElement('header', 'fncoursecolours', get_string('colours', 'format_fntabs'));
 
         $colorschemaoptions = $DB->get_records_menu('format_fntabs_color');
 
         $saveasarray = array();
-        $saveasarray[] = &$mform->createElement('select', 'colorschema', '', $colorschemaoptions);
+        $colorschemaselect = &$mform->createElement('select', 'colorschema', '', $colorschemaoptions);
+        $colorschemaselect->setSelected($this->_customdata['colorschema']);
+        $saveasarray[] = $colorschemaselect;
         $saveasarray[] = &$mform->createElement('button', 'managecolorschemas',
-            get_string('managecolorschemas', 'format_fntabs')
+            get_string('managecolourschemas', 'format_fntabs')
         );
-        $mform->addGroup($saveasarray, 'saveasarr', get_string('loadcolorschema', 'format_fntabs'), array(' '), false);
+        $mform->addGroup($saveasarray, 'saveasarr', get_string('loadcolourschema', 'format_fntabs'), array(' '), false);
 
         $mform->addElement('header', 'sections', get_string('sections', 'format_fntabs'));
 

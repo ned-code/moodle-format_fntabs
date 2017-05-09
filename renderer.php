@@ -321,8 +321,8 @@ class format_fntabs_renderer extends format_section_renderer_base {
      * @return string
      */
     public function course_section_cm($course, &$completioninfo, cm_info $mod, $sectionreturn,
-                                      $displayoptions = array(), $activitiesstatusarray = null) {
-        global $DB, $CFG;
+        $displayoptions = array(), $activitiesstatusarray = null) {
+        global $CFG;
         $output = '';
 
         if (!$mod->uservisible && empty($mod->availableinfo)) {
@@ -474,7 +474,6 @@ class format_fntabs_renderer extends format_section_renderer_base {
      * @return string
      */
     public function course_section_cm_name(cm_info $mod, $displayoptions = array()) {
-        global $CFG;
         $output = '';
         if (!$mod->uservisible && empty($mod->availableinfo)) {
             // Nothing to be displayed to the user.
@@ -717,8 +716,8 @@ class format_fntabs_renderer extends format_section_renderer_base {
      * @return string
      */
     public function course_section_cm_completion($course, &$completioninfo, cm_info $mod, $displayoptions = array(),
-                                                 $activitiesstatusarray = null) {
-        global $CFG, $DB;
+        $activitiesstatusarray = null) {
+        global $CFG;
 
         $locationoftrackingicons = format_fntabs_get_setting($course->id, 'locationoftrackingicons');
 
@@ -933,7 +932,7 @@ class format_fntabs_renderer extends format_section_renderer_base {
             format_fntabs_get_course($course);
             $course->sec0title = $_POST['sec0title'];
             format_fntabs_update_course($course);
-            $cm->course = $course->id;
+            $cm->course = $course->id;  // ?
         }
     }
 
@@ -941,32 +940,15 @@ class format_fntabs_renderer extends format_section_renderer_base {
     public function print_weekly_activities_bar($course, $week=0, $tabrange=0) {
         global $FULLME, $CFG, $course, $DB, $USER, $PAGE, $OUTPUT;
 
-        $selectedcolour = $DB->get_field('format_fntabs_config', 'value',
-            array('courseid' => $course->id, 'variable' => 'selectedcolour')
-        );
-        $activelinkcolour = $DB->get_field('format_fntabs_config', 'value',
-            array('courseid' => $course->id, 'variable' => 'activelinkcolour')
-        );
-        $activecolour = $DB->get_field('format_fntabs_config', 'value',
-            array('courseid' => $course->id, 'variable' => 'activecolour')
-        );
-
-        $inactivelinkcolour = $DB->get_field('format_fntabs_config', 'value',
-            array('courseid' => $course->id, 'variable' => 'inactivelinkcolour')
-        );
-        $inactivecolour = $DB->get_field('format_fntabs_config', 'value',
-            array('courseid' => $course->id, 'variable' => 'inactivecolour')
-        );
+        $selectedcolour = format_fntabs_get_setting($course->id, 'selectedcolour');
+        $activelinkcolour = format_fntabs_get_setting($course->id, 'activelinkcolour');
+        $activecolour = format_fntabs_get_setting($course->id, 'activecolour');
+        $inactivelinkcolour = format_fntabs_get_setting($course->id, 'inactivelinkcolour');
+        $inactivecolour = format_fntabs_get_setting($course->id, 'inactivecolour');
 
         $tabcontent = format_fntabs_get_setting($course->id, 'tabcontent');
         $completiontracking = format_fntabs_get_setting($course->id, 'completiontracking');
         $tabwidth = format_fntabs_get_setting($course->id, 'tabwidth');
-
-        $selectedcolour     = $selectedcolour ? $selectedcolour : 'FFFF33';
-        $activelinkcolour   = $activelinkcolour ? $activelinkcolour : '000000';
-        $inactivelinkcolour = $inactivelinkcolour ? $inactivelinkcolour : '000000';
-        $activecolour       = $activecolour ? $activecolour : 'DBE6C4';
-        $inactivecolour     = $inactivecolour ? $inactivecolour : 'BDBBBB';
 
         $fnmaxtab = $DB->get_field('format_fntabs_config', 'value',
             array('courseid' => $course->id, 'variable' => 'maxtabs'));
@@ -1034,7 +1016,6 @@ class format_fntabs_renderer extends format_section_renderer_base {
         $actbar = '';
         $actbar .= '<table align="center" cellpadding="0" cellspacing="0" class="fntabwrapper"><tr><td>';
         $actbar .= '<table cellpadding="0" cellspacing="0"  class="fnweeklynav"><tr class="tabs">';
-        $width = (int) (100 / ($tabhigh - $tablow + 3));
         $actbar .= '<td width="4" align="center" height="25"></td>';
 
         if ($tablow <= 1) {
@@ -1113,7 +1094,6 @@ class format_fntabs_renderer extends format_section_renderer_base {
                     if (!$isteacher && !is_siteadmin() && !$iseditingteacher) {
                         if ($completioninfo->is_enabled() && $CFG->enablecompletion && $completiontracking) {
                             $f = $this->is_section_finished($this->sections[$i], $this->mods) ? 'green-tab' : 'red-tab';
-                            $w = $i;
                             $sectionid = $i;
                             $section = $DB->get_record("course_sections", array("section" => $sectionid, "course" => $course->id));
                             $activitiesstatusarray = format_fntabs_get_activities_status($course, $section);
@@ -1225,7 +1205,7 @@ class format_fntabs_renderer extends format_section_renderer_base {
     }
 
     public function is_section_finished(&$section, $mods) {
-        global $USER, $course;
+        global $course;
         $completioninfo = new completion_info($course);
         $modules = format_fntabs_get_course_section_mods($course->id, $section->id);
         $count = 0;

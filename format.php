@@ -317,19 +317,6 @@ if (empty($course->showonlysection0)) {
         }
         </style>";
         $class = '';
-
-
-
-
-
-
-
-
-
-
-
-
-
         echo html_writer::start_div('fntopicsoutlinecontent fnsectionouter');
         if ($selectedweek > 0 && !$PAGE->user_is_editing()) {
             if ($course->numsections > 1) {
@@ -379,7 +366,7 @@ if (empty($course->showonlysection0)) {
     $totalnumofsections = $DB->count_records('course_sections', array('course' => $course->id));
 
     if ($PAGE->user_is_editing() && $showorphaned && ($totalnumofsections > $numsections)) {
-        $numsections = $totalnumofsections-1;
+        $numsections = $totalnumofsections - 1;
     }
 
     while (($course->numsections > 0) && ($section <= $numsections)) {
@@ -523,7 +510,6 @@ if (empty($course->showonlysection0)) {
     }
 }
 
-//echo "</div>\n";
 if ($course->numsections > 0) {
     echo "</li>\n";
 }

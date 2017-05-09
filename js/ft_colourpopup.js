@@ -1,4 +1,27 @@
-M.util.init_tccolour_popup = function(Y, id, previewconf) {
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
+/**
+ * @package    course/format
+ * @subpackage fntabs
+ * @copyright  &copy; 2017 G J Barnard.
+ * @author     G J Barnard - {@link http://moodle.org/user/profile.php?id=442195}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU Public License
+ */
+
+ M.util.init_ftcolour_popup = function(Y, id, previewconf) {
     Y.use('node', 'event-mouseenter', function(){
         /**
          * The colour popup object
@@ -32,6 +55,7 @@ M.util.init_tccolour_popup = function(Y, id, previewconf) {
                 this.current = Y.Node.create('<div class="currentcolour"></div>');
                 this.current.setStyle('width', this.height / 2).setStyle('height', this.height / 2 - 1).setStyle('backgroundColor', this.input.get('value'));
                 this.box.setContent('').append(this.image).append(this.preview).append(this.current);
+                //this.box.setContent('');
 
                 if (typeof(previewconf) === 'object' && previewconf !== null) {
                     Y.one('#' + id + '_preview').on('click', function(e){
@@ -50,7 +74,7 @@ M.util.init_tccolour_popup = function(Y, id, previewconf) {
                 this.eventMouseEnter = Y.on('mouseenter', this.startFollow, this.image, this);
             },
             popup: function(e){
-                this.box.ancestor().setStyle('display','block');
+                this.box.ancestor().setStyle('display', 'block');
             },
             showColours : function(e){
                 this.eventFocus.detach();
@@ -65,6 +89,7 @@ M.util.init_tccolour_popup = function(Y, id, previewconf) {
                 this.eventMouseLeave = Y.on('mouseleave', this.endFollow, this.image, this);
                 this.eventMouseMove = this.image.on('mousemove', function(e){
                     var colour = this.determineColour(e);
+                    //this.swatch.setStyle('backgroundColor', colour);
                     this.preview.setStyle('backgroundColor', '#' + colour);
                 }, this);
             },
@@ -86,7 +111,7 @@ M.util.init_tccolour_popup = function(Y, id, previewconf) {
                 this.input.focus();
                 this.swatch.setStyle('backgroundColor', '#' + colour);
                 this.current.setStyle('backgroundColor', '#' + colour);
-                this.box.ancestor().setStyle('display','none');
+                this.box.ancestor().setStyle('display', 'none');
             },
             /**
              * Calculates the colour from the given co-ordinates
@@ -101,12 +126,12 @@ M.util.init_tccolour_popup = function(Y, id, previewconf) {
                 var colour = [255,0,0];
 
                 var matrices = [
-                    [  0,  1,  0],
-                    [ -1,  0,  0],
-                    [  0,  0,  1],
-                    [  0, -1,  0],
-                    [  1,  0,  0],
-                    [  0,  0, -1]
+                [  0,  1,  0],
+                [ -1,  0,  0],
+                [  0,  0,  1],
+                [  0, -1,  0],
+                [  1,  0,  0],
+                [  0,  0, -1]
                 ];
 
                 var matrixcount = matrices.length;
@@ -156,8 +181,9 @@ M.util.init_tccolour_popup = function(Y, id, previewconf) {
                 return hex;
             }
         };
-
-         // Initialise the colour popup :) Hoorah.
+        /**
+         * Initialise the colour popup :) Hoorah
+         */
         colourpopup.init();
     });
 };

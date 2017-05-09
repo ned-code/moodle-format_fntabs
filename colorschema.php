@@ -47,8 +47,8 @@ $PAGE->set_pagelayout('course');
 $PAGE->set_context($coursecontext);
 
 $course = $DB->get_record('course', array('id' => $courseid));
-$name = get_string('colorschemas', 'format_fntabs');
-$title = get_string('colorschemas', 'format_fntabs');
+$name = get_string('colourschemas', 'format_fntabs');
+$title = get_string('colourschemas', 'format_fntabs');
 $heading = $SITE->fullname;
 
 // Breadcrumb.

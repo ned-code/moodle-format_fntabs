@@ -367,11 +367,10 @@ class format_fntabs extends format_base {
     }
 
     public function get_course() {
-        global $DB;
-
         parent::get_course();
 
         if (!empty($this->course->id)) {
+            global $DB;
             $extradata = $DB->get_records('format_fntabs_config', array('courseid' => $this->course->id));
         } else {
             $extradata = false;
@@ -459,7 +458,7 @@ function format_fntabs_update_course($form, $oldformat = false) {
     // Check for a change to an FN format. If so, set some defaults as well...
     if ($oldformat != 'FN') {
         // Set the news (announcements) forum to no force subscribe, and no posts or discussions.
-        require_once($CFG->dirroot . '/mod/forum/lib.php');
+        require_once($CFG->dirroot.'/mod/forum/lib.php');
         $news = forum_get_course_forum($form->id, 'news');
         $news->open = 0;
         $news->forcesubscribe = 0;
@@ -881,41 +880,73 @@ function format_fntabs_get_setting($courseid, $name, $getdefaultvalue = false) {
     global $DB;
 
     // Default values.
-    $showtabs = 1;
-    $tabcontent = 'usesectionnumbers';
-    $completiontracking = 1;
-    $tabwidth = 'equalspacing';
-    $locationoftrackingicons = 'nediconsleft';
-    $showorphaned = 0;
-    $activitytrackingbackground = 1;
-    $completiontracking = 1;
-    $mainheading = '';
-    $topicheading = get_string('defaulttopicheading', 'format_fntabs');
-    $maxtabs = 12;
-    $colorschema = 0;
-    $bgcolour = '9DBB61';
-    $activecolour = 'DBE6C4';
-    $selectedcolour = 'FFFF33';
-    $inactivebgcolour = 'F5E49C';
-    $inactivecolour = 'BDBBBB';
-    $activelinkcolour = '000000';
-    $inactivelinkcolour = '000000';
-    $selectedlinkcolour = '000000';
-    $topictoshow = 1;
-    $showsection0 = 0;
-    $showonlysection0 = 0;
-    $defaulttab = 'option1';
+    $defaults = array(
+        'showtabs' => 1,
+        'tabcontent' => 'usesectionnumbers',
+        'completiontracking' => 1,
+        'tabwidth' => 'equalspacing',
+        'locationoftrackingicons' => 'nediconsleft',
+        'showorphaned' => 0,
+        'activitytrackingbackground' => 1,
+        'completiontracking' => 1,
+        'mainheading' => '',
+        'topicheading' => get_string('defaulttopicheading', 'format_fntabs'),
+        'maxtabs' => 12,
+        'colorschema' => 0,
+        'bgcolour' => '9DBB61',
+        'activecolour' => 'DBE6C4',
+        'selectedcolour' => 'FFFF33',
+        'inactivebgcolour' => 'F5E49C',
+        'inactivecolour' => 'BDBBBB',
+        'activelinkcolour' => '000000',
+        'inactivelinkcolour' => '000000',
+        'selectedlinkcolour' => '000000',
+        'topictoshow' => 1,
+        'showsection0' => 0,
+        'showonlysection0' => 0,
+        'defaulttab' => 'option1',
+    );
 
     if ($getdefaultvalue) {
-        return $$name;
+        return $defaults[$name];
+    }
+
+    // A colour schema?
+    $colourschema = false;
+    switch($name) {
+        case 'bgcolor':
+        case 'activecolour':
+        case 'selectedcolour':
+        case 'inactivebgcolour':
+        case 'inactivecolour':
+        case 'activelinkcolour':
+        case 'inactivelinkcolour':
+        case 'selectedlinkcolour':
+            $colourschema = true;
+            $coloursname = $name;
+            $name = 'colourschema';
+        break;
     }
 
     $setting = $DB->get_field('format_fntabs_config', 'value',
         array('courseid' => $courseid, 'variable' => $name)
     );
 
+    if ($colourschema) {
+        if ($setting === false) {
+            // Reset name to return default.
+            $name = $coloursname;
+        } else {
+            $setting = $DB->get_field('format_fntabs_color', $coloursname, array('id' => $setting));
+            if ($setting === false) {
+                // Reset name to return default.
+                $name = $coloursname;
+            }
+        }
+    }
+
     if ($setting === false) {
-        return $$name;
+        return $defaults[$name];
     } else {
         return $setting;
     }

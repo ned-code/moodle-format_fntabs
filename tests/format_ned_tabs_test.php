@@ -27,10 +27,6 @@ require_once($CFG->dirroot . '/course/lib.php');
 
 /**
  * format_fntabs related unit tests
- *
- * @package    format_fntabs
- * @copyright  2015 Marina Glancy
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class format_fntabs_testcase extends advanced_testcase {
 
@@ -40,7 +36,7 @@ class format_fntabs_testcase extends advanced_testcase {
 
         $generator = $this->getDataGenerator();
 
-        $course = $generator->create_course(array('numsections' => 10, 'format' => 'topics'),
+        $course = $generator->create_course(array('numsections' => 10, 'format' => 'fntabs'),
             array('createsections' => true));
         $generator->create_module('assign', array('course' => $course, 'section' => 7));
 
@@ -70,7 +66,7 @@ class format_fntabs_testcase extends advanced_testcase {
         // Generate a course with 5 sections.
         $generator = $this->getDataGenerator();
         $numsections = 5;
-        $course = $generator->create_course(array('numsections' => $numsections, 'format' => 'topics'),
+        $course = $generator->create_course(array('numsections' => $numsections, 'format' => 'fntabs'),
             array('createsections' => true));
 
         // Get section names for course.
@@ -79,8 +75,14 @@ class format_fntabs_testcase extends advanced_testcase {
         // Test get_section_name with default section names.
         $courseformat = course_get_format($course);
         foreach ($coursesections as $section) {
-            // Assert that with unmodified section names, get_section_name returns the same result as get_default_section_name.
-            $this->assertEquals($courseformat->get_default_section_name($section), $courseformat->get_section_name($section));
+            // Section 0 is different.
+            if ($section->section == 0) {
+                // Assert that with unmodified section names section 0 is what is defined in the language file.
+                $this->assertEquals($courseformat->get_default_section_name($section), get_string('section0name', 'format_fntabs'));
+            } else {
+                // Assert that with unmodified section names, get_section_name returns the same result as get_default_section_name.
+                $this->assertEquals($courseformat->get_default_section_name($section), $courseformat->get_section_name($section));
+            }
         }
     }
 
@@ -94,7 +96,7 @@ class format_fntabs_testcase extends advanced_testcase {
         // Generate a course with 5 sections.
         $generator = $this->getDataGenerator();
         $numsections = 5;
-        $course = $generator->create_course(array('numsections' => $numsections, 'format' => 'topics'),
+        $course = $generator->create_course(array('numsections' => $numsections, 'format' => 'fntabs'),
             array('createsections' => true));
 
         // Get section names for course.
@@ -126,7 +128,7 @@ class format_fntabs_testcase extends advanced_testcase {
         // Generate a course with 5 sections.
         $generator = $this->getDataGenerator();
         $numsections = 5;
-        $course = $generator->create_course(array('numsections' => $numsections, 'format' => 'topics'),
+        $course = $generator->create_course(array('numsections' => $numsections, 'format' => 'fntabs'),
             array('createsections' => true));
 
         // Get section names for course.

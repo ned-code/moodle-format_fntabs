@@ -48,7 +48,7 @@ $PAGE->navbar->add(get_string('pluginname', 'format_fntabs'));
 $PAGE->navbar->add(get_string('settings', 'format_fntabs'),
     new moodle_url('/course/format/fntabs/tabsettings.php', array('id' => $courseid))
 );
-$PAGE->navbar->add(get_string('colorschemas', 'format_fntabs'),
+$PAGE->navbar->add(get_string('colourschemas', 'format_fntabs'),
     new moodle_url('/course/format/fntabs/colorschema.php', array('courseid' => $courseid))
 );
 $PAGE->navbar->add($title);
@@ -63,6 +63,18 @@ if ($process) {
     require_sesskey();
     $DB->delete_records('format_fntabs_color', array('id' => $delete, 'predefined' => 0));
 
+    // Update existing courses with the schema to the first default.
+    $coursesschema = $DB->get_records_sql('
+        SELECT id FROM {format_fntabs_config}
+        WHERE '.$DB->sql_compare_text('variable', 8).' = "colorschema"
+        AND value = '.$delete
+    );
+    if ($coursesschema) {
+        foreach ($coursesschema as $courseschema) {
+            $DB->set_field('format_fntabs_config', 'value', 1, array('id' => $courseschema->id));
+        }
+    }
+
     redirect(new moodle_url('/course/format/fntabs/colorschema.php', array('courseid' => $courseid)),
         get_string('successful', 'format_fntabs'), 1
     );
@@ -71,7 +83,7 @@ if ($process) {
     echo $OUTPUT->header();
     echo html_writer::tag('h1', $title, array('class' => 'page-title'));
     echo $OUTPUT->confirm('<div><strong>'.
-        get_string('colorschema', 'format_fntabs').': </strong>'.$colorschema->name.
+        get_string('colourschema', 'format_fntabs').': </strong>'.$colorschema->name.
         '<br><br>'.
         '</div>'.
         get_string('deleteconfirmmsg', 'format_fntabs').'<br><br>',

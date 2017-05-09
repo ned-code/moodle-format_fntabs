@@ -9,48 +9,48 @@
     background-color:#C5EFFF;
 }
 .courseedit-fn-section {
-    border-width: 2px;
+    background-color: #C5EFFF;
     border-style: solid;
-    background-color:#C5EFFF;
+    border-width: 2px;
 }
 .fntopicsoutlinecontent {
+    border-left: 0;
+    border-right: 0;
     border-style: solid;
     border-width: 1px;
-    border-left: 0px;
-    border-right: 0px;
 }
 .fntopicsoutlinecontenthidden {
+    background-color: #D3D3D3;
+    border-color: #AAA;
+    border-left: 0;
+    border-right: 0;
     border-style: solid;
     border-width: 1px;
-    border-left: 0px;
-    border-right: 0px;
-    border-color: #AAAAAA;
-    background-color: #D3D3D3;
-    padding:10px !important;
+    padding: 10px !important;
 }
 .fntopicsoutlinecontenthighlight {
+    border-left: 0;
+    border-right: 0;
     border-style: solid;
     border-width: 1px;
-    border-left: 0px;
-    border-right: 0px;
 }
 .fnweeklynav {
     border-collapse: separate;
     border-spacing: 1px 0;
 }
 .fnweeklynav .tab-heading {
-    width:50px;
-    font-size:16px;
-    color:#FFF;
+    color: #FFF;
+    font-size: 16px;
+    width: 50px;
 }
 .fnweeklynavnorm {
-    text-align: center;
     color: blue;
+    text-align: center;
 }
 .fnweeklynavnorm a {
-    display:block;
-    height:20px;
-    padding-top:5px;
+    display: block;
+    height: 20px;
+    padding-top: 5px;
     text-decoration: none;
 }
 .fnweeklynavnorm a:hover {
@@ -59,10 +59,14 @@
 .fnweeklynavnorm a:active {
     text-decoration: none;
 }
+.fnweeklynavnorm .tooltip {
+    text-align: inherit;
+}
+
 td.fnweeklynavselected {
+    color: black;
     font-weight: bold;
     text-align: center;
-    color: black;
 }
 td.fnweeklynavselected {
     border-radius: 0;
@@ -87,25 +91,25 @@ td.fnweeklynavselected {
     border-bottom: 0;
 }
 .fnweeklynavselected .content-section {
-    padding:5px;
+    padding: 5px;
 }
 .fnweeklynavdisabledselected1 .content-section {
-    padding:5px;
+    padding: 5px;
 }
 .topicsoutline {
     font-weight: normal;
-    margin:0;
+    margin: 0;
 }
 .topicsoutline table {
-    margin:0;
+    margin: 0;
 }
 .topicsoutline table td {
-    padding:0;
+    padding: 0;
 }
 
 .fnweeklynavdisabledselected {
-    text-align: center;
     color: #bdbbbb;
+    text-align: center;
 }
 .fnweeklynavdisabled {
     text-align: center;
@@ -117,10 +121,10 @@ td.fnweeklynavselected {
     border: solid red 1px;
 }
 .markingpastbox {
-    border-width: 1px;
-    border-style: solid;
     background-color: #D2D2D2;
     border-color: Gray;
+    border-style: solid;
+    border-width: 1px;
 }
 .fnmarkingblock thead,
 .fnmarkingblock tbody td {
@@ -131,8 +135,8 @@ table.fnmarkingblock tbody {
     background-color: #B3EAFF;
 }
 .fncoursegroup {
-    border-width: 1px;
     border-style: solid;
+    border-width: 1px;
 }
 .gradeactcol {
     text-align: left;
@@ -142,34 +146,34 @@ div.fnintro {
     width: 100%;
 }
 .fnintro .hide-show img.hide-show-image {
-    background: url('../../pix/t/switch_minus.gif') no-repeat bottom;
-    height:11px;
-    width:11px;
+    background: url('[[pix:theme|switch_minus]]') no-repeat bottom;
+    height: 11px;
     margin-top:0.25em;
+    width: 11px;
 }
 .fnintro.hidden .asscontent {
     display: none;
 }
 .fnintro.hidden .hide-show img.hide-show-image {
-    background: url('../../pix/t/switch_plus.gif') no-repeat bottom;
+    background: url('[[pix:theme|switch_plus]]') no-repeat bottom;
 }
 .fnintro .hide-show {
-    float:right;
+    float: right;
 }
 fieldset#fnassntypefs,
 fieldset#fnassntype2fs  {
+    background-color: #E5F8FF;
     border: solid 1px;
     float: none;
-    width: auto;
-    background-color: #E5F8FF;
     padding: 10px;
+    width: auto;
 }
 fieldset#fnassntypefs div.htmlarea {
     width: auto;
 }
 fieldset.fnassnsubtype {
-    margin: 6px 20px 6px 100px;
     background-color: #C5EFFF;
+    margin: 6px 20px 6px 100px;
 }
 .fnassnsubtype.hideit {
     display: none;
@@ -190,11 +194,11 @@ div.fnassnsubtype {
     border: solid black 1px;
 }
 .block_gallery_pix .content h4 {
-    margin-top: 0px;
-    margin-bottom: 0px;
+    margin-bottom: 0;
+    margin-top: 0;
 }
 .neutral {
-    background-color: #FFFFFF;
+    background-color: #FFF;
 }
 .passed {
     background-color: #CEFECE;
@@ -217,23 +221,23 @@ tr.evenrow {
     background-color: #B3EAFF;
 }
 tr.oddrow {
-    background-color: #FFFFFF;
+    background-color: #FFF;
 }
 .fnweeklycontent {
-    background-color: #FFFFFF;
+    background-color: #FFF;
 }
 .fnsectionouter {
-    padding:0;
+    padding: 0;
 }
 .number-select {
-    padding:0.5em;
+    padding: 0.5em;
 }
 .fntopicsoutlineinner {
-    background-color: #FFFFFF;
-    padding:10px !important;
+    background-color: #FFF;
+    padding: 10px !important;
 }
 .fntopicsoutlinesidehidden {
-    background-color: #AAAAAA;
+    background-color: #AAA;
 }
 .markingpastcomment {
     background-color: #C0C0C0;
@@ -261,10 +265,10 @@ tr.oddrow {
     border: solid green 2px;
 }
 #mod-resource-view .generalboxcontent {
-    background-color: #FFFFFF;
+    background-color: #FFF;
 }
 #mod-assignment-view .generalboxcontent {
-    background-color: #FFFFFF;
+    background-color: #FFF;
 }
 .treeMenuDefault {
     font-size: 90%;
@@ -278,63 +282,58 @@ tr.oddrow {
 
 
 #fn_tab_previous {
-    text-align: right;
     padding-right: 0.5em;
+    text-align: right;
 }
 #fn_tab_next {
     padding-left: 0.5em;
 }
 
 .weekcompletedstatus {
-    border:4px solid green;
+    border: 4px solid green;
 }
 .weekincompletedstatus {
-    border:4px solid red;
+    border: 4px solid red;
 }
-.course-content ul.weeks {margin:0;}
-.course-content ul.weeks li.section {list-style: none;margin:5px 0 0 0;padding:0;}
-.course-content ul.weeks li.section .content {margin:0 40px;}
-.course-content ul.weeks li.section .left {width:40px;float:left;text-align:center;}
-.course-content ul.weeks li.section .right {width:40px;float:right;text-align:center;}
-.jumpmenu {text-align:center;}
 
+.jumpmenu {text-align:center;}
 
 /***overright ***/
 #page-course-view-fntabs li.activity span.autocompletion, #page-course-view-fntabs li.activity form.togglecompletion {
     display: inline;
+    left: -25px;
     padding: 0;
     position: absolute;
-    left:-25px;
     top: 0;
+    width: 18px;
     z-index: 10;
-    width:18px;
 }
 #page-course-view-fntabs .section li.activity {
-    margin-bottom:3px;
+    margin-bottom: 3px;
 }
 #page-course-view-fntabs .weeks .section, #page-course-view-fntabs .topics .section {
-    background:none;
+    background: none;
 }
 #page-course-view-fntabs .green-tab {
-    border-top:5px solid green;
-    padding-top:0;
+    border-top: 5px solid green;
+    padding-top: 0;
 }
 #page-course-view-fntabs .red-tab {
-    border-top:5px solid red;
-    padding-top:0;
+    border-top: 5px solid red;
+    padding-top: 0;
 }
 #page-course-view-fntabs table {
-    font-size:100% !important;
+    font-size: 100% !important;
 }
 #page-course-view-fntabs .weeks .fntopicsoutlineinner .section-boxs {
-    text-align: center;
-    overflow: hidden;
     margin: 0 auto;
+    overflow: hidden;
+    text-align: center;
     width: 100%;
 }
 #page-course-view-fntabs .weeks .fntopicsoutlineinner ul.section {
-    margin-top:1em;
-    display:inline-block;
+    display: inline-block;
+    margin-top: 1em;
 }
 #page-course-view-fntabs .weeks .fntopicsoutlineinner ul.section li {
     text-align: left;
@@ -343,80 +342,167 @@ tr.oddrow {
     padding: 5px;
 }
 #page-course-view-fntabs .weeks .fntopicsoutlineinner ul.section table td p{
-    margin:0px;
+    margin: 0;
 }
 
 /*** Tool Tips ***/
-.fnweeklynav .tooltip {outline:none; text-decoration:none; position:relative; cursor:pointer;}
-.fnweeklynav .tooltip span {margin-left:-999em; position:absolute;}
-.fnweeklynav .tooltip:hover span {position:absolute; left:-4.4em; top:-4.5em; z-index:999; margin-left:0; width:255px; height:38px; background:#DCDCDC; padding:1px}
-.fnweeklynav .tooltip:hover img.arrows {border:0; margin:0px; position:absolute; left:70px; bottom:-19px;}
-.fnweeklynav .tooltip:hover div.head {text-align:center; background:#DCDCDC; padding:0.1em 0; color:#18a3e6; font-weight:bold; font-size:16px; margin:0;}
-.fnweeklynav .tooltip:hover ul {margin:0; padding:2px; list-style-type:none;}
-.fnweeklynav .tooltip:hover li {margin:2px; padding:3px 3px 6px 3px; width:40px; float:left; font-size:14px; text-align:left; list-style-type:none; background:white;}
-.fnweeklynav .tooltip:hover li img { vertical-align:middle;}
-
-.fnweeklynav .tooltip-right {outline:none; text-decoration:none; position:relative; cursor:pointer;}
-.fnweeklynav .tooltip-right span {margin-left:-999em; position:absolute;}
-.fnweeklynav .tooltip-right:hover span {position:absolute; right:-3.9em; top:-4.5em; z-index:999; margin-left:0; width:255px; height:38px; background:#DCDCDC; padding:1px}
-.fnweeklynav .tooltip-right:hover img.arrows {border:0; margin:0px; position:absolute; right:63px; bottom:-19px;}
-.fnweeklynav .tooltip-right:hover div.head {text-align:center; background:#DCDCDC; padding:0.1em 0; color:#18a3e6; font-weight:bold; font-size:16px; margin:0;}
-.fnweeklynav .tooltip-right:hover ul {margin:0; padding:2px; list-style-type:none;}
-.fnweeklynav .tooltip-right:hover li {margin:2px; padding:3px 3px 6px 3px; width:40px; float:left; font-size:14px; text-align:left; list-style-type:none; background:white;}
-.fnweeklynav .tooltip-right:hover li img { vertical-align:middle;}
-
-
-.fnweeklynav .custom {padding:0em}
-* html a:hover { background: transparent; }
-.fnweeklynav .info { background: #fff; border:3px solid #2BB0D7;}
-
-
-
-
-.fnoutlineheadingblock {
-    text-align: center;
-    padding:5px 0 10px 0;
-    border: 1px solid #DDDDDD;
-    background-color: #E1E1DF;
-    background-image: url("image.php?theme=standard&image=hgradient&component=theme");
-    background-repeat: repeat-x;
+.fnweeklynav .tooltip {
+    cursor: pointer;
+    outline: none;
+    position: relative;
+    text-decoration: none;
 }
-.fnoutlineheadingblock1 {
-    text-align: center;
-    padding:5px 0 10px 0;
-    border: 1px solid #DDDDDD;
+.fnweeklynav .tooltip span {
+    margin-left: -999em; 
+    position: absolute;
+}
+.fnweeklynav .tooltip:hover span {
+    background: #DCDCDC; 
+    height: 38px;
+    left: -4.4em; 
+    margin-left: 0; 
+    padding: 1px;
+    position: absolute; 
+    top: -4.5em; 
+    width: 255px; 
+    z-index: 999; 
+}
+.fnweeklynav .tooltip:hover img.arrows {
+    border: 0; 
+    bottom: -19px;
+    left: 70px; 
+    margin: 0; 
+    position: absolute; 
+}
+.fnweeklynav .tooltip:hover div.head {
+    background-color: #DCDCDC; 
+    color: #18a3e6; 
+    font-size: 16px; 
+    font-weight: bold; 
+    margin: 0;
+    padding: 0.1em 0; 
+    text-align: center; 
+}
+.fnweeklynav .tooltip:hover ul {
+    list-style-type: none;
+    margin: 0; 
+    padding: 2px; 
+}
+.fnweeklynav .tooltip:hover li {
+    background: white;
+    float: left; 
+    font-size: 14px; 
+    list-style-type: none; 
+    margin: 2px; 
+    padding: 3px 3px 6px 3px; 
+    text-align: left; 
+    width: 40px; 
+}
+.fnweeklynav .tooltip:hover li img {
+    vertical-align: middle;
+}
+.fnweeklynav .tooltip-right {
+    cursor: pointer;
+    outline: none; 
+    position: relative; 
+    text-decoration: none; 
+}
+.fnweeklynav .tooltip-right span {
+    margin-left: -999em; 
+    position: absolute;
+}
+.fnweeklynav .tooltip-right:hover span {
+    background-color: #DCDCDC; 
+    height: 38px; 
+    margin-left: 0; 
+    padding: 1px;
+    position: absolute; 
+    right: -3.9em; 
+    top: -4.5em; 
+    width: 255px; 
+    z-index: 999; 
+}
+.fnweeklynav .tooltip-right:hover img.arrows {
+    border: 0; 
+    bottom: -19px;
+    margin: 0; 
+    position: absolute; 
+    right: 63px; 
+}
+.fnweeklynav .tooltip-right:hover div.head {
+    background: #DCDCDC; 
+    color: #18a3e6; 
+    font-size: 16px; 
+    font-weight: bold; 
+    margin: 0;
+    padding: 0.1em 0; 
+    text-align: center; 
+}
+.fnweeklynav .tooltip-right:hover ul {
+    list-style-type: none;
+    margin: 0; 
+    padding: 2px; 
+}
+.fnweeklynav .tooltip-right:hover li {
+    background: white;
+    float: left; 
+    font-size: 14px; 
+    list-style-type: none; 
+    margin: 2px; 
+    padding: 3px 3px 6px 3px; 
+    text-align: left; 
+    width: 40px; 
+}
+.fnweeklynav .tooltip-right:hover li img {
+    vertical-align:middle;
+}
+
+
+.fnweeklynav .custom {
+    padding: 0;
+}
+* html a:hover {
+    background: transparent;
+}
+.fnweeklynav .info {
+    background: #fff; 
+    border: 3px solid #2BB0D7;
+}
+
+
+.fnoutlineheadingblock, .fnoutlineheadingblock1 {
     background-color: #E1E1DF;
-    background-image: url("image.php?theme=standard&image=hgradient&component=theme");
+    background-image: url('[[pix:format_fntabs|hgradient]]');
     background-repeat: repeat-x;
+    border: 1px solid #DDDDDD;
+    padding: 5px 0 10px 0;
+    text-align: center;
 }
 .fnoutlineheadingblockone {
     text-align: center;
 }
-h2.fnoutlineheadingblock {
-    font-size: 1.0em;
-}
-h2.fnoutlineheadingblock1 {
+h2.fnoutlineheadingblock, h2.fnoutlineheadingblock1 {
     font-size: 1.0em;
 }
 .tab-greaterthan5 {
-    width:60px;
+    width: 60px;
 }
 .course-content ul.fntabs li.section .tab-lessthan5 {
-    width:86px;
-    max-width:86px;
     border-radius: 5px 5px 0 0;
+    max-width: 86px;
+    width: 86px;
 }
 .course-content ul.fntabs li.section .tab-lessthan5 a {
+    display: inline;
     margin: 0;
     overflow: hidden;
     padding: 0;
-    display: inline;
 }
 .course-content ul.fntabs li.section tr.tabs td.fnweeklynavselected {
     border-radius: 5px 5px 0 0;
 }
 .mod-indent-1 {
-    margin-left: 0px !important;
+    margin-left: 0 !important;
 }
 
 .mform .fitem fieldset.fgroup label, .mform .fradio label, .mform .fcheckbox label, .mform fieldset.fdate_selector label{
@@ -433,30 +519,28 @@ h2.fnoutlineheadingblock1 {
 
 #page-course-format-fntabs-settings #fgroup_id_radioar span {
     display: inline-block;
-    line-height: normal;
-    width: 80%;
     line-height: 30px;
     overflow: hidden;
+    width: 80%;
 }
 #page-course-format-fntabs-settings #fitem_id_topictoshow {
-    width:50px;
+    margin: -31px 0 0 365px;
     position: relative;
-    margin:-31px 0 0 365px;
-
+    width: 50px;
 }
 
 #page-course-format-fntabs-settings #fgroup_id_buttonar {
     text-align: center;
 }
 #page-course-format-fntabs-settings #Section0 .fitemtitle{
-    width:17% !important;
-    padding-right:5px;
+    padding-right: 5px;
+    width: 17% !important;
 }
 #page-course-format-fntabs-settings .fgroup {
-    border:none  !important;
+    border:none !important;
 }
 .headingwrap{
-    margin-top:5px;
+    margin-top: 5px;
 }
 .fn_tabs_settings .fitem .fitemtitle {
     width: 40% !important;
@@ -473,13 +557,13 @@ h2.fnoutlineheadingblock1 {
     display: block !important;
 }
 .course-content ul.fntabs li.section .activity .actionsleft {
-    position: absolute;
     left: 30px;
+    position: absolute;
     top: 0;
 }
 .course-content ul.fntabs li.section .activity .actionslefttrackingbackground {
-    position: absolute;
     left: 33px;
+    position: absolute;
     top: 8px;
 }
 .course-content ul.fntabs li.section .activity .activityinstance.completion-notset {
@@ -494,13 +578,13 @@ h2.fnoutlineheadingblock1 {
 .course-content ul.fntabs li.section .activity .activityinstance.completion-auto-fail,
 .course-content ul.fntabs li.section .activity .activityinstance.completion-submitted,
 .course-content ul.fntabs li.section .activity .activityinstance.completion-saved {
+    border-radius: 10px;
     margin: 0;
     padding: 5px 15px 1px 10px;
-    border-radius: 10px;
 }
 .course-content ul.fntabs li.section .activity .activityinstance.completion-manual-n,
 .course-content ul.fntabs li.section .activity .activityinstance.completion-auto-n {
-    background-color: #ffffff;
+    background-color: #FFF;
     border: 1px solid #AEE5E3;
 }
 .course-content ul.fntabs li.section .activity .activityinstance.completion-auto-pass,
@@ -516,18 +600,18 @@ h2.fnoutlineheadingblock1 {
     background-color: #757575;
 }
 .course-content .fntopicsoutlinecontent.fnsectionouter:first-of-type {
+    border-bottom: 0;
     margin-bottom: 0;
     padding-bottom: 0;
-    border-bottom: 0;
 }
 .course-content .fntopicsoutlinecontent.fnsectionouter:nth-child(3) {
+    border-top: 0;
     margin-top: 0;
     padding-top: 0;
-    border-top: 0;
 }
 .course-content .fntopicsoutlinecontent.fnsectionouter {
-    padding: 7px;
     margin-bottom: 10px;
+    padding: 7px;
     position: relative;
 }
 .course-content ul.fntabs li.section .activity .activityinstance.completion-auto-fail {
@@ -558,8 +642,8 @@ ul.fntabs li.section .activity .mod-indent-outer {
 }
 .fnsectionnumber {
     color: white;
+    font-size: 1.2em;
     font-weight: bold;
     margin-bottom: 4px;
     text-align: center;
-    font-size: 1.2em;
 }
