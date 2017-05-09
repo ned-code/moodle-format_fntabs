@@ -254,3 +254,6 @@ $string['deleteconfirmmsg'] = 'Record will be deleted permanently. Do you want t
 $string['close'] = 'Close';
 $string['showorphaned'] = 'Show orphaned section in edit mode';
 $string['blockinfo'] = 'Format info';
+$string['sectiondeliverymethod'] = 'Section delivery method';
+$string['week'] = 'Week';
+$string['topic'] = 'Topic';

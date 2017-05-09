@@ -235,6 +235,10 @@ class format_fntabs extends format_base {
                     'default' => $courseconfig->hiddensections,
                     'type' => PARAM_INT,
                 ),
+                'sectiondeliverymethod' => array(
+                    'default' => 'week',
+                    'type' => PARAM_TEXT,
+                ),
             );
         }
         if ($foreditform && !isset($courseformatoptions['coursedisplay']['label'])) {
@@ -262,6 +266,16 @@ class format_fntabs extends format_base {
                         array(
                             0 => new lang_string('hiddensectionscollapsed'),
                             1 => new lang_string('hiddensectionsinvisible')
+                        )
+                    ),
+                ),
+                'sectiondeliverymethod' => array(
+                    'label' => new lang_string('sectiondeliverymethod', 'format_fntabs'),
+                    'element_type' => 'select',
+                    'element_attributes' => array(
+                        array(
+                            'week' => new lang_string('week'),
+                            'topic' => new lang_string('topic')
                         )
                     ),
                 )
