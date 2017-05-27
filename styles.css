@@ -550,7 +550,7 @@ h2.fnoutlineheadingblock, h2.fnoutlineheadingblock1 {
     margin-left: 41% !important;
     width: 55% !important;
 }
-.section.img-text {
+ul.fntabs .section.img-text {
     width: 100%;
 }
 .course-content ul.fntabs li.section .mod-indent-outer {
