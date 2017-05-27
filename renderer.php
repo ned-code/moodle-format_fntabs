@@ -1110,11 +1110,11 @@ class format_fntabs_renderer extends format_section_renderer_base {
                     $tooltipclass = ($i >= ($tabhigh / 2)) ? '-right' : '';
                     if ($tabcontent == 'usesectionnumbers') {
                         $actbar .= '<td class="fnweeklynavnorm '.$f.' '.$extraclassfortab.
-                            '" id=fnweeklynav'.$i.'><a class="tooltip'.$tooltipclass.
+                            '" id=fnweeklynav'.$i.'><a class="fntab-tooltip'.$tooltipclass.
                             '" href="'.$url.'&selected_week='.$i.'">'.$i;
                     } else if ($tabcontent == 'usesectiontitles') {
                         $actbar .= '<td class="fnweeklynavnorm '.$f.' '.$extraclassfortab.
-                            '" id=fnweeklynav'.$i.'><a class="tooltip'.$tooltipclass.
+                            '" id=fnweeklynav'.$i.'><a class="fntab-tooltip'.$tooltipclass.
                             '" href="'.$url.'&selected_week='.$i.'">'.$sectionname;
                     }
                     if (!$isteacher && !is_siteadmin()

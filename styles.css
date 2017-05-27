@@ -59,7 +59,7 @@
 .fnweeklynavnorm a:active {
     text-decoration: none;
 }
-.fnweeklynavnorm .tooltip {
+.fnweeklynavnorm .fntab-tooltip {
     text-align: inherit;
 }
 
@@ -352,17 +352,17 @@ tr.oddrow {
 }
 
 /*** Tool Tips ***/
-.fnweeklynav .tooltip {
+.fnweeklynav .fntab-tooltip {
     cursor: pointer;
     outline: none;
     position: relative;
     text-decoration: none;
 }
-.fnweeklynav .tooltip span {
+.fnweeklynav .fntab-tooltip span {
     margin-left: -999em; 
     position: absolute;
 }
-.fnweeklynav .tooltip:hover span {
+.fnweeklynav .fntab-tooltip:hover span {
     background: #DCDCDC; 
     height: 38px;
     left: -4.4em; 
@@ -373,14 +373,14 @@ tr.oddrow {
     width: 255px; 
     z-index: 999; 
 }
-.fnweeklynav .tooltip:hover img.arrows {
+.fnweeklynav .fntab-tooltip:hover img.arrows {
     border: 0; 
     bottom: -19px;
     left: 70px; 
     margin: 0; 
     position: absolute; 
 }
-.fnweeklynav .tooltip:hover div.head {
+.fnweeklynav .fntab-tooltip:hover div.head {
     background-color: #DCDCDC; 
     color: #18a3e6; 
     font-size: 16px; 
@@ -389,12 +389,12 @@ tr.oddrow {
     padding: 0.1em 0; 
     text-align: center; 
 }
-.fnweeklynav .tooltip:hover ul {
+.fnweeklynav .fntab-tooltip:hover ul {
     list-style-type: none;
     margin: 0; 
     padding: 2px; 
 }
-.fnweeklynav .tooltip:hover li {
+.fnweeklynav .fntab-tooltip:hover li {
     background: white;
     float: left; 
     font-size: 14px; 
@@ -404,20 +404,20 @@ tr.oddrow {
     text-align: left; 
     width: 40px; 
 }
-.fnweeklynav .tooltip:hover li img {
+.fnweeklynav .fntab-tooltip:hover li img {
     vertical-align: middle;
 }
-.fnweeklynav .tooltip-right {
+.fnweeklynav .fntab-tooltip-right {
     cursor: pointer;
     outline: none; 
     position: relative; 
     text-decoration: none; 
 }
-.fnweeklynav .tooltip-right span {
+.fnweeklynav .fntab-tooltip-right span {
     margin-left: -999em; 
     position: absolute;
 }
-.fnweeklynav .tooltip-right:hover span {
+.fnweeklynav .fntab-tooltip-right:hover span {
     background-color: #DCDCDC; 
     height: 38px; 
     margin-left: 0; 
@@ -428,14 +428,14 @@ tr.oddrow {
     width: 255px; 
     z-index: 999; 
 }
-.fnweeklynav .tooltip-right:hover img.arrows {
+.fnweeklynav .fntab-tooltip-right:hover img.arrows {
     border: 0; 
     bottom: -19px;
     margin: 0; 
     position: absolute; 
     right: 63px; 
 }
-.fnweeklynav .tooltip-right:hover div.head {
+.fnweeklynav .fntab-tooltip-right:hover div.head {
     background: #DCDCDC; 
     color: #18a3e6; 
     font-size: 16px; 
@@ -444,12 +444,12 @@ tr.oddrow {
     padding: 0.1em 0; 
     text-align: center; 
 }
-.fnweeklynav .tooltip-right:hover ul {
+.fnweeklynav .fntab-tooltip-right:hover ul {
     list-style-type: none;
     margin: 0; 
     padding: 2px; 
 }
-.fnweeklynav .tooltip-right:hover li {
+.fnweeklynav .fntab-tooltip-right:hover li {
     background: white;
     float: left; 
     font-size: 14px; 
@@ -459,7 +459,7 @@ tr.oddrow {
     text-align: left; 
     width: 40px; 
 }
-.fnweeklynav .tooltip-right:hover li img {
+.fnweeklynav .fntab-tooltip-right:hover li img {
     vertical-align:middle;
 }
 
@@ -646,7 +646,7 @@ ul.fntabs li.section .activity .mod-indent-outer {
 .course-content ul.fntabs ul.fntabs {
     margin: 0;
 }
-.course-content ul.fntabs li.section a.tooltip {
+.course-content ul.fntabs li.section a.fntab-tooltip {
     font-size: 14px;
 }
 .fnsectionnumber {
