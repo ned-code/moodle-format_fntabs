@@ -1015,7 +1015,7 @@ class format_fntabs_renderer extends format_section_renderer_base {
 
         $actbar = '';
         $actbar .= '<table align="center" cellpadding="0" cellspacing="0" class="fntabwrapper"><tr><td>';
-        $actbar .= '<table cellpadding="0" cellspacing="0"  class="fnweeklynav"><tr class="tabs">';
+        $actbar .= '<table cellpadding="0" cellspacing="0"  class="fnweeklynav"><tr class="fntabs">';
         $actbar .= '<td width="4" align="center" height="25"></td>';
 
         if ($tablow <= 1) {
@@ -1163,8 +1163,8 @@ class format_fntabs_renderer extends format_section_renderer_base {
         $settingicon = '';
         if ($PAGE->user_is_editing() && has_capability('moodle/course:update', $context)) {
             $settingicon = '<a href="' . $CFG->wwwroot . '/course/format/' . $course->format .
-                '/tabsettings.php?id='.$course->id.'" ><img style="margin: 3px 1px 1px 5px;" src="'.
-                $OUTPUT->pix_url('t/edit').'" width="16" /></a>';
+                '/tabsettings.php?id='.$course->id.'" class="fntabsettings"><img src="'.
+                $OUTPUT->pix_url('edit_white', 'format_fntabs').'" width="16" /></a>';
         }
         $actbar .= '<td width="1" align="center" height="25">'.$settingicon.'</td>';
         $actbar .= '</tr>';

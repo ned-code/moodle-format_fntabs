@@ -71,7 +71,7 @@ td.fnweeklynavselected {
 td.fnweeklynavselected {
     border-radius: 0;
 }
-.tabs td.fnweeklynavselected {
+.fntabs td.fnweeklynavselected {
     border-radius: 5px 5px 0 0;
 }
 .format-fntabs div.fnweeklynavselected {
@@ -279,8 +279,6 @@ tr.oddrow {
     font-weight: bold;
 }
 
-
-
 #fn_tab_previous {
     padding-right: 0.5em;
     text-align: right;
@@ -296,7 +294,17 @@ tr.oddrow {
     border: 4px solid red;
 }
 
-.jumpmenu {text-align:center;}
+.jumpmenu {
+    text-align:center;
+}
+
+.fntabs .fntabsettings img {
+    background-color: #4285F4;
+    border: solid 2px #fff;
+    border-radius: 5px;
+    margin: 3px 1px 1px 5px;
+    padding: 2px;
+}
 
 /***overright ***/
 #page-course-view-fntabs li.activity span.autocompletion, #page-course-view-fntabs li.activity form.togglecompletion {
@@ -498,7 +506,7 @@ h2.fnoutlineheadingblock, h2.fnoutlineheadingblock1 {
     overflow: hidden;
     padding: 0;
 }
-.course-content ul.fntabs li.section tr.tabs td.fnweeklynavselected {
+.course-content ul.fntabs li.section tr.fntabs td.fnweeklynavselected {
     border-radius: 5px 5px 0 0;
 }
 .mod-indent-1 {
