@@ -36,7 +36,7 @@
 }
 .fnweeklynav {
     border-collapse: separate;
-    border-spacing: 1px 0;
+    border-spacing: 4px 0;
 }
 .fnweeklynav .tab-heading {
     color: #FFF;
@@ -71,18 +71,16 @@ td.fnweeklynavselected {
 td.fnweeklynavselected {
     border-radius: 0;
 }
-.fntabs td.fnweeklynavselected {
-    border-radius: 5px 5px 0 0;
-}
+
 .format-fntabs div.fnweeklynavselected {
     border-radius: 5px 5px 0 0;
 }
-.format-fntabs.editing .fnweeklynavselected {
+.format-fntabs.editing .fnweeklynavselectedcontent {
     width: -moz-calc(100% - 30px);
     width: -webkit-calc(100% - 30px);
     width: calc(100% - 30px);
 }
-.format-fntabs  .section .side.right {
+.format-fntabs .section .side.right {
     position: absolute;
     right: 6px;
     top: 10px;
@@ -489,12 +487,15 @@ tr.oddrow {
 .fnoutlineheadingblockone {
     text-align: center;
 }
+
 h2.fnoutlineheadingblock, h2.fnoutlineheadingblock1 {
     font-size: 1.0em;
 }
-.tab-greaterthan5 {
+
+.fntabs .tab-greaterthan5 {
     width: 60px;
 }
+
 .course-content ul.fntabs li.section .tab-lessthan5 {
     border-radius: 5px 5px 0 0;
     max-width: 86px;

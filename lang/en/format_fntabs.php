@@ -257,3 +257,4 @@ $string['blockinfo'] = 'Format info';
 $string['sectiondeliverymethod'] = 'Section delivery method';
 $string['week'] = 'Week';
 $string['topic'] = 'Topic';
+$string['upcomingsections'] = 'Upcoming sections';

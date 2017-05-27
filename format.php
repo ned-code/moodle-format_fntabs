@@ -296,17 +296,10 @@ if (empty($course->showonlysection0)) {
             background-color:#$bgcolour;
         }
         .fntopicsoutlinecontent {
-            border-color:#$bgcolour;
-        }
-        .fnweeklynavnorm {
-            border-right: solid 1px #$bgcolour;
-            border-right: solid 1px #$bgcolour;
-        }
-        .fnweeklynavselected {
-            border-right: solid 1px #$bgcolour;
+            border-color: #$bgcolour;
         }
         .fntopicsoutlineside {
-            background-color:#$bgcolour;
+            background-color: #$bgcolour;
         }
         .fnweeklynavselected {
               color: #$selectedlinkcolour;
@@ -418,7 +411,7 @@ if (empty($course->showonlysection0)) {
                 if ($selectedweek == 0) {
                     echo html_writer::div($section, 'fnsectionnumber');
                 }
-                echo html_writer::start_div('fnweeklynavselected');
+                echo html_writer::start_div('fnweeklynavselected fnweeklynavselectedcontent');
                 echo html_writer::start_div('content-section');
                 echo html_writer::start_div('fntopicsoutlinecontent fntopicsoutlineinner');
                 echo '<ul class="fntabs">';
