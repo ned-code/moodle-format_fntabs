@@ -993,7 +993,7 @@ class format_fntabs_renderer extends format_section_renderer_base {
         $weekofseconds = 604800;
 
         if ($tabwidth == 'equalspacing') {
-            if ($course->numsections > 20) {
+            if ($course->numsections > 9) {
                 $extraclassfortab = "tab-greaterthan5";
             } else {
                 $extraclassfortab = "tab-lessthan5";
@@ -1014,20 +1014,19 @@ class format_fntabs_renderer extends format_section_renderer_base {
         $url = preg_replace('/(^.*)(&section\=\d+)(.*)/', '$1$3', $url);
 
         $actbar = '';
-        $actbar .= '<table align="center" cellpadding="0" cellspacing="0" class="fntabwrapper"><tr><td>';
-        $actbar .= '<table cellpadding="0" cellspacing="0"  class="fnweeklynav"><tr class="tabs">';
-        $actbar .= '<td width="4" align="center" height="25"></td>';
+        $actbar .= '<table align="center" class="fntabwrapper"><tr><td>';
+        $actbar .= '<table class="fnweeklynav"><tr class="fntabs">';
 
         if ($tablow <= 1) {
             if ($strtopicheading) {
-                $actbar .= '<td height="25" class="tab-heading"><strong>' . $strtopicheading . ':&nbsp;</strong></td>';
+                $actbar .= '<td class="tab-heading"><strong>' . $strtopicheading . ':&nbsp;</strong></td>';
             }
         } else {
             $prv = ($tablow - $maximumtabs) * 1000;
             if ($prv < 0) {
                 $prv = 1000;
             }
-            $actbar .= '<td id="fn_tab_previous" height="25"><a href="' . $url . '&selected_week=' . $prv . '">Previous</a></td>';
+            $actbar .= '<td id="fn_tab_previous"><a href="' . $url . '&selected_week=' . $prv . '">Previous</a></td>';
         }
 
         $tdselectedclass = array();
@@ -1059,17 +1058,16 @@ class format_fntabs_renderer extends format_section_renderer_base {
                     }
                     $tdselectedclass[$i] = $css;
                     if ($isteacher) {
-                        $f = '<a href="' . $url . '&selected_week=' . $i . '" ><span class="' . $css . '">&nbsp;' .
-                            $i . '&nbsp;</span></a>';
+                        $f = '<a href="' . $url . '&selected_week=' . $i . '" >'.$i.'</a>';
                     } else {
-                        $f = ' ' . $i . ' ';
+                        $f = $i;
                     }
                     if ($tabcontent == 'usesectionnumbers') {
-                        $actbar .= '<td class="' . $css . ' ' . $extraclassfortab .
-                            '" height="25" width="" alt="Upcoming sections" title="Upcoming sections">' . $f . '</td>';
+                        $actbar .= '<td class="'.$css.' '.$extraclassfortab .
+                            '" title="'.get_string('upcomingsections', 'format_fntabs').'">'.$f.'</td>';
                     } else if ($tabcontent == 'usesectiontitles') {
-                        $actbar .= '<td class="' . $css . ' ' . $extraclassfortab .
-                            '" height="25" width="" alt="Upcoming sections" title="Upcoming sections">' .
+                        $actbar .= '<td class="'.$css.' '. $extraclassfortab .
+                            '" title="'.get_string('upcomingsections', 'format_fntabs').'">' .
                             $sectionname . '</td>';
                     }
                 } else if ($i == $week) {
@@ -1084,11 +1082,11 @@ class format_fntabs_renderer extends format_section_renderer_base {
                     }
                     $tdselectedclass[$i] = 'fnweeklynavselected';
                     if ($tabcontent == 'usesectionnumbers') {
-                        $actbar .= '<td class="fnweeklynavselected ' . $f . ' ' . $extraclassfortab .
-                            '" id=fnweeklynav' . $i . ' width="" height="25"> ' . $i . ' </td>';
+                        $actbar .= '<td class="fnweeklynavselected '.$f.' '.$extraclassfortab.
+                            '" id=fnweeklynav' . $i . '>'.$i.'</td>';
                     } else if ($tabcontent == 'usesectiontitles') {
-                        $actbar .= '<td class="fnweeklynavselected ' . $f . ' ' . $extraclassfortab .
-                            '" id=fnweeklynav' . $i . ' width="" height="25"> ' . $sectionname . ' </td>';
+                        $actbar .= '<td class="fnweeklynavselected '.$f.' '.$extraclassfortab.
+                            '" id=fnweeklynav' . $i . '>'.$sectionname.'</td>';
                     }
                 } else {
                     if (!$isteacher && !is_siteadmin() && !$iseditingteacher) {
@@ -1111,13 +1109,13 @@ class format_fntabs_renderer extends format_section_renderer_base {
                     $tdselectedclass[$i] = 'fnweeklynavnorm';
                     $tooltipclass = ($i >= ($tabhigh / 2)) ? '-right' : '';
                     if ($tabcontent == 'usesectionnumbers') {
-                        $actbar .= '<td class="fnweeklynavnorm ' . $f . ' ' . $extraclassfortab .
-                            '" id=fnweeklynav' . $i . ' width="" height="25"><a class="tooltip' . $tooltipclass .
-                            '" href="' . $url . '&selected_week=' . $i . '"><div>' . $i . '</div>';
+                        $actbar .= '<td class="fnweeklynavnorm '.$f.' '.$extraclassfortab.
+                            '" id=fnweeklynav'.$i.'><a class="fntab-tooltip'.$tooltipclass.
+                            '" href="'.$url.'&selected_week='.$i.'">'.$i;
                     } else if ($tabcontent == 'usesectiontitles') {
-                        $actbar .= '<td class="fnweeklynavnorm ' . $f . ' ' . $extraclassfortab .
-                            '" id=fnweeklynav' . $i . ' width="" height="25"><a class="tooltip' . $tooltipclass .
-                            '" href="' . $url . '&selected_week=' . $i . '"><div>' . $sectionname . '</div>';
+                        $actbar .= '<td class="fnweeklynavnorm '.$f.' '.$extraclassfortab.
+                            '" id=fnweeklynav'.$i.'><a class="fntab-tooltip'.$tooltipclass.
+                            '" href="'.$url.'&selected_week='.$i.'">'.$sectionname;
                     }
                     if (!$isteacher && !is_siteadmin()
                         && !is_primary_admin($USER->id)
@@ -1145,33 +1143,28 @@ class format_fntabs_renderer extends format_section_renderer_base {
                     }
                     $actbar .= '</a>' . '</td>';
                 }
-
-                $actbar .= '<td align="center" height="25" style="width: 2px;">' .
-                    '<img src="' . $CFG->wwwroot . '/pix/spacer.gif" height="1" width="1" alt="" /></td>';
             }
         }
 
         if (($week == 0) && ($tabhigh >= $course->numsections)) {
-            $actbar .= '<td class="fnweeklynavselected ' . $extraclassfortab . '"  width="" height="25">All</td>';
+            $actbar .= '<td class="fnweeklynavselected ' . $extraclassfortab . '">'.get_string('all').'</td>';
         } else if ($tabhigh >= $course->numsections) {
-            $actbar .= '<td class="fnweeklynavnorm ' . $extraclassfortab . '" width="" height="25">' .
-                '<a href="' . $url . '&selected_week=0">All</a></td>';
+            $actbar .= '<td class="fnweeklynavnorm '.$extraclassfortab.'">' .
+                '<a href="' . $url . '&selected_week=0">'.get_string('all').'</a></td>';
         } else {
             $nxt = ($tabhigh + 1) * 1000;
-            $actbar .= '<td id="fn_tab_next" height="25"><a href="' . $url . '&selected_week=' . $nxt . '">Next</a></td>';
+            $actbar .= '<td id="fn_tab_next" height="25"><a href="' . $url . '&selected_week=' . $nxt . '">'.get_string('next').'</a></td>';
         }
         $settingicon = '';
         if ($PAGE->user_is_editing() && has_capability('moodle/course:update', $context)) {
             $settingicon = '<a href="' . $CFG->wwwroot . '/course/format/' . $course->format .
-                '/tabsettings.php?id='.$course->id.'" ><img style="margin: 3px 1px 1px 5px;" src="'.
-                $OUTPUT->pix_url('t/edit').'" width="16" /></a>';
+                '/tabsettings.php?id='.$course->id.'" class="fntabsettings"><img src="'.
+                $OUTPUT->pix_url('edit_white', 'format_fntabs').'" width="16" /></a>';
         }
         $actbar .= '<td width="1" align="center" height="25">'.$settingicon.'</td>';
         $actbar .= '</tr>';
         $actbar .= '<tr>';
         if ($strtopicheading) {
-            $actbar .= '<td height="3" colspan="2"></td>';
-        } else {
             $actbar .= '<td height="3"></td>';
         }
 
@@ -1183,7 +1176,6 @@ class format_fntabs_renderer extends format_section_renderer_base {
             } else {
                 $actbar .= '<td height="3"></td>';
             }
-            $actbar .= '<td height="3"></td>';
         }
         $actbar .= '<td height="3" colspan="2"></td>';
 
