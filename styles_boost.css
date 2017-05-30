@@ -28,3 +28,12 @@
 .format-fntabs ul.fntabs {
     padding-left: 0;
 }
+
+.format-fntabs ul.fntabs .toolbox a:first-of-type > .icon,
+.format-fntabs ul.fntabs span:first-of-type > .icon {
+    margin-left: 0;
+}
+
+.format-fntabs ul.fntabs .section.img-text {
+    width: calc(100% - .4em);
+}
