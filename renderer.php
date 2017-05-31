@@ -1159,7 +1159,7 @@ class format_fntabs_renderer extends format_section_renderer_base {
         if ($PAGE->user_is_editing() && has_capability('moodle/course:update', $context)) {
             $settingicon = '<a href="' . $CFG->wwwroot . '/course/format/' . $course->format .
                 '/tabsettings.php?id='.$course->id.'" class="fntabsettings"><img src="'.
-                $OUTPUT->pix_url('edit_white', 'format_fntabs').'" width="32" /></a>';
+                $OUTPUT->pix_url('edit_white', 'format_fntabs').'" /></a>';
         }
         $actbar .= '<td width="1" align="center" height="25">'.$settingicon.'</td>';
         $actbar .= '</tr>';
