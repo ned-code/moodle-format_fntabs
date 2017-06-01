@@ -1,0 +1,39 @@
+/* This file is part of Moodle - http://moodle.org/
+
+   Moodle is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   Moodle is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/**
+ * @package    format_fntabs
+ * @copyright  &copy; 2017 G J Barnard in respect to modifications of standard topics format.
+ * @author     G J Barnard - about.me/gjbarnard and {@link http://moodle.org/user/profile.php?id=442195}
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
+.format-fntabs #region-main .card-block {
+    padding: 0;
+}
+
+.format-fntabs ul.fntabs {
+    padding-left: 0;
+}
+
+.format-fntabs ul.fntabs .toolbox a:first-of-type > .icon,
+.format-fntabs ul.fntabs span:first-of-type > .icon {
+    margin-left: 0;
+}
+
+.format-fntabs ul.fntabs .section.img-text {
+    width: calc(100% - .4em);
+}
